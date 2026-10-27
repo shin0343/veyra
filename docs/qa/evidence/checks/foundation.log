@@ -1,0 +1,11 @@
+{
+  "observed_at": "2026-10-27T07:21:29.085524+00:00",
+  "status": "passed",
+  "migration_apply_and_reapply": true,
+  "postgres_version": "15.19 (Homebrew)",
+  "foreign_key_rejection": true,
+  "fts_schema_fixture_query": true,
+  "api_readiness": true,
+  "authenticated_catalog": true,
+  "next_server_to_api": true
+}

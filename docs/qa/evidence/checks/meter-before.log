@@ -1,0 +1,38 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________ test_agent_turns_share_the_durable_cloud_budget ________________
+
+agent_env = (<starlette.testclient.TestClient object at 0x10b79df10>, <veyra.db.Database object at 0x10b79dfd0>, [{'id': 'e0a3d416... ...}, {'id': '979a8abe-da0d-4872-8857-7b2c8c383c0a', 'name': 'Lobby', 'source_id': 'sample_4', 'enabled': True, ...}])
+
+    def test_agent_turns_share_the_durable_cloud_budget(agent_env):
+        # Regression: QA-002, /qa 2026-10-27; docs/qa/SECURITY_REVIEW.md.
+        _, database, _ = agent_env
+        settings = Settings(
+            _env_file=None,
+            model_api_key="scripted-not-live",
+            model_daily_budget_usd=0.01,
+            model_request_reserve_usd=0.01,
+        )
+        calls = []
+    
+        def handler(request):
+            calls.append(request)
+            return httpx.Response(200, json=completion())
+    
+>       provider = MetaClient(
+            settings,
+            transport=httpx.MockTransport(handler),
+            usage_meter=UsageMeter(settings, database),
+        )
+E       TypeError: MetaClient.__init__() got an unexpected keyword argument 'usage_meter'
+
+apps/api/tests/test_phase07_regressions.py:89: TypeError
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/sjh/Hackaton & Contest/meta-ai-hackaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED apps/api/tests/test_phase07_regressions.py::test_agent_turns_share_the_durable_cloud_budget
+1 failed, 3 deselected, 1 warning in 1.10s

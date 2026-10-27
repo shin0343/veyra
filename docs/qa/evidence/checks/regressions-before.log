@@ -1,0 +1,79 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+___________ test_truncated_response_is_a_distinct_retryable_failure ____________
+
+    def test_truncated_response_is_a_distinct_retryable_failure():
+        # Regression: QA-001, /qa 2026-10-27; docs/qa/E2E_REPORT.md.
+        with pytest.raises(ModelFailure) as caught:
+            output_json(
+                {"status": "incomplete", "incomplete_details": {"reason": "max_output_tokens"}},
+                index_models.VideoAnalysis,
+            )
+>       assert caught.value.code == "MODEL_OUTPUT_TRUNCATED"
+E       AssertionError: assert 'INVALID_MODEL_OUTPUT' == 'MODEL_OUTPUT_TRUNCATED'
+E         
+E         - MODEL_OUTPUT_TRUNCATED
+E         + INVALID_MODEL_OUTPUT
+
+apps/api/tests/test_phase07_regressions.py:22: AssertionError
+___________ test_unattempted_segments_do_not_inherit_a_model_failure ___________
+
+indexed_env = (<starlette.testclient.TestClient object at 0x10d560950>, <veyra.db.Database object at 0x10d5607a0>, [{'id': '90f70982...-b5d3-1a2636bca871'), UUID('4812e8a4-9f56-43cf-b973-6527d90e0a63'), UUID('8a5ce8f4-9180-4aba-a58c-d47b58a60916')], ...)
+
+    def test_unattempted_segments_do_not_inherit_a_model_failure(indexed_env):
+        # Regression: QA-001, /qa 2026-10-27; docs/qa/E2E_REPORT.md.
+        _, database, _, settings, _, _, script, factory = indexed_env
+        job = enqueue(indexed_env)
+        script.failure = httpx.Response(200, json=response("invalid-object"))
+        assert Worker(settings, database, factory).once()
+        with database.connect() as db:
+            result = index_store.get_job(db, UUID(job["id"]))
+        assert result.state == "failed"
+        assert result.segments[0].state == "failed"
+>       assert all(item.state == "waiting" for item in result.segments[1:])
+E       assert False
+E        +  where False = all(<generator object test_unattempted_segments_do_not_inherit_a_model_failure.<locals>.<genexpr> at 0x10d5260c0>)
+
+apps/api/tests/test_phase07_regressions.py:36: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"event":"index_job_failed","code":"INVALID_MODEL_OUTPUT"}
+------------------------------ Captured log call -------------------------------
+WARNING  veyra:index_worker.py:75 {"event":"index_job_failed","code":"INVALID_MODEL_OUTPUT"}
+_________ test_truncation_retries_without_publishing_invalid_metadata __________
+
+indexed_env = (<starlette.testclient.TestClient object at 0x10d5c03e0>, <veyra.db.Database object at 0x10d5c1af0>, [{'id': '6b2015ee...-acff-fb0a988330b9'), UUID('ba25af09-58d7-456f-8638-c01432829642'), UUID('a344ba3c-2fe6-4327-bcf9-5387d3bfe5e1')], ...)
+
+    def test_truncation_retries_without_publishing_invalid_metadata(indexed_env):
+        # Regression: QA-001, /qa 2026-10-27; docs/qa/E2E_REPORT.md.
+        _, database, _, settings, _, _, script, factory = indexed_env
+        job = enqueue(indexed_env)
+        script.failure = httpx.Response(
+            200,
+            json={"status": "incomplete", "incomplete_details": {"reason": "max_output_tokens"}},
+        )
+        worker = Worker(settings, database, factory)
+        assert worker.once()
+        with database.connect() as db:
+            result = index_store.get_job(db, UUID(job["id"]))
+>           assert result.state == "queued" and result.attempts == 1
+E           AssertionError: assert ('failed' == 'queued'
+E             
+E             - queued
+E             + failed)
+
+apps/api/tests/test_phase07_regressions.py:56: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"event":"index_job_failed","code":"INVALID_MODEL_OUTPUT"}
+------------------------------ Captured log call -------------------------------
+WARNING  veyra:index_worker.py:75 {"event":"index_job_failed","code":"INVALID_MODEL_OUTPUT"}
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/sjh/Hackaton & Contest/meta-ai-hackaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED apps/api/tests/test_phase07_regressions.py::test_truncated_response_is_a_distinct_retryable_failure
+FAILED apps/api/tests/test_phase07_regressions.py::test_unattempted_segments_do_not_inherit_a_model_failure
+FAILED apps/api/tests/test_phase07_regressions.py::test_truncation_retries_without_publishing_invalid_metadata
+3 failed, 1 warning in 1.85s

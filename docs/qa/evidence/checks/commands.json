@@ -1,0 +1,80 @@
+{
+  "recorded_at": "2026-10-27T07:31:03.255921+00:00",
+  "commands": [
+    {
+      "command": "make check",
+      "exit_code": 0,
+      "result": "162 passed / 1 deliberately skipped video live test; Ruff, typecheck, contracts"
+    },
+    {
+      "command": "make contracts-check",
+      "exit_code": 0,
+      "result": "frozen and runtime contracts match"
+    },
+    {
+      "command": "npm run lint --workspace @veyra/web",
+      "exit_code": 0,
+      "result": "zero warnings"
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "result": "production Next build"
+    },
+    {
+      "command": ".venv/bin/python -E scripts/foundation_smoke.py",
+      "exit_code": 0,
+      "result": "real disposable DB and Next-to-API; SQL-only FTS fixture"
+    },
+    {
+      "command": "make meta-smoke",
+      "exit_code": 0,
+      "result": "genuine Meta catalog/text/schema/tool loop"
+    },
+    {
+      "command": "make agent-live-smoke",
+      "exit_code": 0,
+      "result": "65 passed; 1 genuine Muse test"
+    },
+    {
+      "command": "make index-live-smoke",
+      "exit_code": 0,
+      "result": "30 passed; 1 genuine evaluation with 6/6 queries; both native gates passed"
+    },
+    {
+      "command": ".venv/bin/python -E scripts/vms_acceptance.py --mediamtx /tmp/veyra-mediamtx/mediamtx",
+      "exit_code": 0,
+      "result": "real media/browser; no cloud calls"
+    },
+    {
+      "command": ".venv/bin/python -E scripts/phase07_acceptance.py --mediamtx /tmp/veyra-mediamtx/mediamtx",
+      "exit_code": 0,
+      "result": "8 real browser cases and actual database restart"
+    },
+    {
+      "command": ".venv/bin/python -E scripts/check_web_image_context.py",
+      "exit_code": 0,
+      "result": "staged native TypeScript; not Docker"
+    },
+    {
+      "command": ".venv/bin/python -E scripts/phase07_security_scan.py",
+      "exit_code": 0,
+      "result": "known secret-value scan"
+    },
+    {
+      "command": "npm audit --json --cache .cache/npm",
+      "exit_code": 0,
+      "result": "zero reported advisories; 475 dependency entries"
+    },
+    {
+      "command": "docker compose config --quiet",
+      "exit_code": 127,
+      "result": "blocked: Docker absent"
+    },
+    {
+      "command": "docker compose --profile fixture up --build --wait",
+      "exit_code": 127,
+      "result": "blocked: Docker absent"
+    }
+  ]
+}

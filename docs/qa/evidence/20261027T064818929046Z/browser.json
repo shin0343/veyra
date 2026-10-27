@@ -1,0 +1,335 @@
+{
+  "observed_at": "2026-10-27T06:49:21.632Z",
+  "mode": "genuine live integration",
+  "scenarios": {
+    "A": {
+      "status": "failed",
+      "recording_id": "1a12820d-db1e-581f-85a8-471c76d5a9e2",
+      "available_duration_ms": 60000,
+      "error": "page.waitForFunction: TypeError: Cannot read properties of null (reading 'currentTime')\n    at eval (eval at predicate (eval at evaluate (:370:30)), <anonymous>:2:49)\n    at predicate (eval at evaluate (:370:30), <anonymous>:7:27)\n    at next (eval at evaluate (:370:30), <anonymous>:29:33)",
+      "duration_ms": 10575
+    },
+    "B": {
+      "status": "passed",
+      "operations": [
+        {
+          "prompt": "Where can I change a camera's settings?",
+          "model_ms": 3526,
+          "completion_ms": 3644,
+          "route": "/cameras",
+          "receipts": [
+            {
+              "tool": "features.discover",
+              "status": "succeeded"
+            },
+            {
+              "tool": "features.navigate",
+              "status": "succeeded"
+            }
+          ]
+        },
+        {
+          "prompt": "Open the live view of Front entrance.",
+          "model_ms": 1474,
+          "completion_ms": 1565,
+          "route": "/live?camera_id=29e6ae08-4b17-4074-9dd4-830909e706df",
+          "receipts": [
+            {
+              "tool": "cameras.navigate",
+              "status": "succeeded"
+            }
+          ]
+        }
+      ],
+      "duration_ms": 6355
+    },
+    "manual_layout": {
+      "status": "passed",
+      "completion_ms": 319,
+      "layout_id": "60207d89-d6a5-46d9-8ef7-7574462f9c32",
+      "duration_ms": 868
+    },
+    "C": {
+      "status": "failed",
+      "model_ms": 2309,
+      "absent_before_approval": true,
+      "completion_ms": 2782,
+      "layout_id": "08d651b0-2595-4358-b6b3-c91eac9a49dd",
+      "persisted_cells": 4,
+      "error": "Please use browser.newContext()\n Please check out https://github.com/dequelabs/axe-core-npm/blob/develop/packages/playwright/error-handling.md",
+      "duration_ms": 4541
+    },
+    "D": {
+      "status": "failed",
+      "indexing_wall_ms": 35484,
+      "job": {
+        "id": "6c0810e6-c981-4bb4-95f6-0e2c3e78a277",
+        "recording_id": "0c26d7c1-945a-5790-9a0e-b00828ee56ca",
+        "state": "succeeded",
+        "progress": 1,
+        "attempts": 1,
+        "error": null,
+        "created_at": "2026-10-27T06:49:45.555358Z",
+        "updated_at": "2026-10-27T06:50:20.131721Z",
+        "pipeline_version": "video-index-1-2b42febfdde1",
+        "selected_segments": 2,
+        "selected_duration_ms": 11067,
+        "processing_ms": 32790,
+        "segments": [
+          {
+            "segment_id": "7c376f3b-6295-5eec-8980-d6162eecb5db",
+            "state": "succeeded",
+            "pipeline_version": "video-index-1-2b42febfdde1",
+            "analyzed_start_ms": 0,
+            "analyzed_end_ms": 10000,
+            "error_code": null,
+            "processing_ms": 23286
+          },
+          {
+            "segment_id": "1367b96f-e20b-58c1-97a9-10b7eb97c546",
+            "state": "succeeded",
+            "pipeline_version": "video-index-1-2b42febfdde1",
+            "analyzed_start_ms": 0,
+            "analyzed_end_ms": 1067,
+            "error_code": null,
+            "processing_ms": 9504
+          }
+        ],
+        "usage": {
+          "requests": 2,
+          "input_tokens": 4292,
+          "output_tokens": 3984,
+          "bytes_uploaded": 507835,
+          "reserved_usd": 0.1,
+          "estimated_usd": null,
+          "billing": "unknown"
+        }
+      },
+      "queries": [
+        {
+          "query": "a person riding a bicycle",
+          "elapsed_ms": 4704,
+          "hits": 5,
+          "coverage": "partial"
+        },
+        {
+          "query": "Find footage with a bicycle.",
+          "elapsed_ms": 3834,
+          "hits": 5,
+          "coverage": "partial"
+        },
+        {
+          "query": "Find cycling events.",
+          "elapsed_ms": 2836,
+          "hits": 5,
+          "coverage": "partial"
+        }
+      ],
+      "grounded_hit": {
+        "segment_id": "7c376f3b-6295-5eec-8980-d6162eecb5db",
+        "camera_id": "539ca110-0a08-4cbf-8248-7c5b70c10ed5",
+        "recording_id": "0c26d7c1-945a-5790-9a0e-b00828ee56ca",
+        "start": "2026-10-27T06:48:21.579614Z",
+        "end": "2026-10-27T06:48:23.579614Z",
+        "offset_ms": 0,
+        "summary": "A person wearing a helmet rides a bicycle away from the camera along a dirt path into dense green forest.",
+        "evidence_text": "Rider on a bicycle moves from center frame toward the tree line and disappears into foliage. Green trees and grass border a light dirt path. White text overlay reads Dirt Biking.",
+        "model_id": "muse-spark-1.3",
+        "indexed_at": "2026-10-27T06:50:10.610940Z",
+        "relevance": 1,
+        "action": {
+          "kind": "navigate",
+          "label": "Play matching footage",
+          "target": {
+            "kind": "recording",
+            "recording_id": "0c26d7c1-945a-5790-9a0e-b00828ee56ca",
+            "offset_ms": 0
+          }
+        },
+        "camera_name": "Trail camera",
+        "metadata_id": "7574063b-967a-45c1-b1c6-5e75502755b4",
+        "objects": [
+          {
+            "category": "person",
+            "attributes": [
+              "moving"
+            ],
+            "apparel": [
+              {
+                "kind": "helmet",
+                "colors": [
+                  "white"
+                ]
+              },
+              {
+                "kind": "shirt",
+                "colors": [
+                  "blue"
+                ]
+              }
+            ],
+            "evidence": "Figure pedaling with light-colored helmet and blue top moving away from camera."
+          },
+          {
+            "category": "bicycle",
+            "attributes": [
+              "moving"
+            ],
+            "apparel": [],
+            "evidence": "Two-wheeled bicycle under rider on the dirt path."
+          }
+        ],
+        "event_types": [
+          "person_visible",
+          "vehicle_visible",
+          "cycling"
+        ],
+        "uncertainty": "medium",
+        "uncertainty_notes": "Low resolution and motion blur limit detail on clothing and bicycle.",
+        "prompt_version": "observable-video-2",
+        "schema_version": "observations-2",
+        "provenance": {
+          "provider": "meta_standard",
+          "timestamps": "recording_clock_plus_estimated_clip_offsets",
+          "clip_end_ms": 10000,
+          "clip_sha256": "b21bcbc036dcc1ae14eb31e9cb9fee4a17ea1cc93eaf0fc6b48cd0754bb0490a",
+          "audio_removed": true,
+          "clip_start_ms": 0,
+          "model_version": "muse-spark-1.3",
+          "motion_method": "ffmpeg_gray_mean_absolute_pixel_difference",
+          "source_sha256": "98455ea3e168793fa968d36a4d2b0423f4612deaed8bc2ffbf6919e2cc40c053",
+          "source_mtime_ns": 1793083711010750000,
+          "motion_threshold": 0.035,
+          "pipeline_version": "video-index-1-2b42febfdde1",
+          "source_size_bytes": 1989112,
+          "sampling_interval_ms": 500
+        },
+        "evidence": {
+          "metadata_id": "7574063b-967a-45c1-b1c6-5e75502755b4",
+          "event_id": null,
+          "kind": "recording_interval",
+          "recording_id": "0c26d7c1-945a-5790-9a0e-b00828ee56ca",
+          "segment_id": "7c376f3b-6295-5eec-8980-d6162eecb5db",
+          "start_offset_ms": 0,
+          "end_offset_ms": 2000,
+          "boundary_accuracy": "model_estimated_within_verified_clip"
+        },
+        "playback_request": {
+          "recording_id": "0c26d7c1-945a-5790-9a0e-b00828ee56ca",
+          "offset_ms": 0,
+          "duration_ms": 10000,
+          "segment_id": "7c376f3b-6295-5eec-8980-d6162eecb5db"
+        }
+      },
+      "player_seek_error_ms": 3,
+      "error": "Please use browser.newContext()\n Please check out https://github.com/dequelabs/axe-core-npm/blob/develop/packages/playwright/error-handling.md",
+      "duration_ms": 49959
+    },
+    "E": {
+      "status": "passed",
+      "offline_video_count": 0,
+      "empty_query_status": 422,
+      "missing_recording_status": 404,
+      "cross_origin_status": 403,
+      "unknown_proxy_path_status": 404,
+      "no_match": {
+        "status": 200,
+        "count": 0,
+        "coverage": "partial"
+      },
+      "duration_ms": 11860
+    },
+    "responsive": {
+      "status": "failed",
+      "routes": [
+        {
+          "width": 390,
+          "route": "/"
+        },
+        {
+          "width": 390,
+          "route": "/cameras"
+        },
+        {
+          "width": 390,
+          "route": "/recordings"
+        },
+        {
+          "width": 390,
+          "route": "/search"
+        },
+        {
+          "width": 390,
+          "route": "/layouts"
+        },
+        {
+          "width": 390,
+          "route": "/settings"
+        },
+        {
+          "width": 834,
+          "route": "/"
+        },
+        {
+          "width": 834,
+          "route": "/cameras"
+        },
+        {
+          "width": 834,
+          "route": "/recordings"
+        },
+        {
+          "width": 834,
+          "route": "/search"
+        },
+        {
+          "width": 834,
+          "route": "/layouts"
+        },
+        {
+          "width": 834,
+          "route": "/settings"
+        }
+      ],
+      "error": "Please use browser.newContext()\n Please check out https://github.com/dequelabs/axe-core-npm/blob/develop/packages/playwright/error-handling.md",
+      "duration_ms": 6769
+    }
+  },
+  "metrics": {
+    "live_startup_ms": [
+      640,
+      591,
+      589
+    ],
+    "recording_retrieval_ms": [],
+    "search_ms": [
+      4704,
+      3834,
+      2836
+    ]
+  },
+  "page_errors": [
+    "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.",
+    "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+  ],
+  "failed_http": [
+    {
+      "path": "/api/v1/playback-sessions",
+      "status": 409
+    },
+    {
+      "path": "/api/v1/search",
+      "status": 422
+    },
+    {
+      "path": "/api/v1/recordings/00000000-0000-4000-8000-000000000099",
+      "status": 404
+    },
+    {
+      "path": "/api/v1/arbitrary-http",
+      "status": 404
+    }
+  ],
+  "accessibility": [],
+  "status": "failed"
+}

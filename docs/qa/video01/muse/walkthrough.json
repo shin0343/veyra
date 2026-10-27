@@ -1,0 +1,60 @@
+{
+  "base": "http://127.0.0.1:3200",
+  "started_at": "2026-10-27T15:33:26.579Z",
+  "steps": [
+    {
+      "name": "overview",
+      "at_s": 4.3,
+      "video_playing": true
+    },
+    {
+      "name": "cameras",
+      "at_s": 8.5
+    },
+    {
+      "name": "live",
+      "at_s": 14,
+      "tiles": 4
+    },
+    {
+      "name": "muse_layout_answer",
+      "at_s": 17.3,
+      "ms": 2153
+    },
+    {
+      "name": "muse_layout_approved",
+      "at_s": 18.7,
+      "ms": 201,
+      "verified": 2
+    },
+    {
+      "name": "saved_view_open",
+      "at_s": 23.5,
+      "url": "/layouts/c240e9ed-74a6-42c6-a486-640f43a8f500",
+      "tiles": 4
+    },
+    {
+      "name": "muse_search_answer",
+      "at_s": 27.7,
+      "ms": 3893,
+      "moments": 2
+    },
+    {
+      "name": "evidence_playback",
+      "at_s": 31.3,
+      "url": "/recordings/4d914a7e-6c91-52b4-8271-73bd038125bb?offset_ms=1000&segment_id=cb6715d7-d771-5046-9744-4d1d8e570418"
+    },
+    {
+      "name": "search",
+      "at_s": 43.9,
+      "ms": 10898,
+      "results": 6
+    },
+    {
+      "name": "context_pages",
+      "at_s": 57.6
+    }
+  ],
+  "page_errors": [],
+  "finished_at": "2026-10-27T15:34:24.316Z"
+}

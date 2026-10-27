@@ -1,0 +1,62 @@
+{
+  "base": "http://127.0.0.1:3200",
+  "captured_at": "2026-10-27T17:56:18.324Z",
+  "pages": [
+    {
+      "route": "/",
+      "width": 1440,
+      "status": 200,
+      "horizontal_overflow_px": 0,
+      "page_errors": []
+    },
+    {
+      "route": "/cameras",
+      "width": 1440,
+      "status": 200,
+      "horizontal_overflow_px": 0,
+      "page_errors": []
+    },
+    {
+      "route": "/live",
+      "width": 1440,
+      "status": 200,
+      "horizontal_overflow_px": 0,
+      "page_errors": []
+    },
+    {
+      "route": "/recordings",
+      "width": 1440,
+      "status": 200,
+      "horizontal_overflow_px": 0,
+      "page_errors": []
+    },
+    {
+      "route": "/search",
+      "width": 1440,
+      "status": 200,
+      "horizontal_overflow_px": 0,
+      "page_errors": []
+    },
+    {
+      "route": "/events",
+      "width": 1440,
+      "status": 200,
+      "horizontal_overflow_px": 0,
+      "page_errors": []
+    },
+    {
+      "route": "/layouts",
+      "width": 1440,
+      "status": 200,
+      "horizontal_overflow_px": 0,
+      "page_errors": []
+    },
+    {
+      "route": "/settings",
+      "width": 1440,
+      "status": 200,
+      "horizontal_overflow_px": 0,
+      "page_errors": []
+    }
+  ]
+}

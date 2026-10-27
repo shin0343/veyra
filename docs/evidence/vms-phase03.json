@@ -1,0 +1,89 @@
+{
+  "phase": "03",
+  "status": "passed",
+  "observed_at": "2026-10-27T02:04:14.974230+00:00",
+  "fixture": "Real FFmpeg testsrc2; no human footage",
+  "docker": "not available",
+  "offline_camera": true,
+  "registered_camera_ids": [
+    "4a5fc284-4eab-4b5c-84a4-6099b9bfe895",
+    "af1a23e1-b01c-447f-8b0a-1051d38ce0a2",
+    "ada1fde6-4f90-494c-83c8-7b064a8210de",
+    "f3a76c6e-fcd3-4eee-9396-e2d1b846d863"
+  ],
+  "online_cameras": 4,
+  "authenticated_hls": true,
+  "layout_id": "7e9d33ab-fc29-4c1a-96ac-5502b8d16c67",
+  "persisted_2x2_layout": true,
+  "recording_id": "3c79abf0-b35a-5b00-97de-4afcd528b077",
+  "recording_started_at": "2026-10-27T02:04:16.462397Z",
+  "recorded_duration_ms": 60000,
+  "segment_count": 6,
+  "playback_bytes": 1357855,
+  "mp4_range": true,
+  "playback_duration_seconds": 8.533,
+  "playback_requested_offset_ms": 52000,
+  "playback_actual_start_ms": 49497,
+  "playback_seek_offset_ms": 2503,
+  "browser": {
+    "status": "passed",
+    "source": "Unmodified Phase 02 Next.js UI + real Phase 03 API/media",
+    "live": [
+      {
+        "width": 640,
+        "height": 360,
+        "time": 2.0352,
+        "readyState": 4,
+        "error": null
+      },
+      {
+        "width": 640,
+        "height": 360,
+        "time": 2.0322,
+        "readyState": 4,
+        "error": null
+      },
+      {
+        "width": 640,
+        "height": 360,
+        "time": 2.0333,
+        "readyState": 4,
+        "error": null
+      },
+      {
+        "width": 640,
+        "height": 360,
+        "time": 2.0246,
+        "readyState": 4,
+        "error": null
+      }
+    ],
+    "requestedOffsetMs": 52000,
+    "initialTime": 2.503,
+    "actualStartOffsetMs": 49497,
+    "seekOffsetMs": 2503,
+    "playback": {
+      "width": 640,
+      "height": 360,
+      "currentTime": 5,
+      "duration": 10,
+      "seekable": [
+        [
+          0,
+          10
+        ]
+      ],
+      "error": null
+    }
+  },
+  "backend_restart_persistence": true,
+  "missing_media": "RECORDING_UNAVAILABLE",
+  "missing_recording_directory": true,
+  "unsupported_codec": true,
+  "recovered_segment_id": "1fbea4ad-1627-5e77-9c82-8a2e8025d0ae",
+  "stream_recovery": true,
+  "camera_crud": true,
+  "audit_records": 8,
+  "expired_session": true,
+  "media_outage": true
+}

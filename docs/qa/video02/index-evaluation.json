@@ -1,0 +1,133 @@
+{
+ "people": {
+  "hits": 50,
+  "capped_at_50": true,
+  "latency_ms": 815,
+  "server_latency_ms": 804,
+  "coverage": "partial",
+  "by_camera": {
+   "Bicycle parking": 3,
+   "Entrance gate": 1,
+   "Community space": 2,
+   "Trail camera": 44
+  },
+  "uncertainty": {
+   "low": 4,
+   "medium": 30,
+   "high": 16
+  }
+ },
+ "bicycles": {
+  "hits": 50,
+  "capped_at_50": true,
+  "latency_ms": 1443,
+  "server_latency_ms": 1438,
+  "coverage": "partial",
+  "by_camera": {
+   "Bicycle parking": 3,
+   "Trail camera": 47
+  },
+  "uncertainty": {
+   "low": 5,
+   "medium": 30,
+   "high": 15
+  }
+ },
+ "vehicles": {
+  "hits": 50,
+  "capped_at_50": true,
+  "latency_ms": 901,
+  "server_latency_ms": 896,
+  "coverage": "partial",
+  "by_camera": {
+   "Street approach": 1,
+   "Bicycle parking": 3,
+   "Entrance gate": 2,
+   "Trail camera": 44
+  },
+  "uncertainty": {
+   "low": 6,
+   "medium": 31,
+   "high": 13
+  }
+ },
+ "animals": {
+  "hits": 1,
+  "capped_at_50": false,
+  "latency_ms": 1368,
+  "server_latency_ms": 1363,
+  "coverage": "partial",
+  "by_camera": {
+   "Garden wildlife": 1
+  },
+  "uncertainty": {
+   "low": 0,
+   "medium": 1,
+   "high": 0
+  }
+ },
+ "walking": {
+  "hits": 6,
+  "capped_at_50": false,
+  "latency_ms": 973,
+  "server_latency_ms": 969,
+  "coverage": "partial",
+  "by_camera": {
+   "Bicycle parking": 3,
+   "Entrance gate": 1,
+   "Community space": 2
+  },
+  "uncertainty": {
+   "low": 1,
+   "medium": 4,
+   "high": 1
+  }
+ },
+ "carrying": {
+  "hits": 4,
+  "capped_at_50": false,
+  "latency_ms": 1275,
+  "server_latency_ms": 1271,
+  "coverage": "partial",
+  "by_camera": {
+   "Bicycle parking": 2,
+   "Entrance gate": 1,
+   "Community space": 1
+  },
+  "uncertainty": {
+   "low": 0,
+   "medium": 4,
+   "high": 0
+  }
+ },
+ "keyword_squirrels": {
+  "hits": 1,
+  "capped_at_50": false,
+  "latency_ms": 1044,
+  "server_latency_ms": 1039,
+  "coverage": "partial",
+  "by_camera": {
+   "Garden wildlife": 1
+  },
+  "uncertainty": {
+   "low": 0,
+   "medium": 1,
+   "high": 0
+  }
+ },
+ "keyword_bus": {
+  "hits": 1,
+  "capped_at_50": false,
+  "latency_ms": 1244,
+  "server_latency_ms": 1239,
+  "coverage": "partial",
+  "by_camera": {
+   "Street approach": 1
+  },
+  "uncertainty": {
+   "low": 1,
+   "medium": 0,
+   "high": 0
+  }
+ }
+}

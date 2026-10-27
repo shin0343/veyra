@@ -1,0 +1,35 @@
+:root {
+  color-scheme: light;
+  --canvas: #f7f9f6;
+  --surface: #ffffff;
+  --sage: #dcece5;
+  --sage-light: #ecf3ee;
+  --teal: #207a70;
+  --teal-hover: #17675e;
+  --teal-wash: #e3f0ec;
+  --ink: #253b36;
+  --text-secondary: #5d6d64;
+  --blue: #e8f1f7;
+  --blue-ink: #3d647c;
+  --amber: #e6b56e;
+  --amber-light: #fcf2e3;
+  --amber-ink: #78501d;
+  --border: #e0e7e0;
+  --border-strong: #7a8d84;
+  --error: #9b4c35;
+  --error-bg: #fcf0ea;
+  /* Video stage behind letter/pillarboxed footage; labels on it use --stage-text. */
+  --stage: #101513;
+  --stage-text: #e9f0ec;
+  --font-sans: "Manrope Variable", "Avenir Next", "Segoe UI", sans-serif;
+  --radius-control: 8px;
+  --radius-media: 10px;
+  --radius-surface: 14px;
+  --radius-dialog: 20px;
+  --shadow-popover: 0 24px 80px #253b361c, 0 4px 16px #253b360a;
+  --space-page: 38px;
+  --sidebar-width: 224px;
+}
+html[data-density="compact"] {
+  --space-page: 28px;
+}

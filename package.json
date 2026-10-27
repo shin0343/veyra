@@ -1,0 +1,18 @@
+{
+  "name": "veyra",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "engines": {"node": ">=22 <25"},
+  "scripts": {
+    "dev": "npm run dev --workspace @veyra/web",
+    "build": "npm run build --workspace @veyra/web",
+    "typecheck": "npm run typecheck --workspace @veyra/web",
+    "contracts:types": "openapi-typescript packages/contracts/openapi.json -o packages/contracts/src/api.d.ts",
+    "media:browser": "node scripts/media_browser_smoke.mjs"
+  },
+  "devDependencies": {
+    "openapi-typescript": "^7.10.0",
+    "playwright": "^1.58.0"
+  }
+}

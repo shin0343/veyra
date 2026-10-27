@@ -1,0 +1,303 @@
+{
+  "observed_at": "2026-10-27T18:59:12.743Z",
+  "mode": "explicit development fixtures",
+  "routes": [
+    {
+      "viewport": "desktop",
+      "route": "/",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "desktop",
+      "route": "/cameras",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "desktop",
+      "route": "/live",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "desktop",
+      "route": "/recordings",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "desktop",
+      "route": "/explore",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "desktop",
+      "route": "/events",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "desktop",
+      "route": "/layouts",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "desktop",
+      "route": "/settings",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "tablet",
+      "route": "/",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "tablet",
+      "route": "/cameras",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "tablet",
+      "route": "/live",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "tablet",
+      "route": "/recordings",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "tablet",
+      "route": "/explore",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "tablet",
+      "route": "/events",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "tablet",
+      "route": "/layouts",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "tablet",
+      "route": "/settings",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "mobile",
+      "route": "/",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "mobile",
+      "route": "/cameras",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "mobile",
+      "route": "/live",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "mobile",
+      "route": "/recordings",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "mobile",
+      "route": "/explore",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "mobile",
+      "route": "/events",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "mobile",
+      "route": "/layouts",
+      "horizontal_overflow": false,
+      "headings": 1
+    },
+    {
+      "viewport": "mobile",
+      "route": "/settings",
+      "horizontal_overflow": false,
+      "headings": 1
+    }
+  ],
+  "interactions": [
+    "Dialog keeps keyboard Tab navigation within the active dialog",
+    "Command palette restores trigger focus",
+    "Ctrl+K, filtering and Enter navigate to typed settings route",
+    "Feature guidance never impersonates a model response",
+    "Muse settings action navigates to actual recording settings section",
+    "Camera space filter updates visible cards",
+    "Consequential privacy change requires a review step",
+    "Privacy preview result makes no device-change claim",
+    "Layout creation is labeled as a local preview result",
+    "New local layout opens its actual detail route",
+    "A second layout starts with a fresh draft rather than a previous success state",
+    "Single camera selection changes the layout",
+    "2 by 2 camera selection displays four labeled preview tiles",
+    "Preview mode never fabricates a playing video element",
+    "Preview results are labelled as illustrations, never as footage",
+    "Explore result opens recording at the exact 720000ms offset",
+    "Empty preview explore shows a truthful no-match state",
+    "loading state shows no fabricated media",
+    "empty state shows no fabricated media",
+    "error state shows no fabricated media",
+    "Indexing fixture exposes labeled accessible progress",
+    "Connected mode never falls back to fixture cameras or events",
+    "Unavailable Muse request reports missing execution evidence instead of claiming success or rollback",
+    "Frontend adapter rejects cross-origin access",
+    "Frontend adapter rejects unknown upstream paths",
+    "Declining a server-bound confirmation sends approved:false and renders the actual failed receipt",
+    "Expired server confirmation cannot be approved",
+    "Successful action receipt maps to the typed recording route and exact timestamp",
+    "Unknown action navigation kinds never create a URL link",
+    "Tab-local appearance preference remains consistent across navigation",
+    "Invalid offsets are rejected instead of silently playing the beginning"
+  ],
+  "accessibility": [
+    {
+      "screen": "desktop/",
+      "violations": []
+    },
+    {
+      "screen": "desktop/cameras",
+      "violations": []
+    },
+    {
+      "screen": "desktop/live",
+      "violations": []
+    },
+    {
+      "screen": "desktop/recordings",
+      "violations": []
+    },
+    {
+      "screen": "desktop/explore",
+      "violations": []
+    },
+    {
+      "screen": "desktop/events",
+      "violations": []
+    },
+    {
+      "screen": "desktop/layouts",
+      "violations": []
+    },
+    {
+      "screen": "desktop/settings",
+      "violations": []
+    },
+    {
+      "screen": "tablet/",
+      "violations": []
+    },
+    {
+      "screen": "tablet/cameras",
+      "violations": []
+    },
+    {
+      "screen": "tablet/live",
+      "violations": []
+    },
+    {
+      "screen": "tablet/recordings",
+      "violations": []
+    },
+    {
+      "screen": "tablet/explore",
+      "violations": []
+    },
+    {
+      "screen": "tablet/events",
+      "violations": []
+    },
+    {
+      "screen": "tablet/layouts",
+      "violations": []
+    },
+    {
+      "screen": "tablet/settings",
+      "violations": []
+    },
+    {
+      "screen": "mobile/",
+      "violations": []
+    },
+    {
+      "screen": "mobile/cameras",
+      "violations": []
+    },
+    {
+      "screen": "mobile/live",
+      "violations": []
+    },
+    {
+      "screen": "mobile/recordings",
+      "violations": []
+    },
+    {
+      "screen": "mobile/explore",
+      "violations": []
+    },
+    {
+      "screen": "mobile/events",
+      "violations": []
+    },
+    {
+      "screen": "mobile/layouts",
+      "violations": []
+    },
+    {
+      "screen": "mobile/settings",
+      "violations": []
+    },
+    {
+      "screen": "Muse side panel",
+      "violations": []
+    },
+    {
+      "screen": "Privacy confirmation",
+      "violations": []
+    },
+    {
+      "screen": "Explore preview with authored results",
+      "violations": []
+    },
+    {
+      "screen": "Real unavailable workspace",
+      "violations": []
+    },
+    {
+      "screen": "Contract fixture confirmation receipt",
+      "violations": []
+    }
+  ],
+  "errors": [],
+  "status": "passed"
+}

@@ -1,0 +1,1479 @@
+{
+  "checked_at": "2026-10-27T15:25:37.099702+00:00",
+  "web_url": "http://127.0.0.1:3200",
+  "cameras": {
+    "items": [
+      {
+        "id": "82f995cb-8bee-469d-9063-a2da3439fbdb",
+        "name": "Trail camera",
+        "source_id": "sample_4",
+        "enabled": true,
+        "cloud_analysis_allowed": true,
+        "status": "online",
+        "last_observed_at": "2026-10-27T15:25:35.525326Z",
+        "created_at": "2026-10-27T07:46:32.281841Z",
+        "group_name": "Outdoors",
+        "location": "Licensed replay \u00b7 Henry Geer, CC BY 3.0",
+        "connection_error": null,
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "trail-camera",
+          "title": "Dirt jump biking",
+          "creator": "Henry Geer",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3ADirt_jump_biking.webm",
+          "license": "CC BY 3.0",
+          "license_url": "https://creativecommons.org/licenses/by/3.0",
+          "changes": "Excerpt 2\u201338s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "69f1f1268b090b77f908e38653194b0af8e9b4be8ba48d13644b79663f6a7a8e"
+        }
+      },
+      {
+        "id": "55163235-01fa-427f-99ce-27c24b7f30f1",
+        "name": "Entrance gate",
+        "source_id": "demo_entrance",
+        "enabled": true,
+        "cloud_analysis_allowed": true,
+        "status": "online",
+        "last_observed_at": "2026-10-27T15:25:35.525326Z",
+        "created_at": "2026-10-27T15:09:18.419641Z",
+        "group_name": "Video demo library",
+        "location": "Freedom Park, Lagos \u00b7 Licensed film replay",
+        "connection_error": null,
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "entrance-gate",
+          "title": "Freedom Park-Entrance Gate 2",
+          "creator": "Olusola David, Ayibiowu",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3AFreedom_Park-Entrance_Gate_2.webm",
+          "license": "CC BY-SA 4.0",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+          "changes": "Excerpt 0\u201320.6s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "2ad7a6563bb23b5e4321ae42e5944aa753a01707c0c4f5c05960f443f6861c85"
+        }
+      },
+      {
+        "id": "d9102168-f60d-4feb-b47d-5b5012d2e1a4",
+        "name": "Street approach",
+        "source_id": "demo_street",
+        "enabled": true,
+        "cloud_analysis_allowed": true,
+        "status": "online",
+        "last_observed_at": "2026-10-27T15:25:35.525326Z",
+        "created_at": "2026-10-27T15:09:18.425432Z",
+        "group_name": "Video demo library",
+        "location": "San Francisco street \u00b7 Licensed film replay",
+        "connection_error": null,
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "street-approach",
+          "title": "Street traffic",
+          "creator": "Editor (YouTube)",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3AStreet_traffic.webm",
+          "license": "CC BY 3.0",
+          "license_url": "https://creativecommons.org/licenses/by/3.0",
+          "changes": "Excerpt 0\u201330s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "b52fdf7dab4c160b7321afe0c079322dc4f0709489f8079625dda342d5f44af0"
+        }
+      },
+      {
+        "id": "48a3fb91-d509-414f-9479-48cfc886b775",
+        "name": "Garden wildlife",
+        "source_id": "demo_garden",
+        "enabled": true,
+        "cloud_analysis_allowed": true,
+        "status": "offline",
+        "last_observed_at": "2026-10-27T15:25:35.525326Z",
+        "created_at": "2026-10-27T15:09:18.430574Z",
+        "group_name": "Video demo library",
+        "location": "Tresco Abbey Gardens \u00b7 Licensed film replay",
+        "connection_error": {
+          "code": "SOURCE_OFFLINE",
+          "message": "The camera is not providing a stream. Check its connection.",
+          "retryable": false,
+          "fields": []
+        },
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "garden-wildlife",
+          "title": "Red squirrels in Tresco Abbey Gardens",
+          "creator": "andrewrabbott",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3ARed_squirrels_in_Tresco_Abbey_Gardens.webm",
+          "license": "CC BY 4.0",
+          "license_url": "https://creativecommons.org/licenses/by/4.0",
+          "changes": "Excerpt 0\u201323.6s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "cfb0ad553e5f581003305eb7c5ae3a950167c190d0157550e146ee175bb3e4a1"
+        }
+      },
+      {
+        "id": "b345aac7-984e-43f9-a927-37c639642e27",
+        "name": "Community space",
+        "source_id": "demo_community",
+        "enabled": true,
+        "cloud_analysis_allowed": true,
+        "status": "online",
+        "last_observed_at": "2026-10-27T15:25:35.525326Z",
+        "created_at": "2026-10-27T15:09:18.435410Z",
+        "group_name": "Video demo library",
+        "location": "Stari trg, Ljubljana \u00b7 Licensed film replay",
+        "connection_error": null,
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "community-space",
+          "title": "Pedestrian area Ljubljana",
+          "creator": "Sounds of Changes",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3APedestrian_area_Ljubljana.webm",
+          "license": "CC BY 3.0",
+          "license_url": "https://creativecommons.org/licenses/by/3.0",
+          "changes": "Excerpt 0\u201336s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "5e9e466ba405af89cf4975b4658462157a6e00851a0fa2be13e0cbb0c550dfa9"
+        }
+      },
+      {
+        "id": "736b2e6b-b93c-41ad-af97-be479405ac59",
+        "name": "Bicycle parking",
+        "source_id": "demo_parking",
+        "enabled": true,
+        "cloud_analysis_allowed": true,
+        "status": "online",
+        "last_observed_at": "2026-10-27T15:25:35.525326Z",
+        "created_at": "2026-10-27T15:09:18.440490Z",
+        "group_name": "Video demo library",
+        "location": "Jaarbeursplein, Utrecht \u00b7 Licensed film excerpt",
+        "connection_error": null,
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "bicycle-parking",
+          "title": "Nieuwe fietsenstalling Jaarbeursplein Utrecht",
+          "creator": "ProRail",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3ANieuwe_fietsenstalling_Jaarbeursplein_Utrecht.webm",
+          "license": "CC BY 3.0",
+          "license_url": "https://creativecommons.org/licenses/by/3.0",
+          "changes": "Excerpt 46\u201378s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "be20a96a061a47b0fe2229b61589061fd9622b1c0eff44cbb3d68fcbcf054169"
+        }
+      },
+      {
+        "id": "0b014f6f-4cda-49d5-9d7f-9a8c758ab3ee",
+        "name": "Front entrance",
+        "source_id": "sample",
+        "enabled": false,
+        "cloud_analysis_allowed": false,
+        "status": "disabled",
+        "last_observed_at": "2026-10-27T15:25:35.525326Z",
+        "created_at": "2026-10-27T07:46:32.271295Z",
+        "group_name": "Development test sources",
+        "location": "Front door \u00b7 synthetic test pattern",
+        "connection_error": null,
+        "source_media": {
+          "kind": "synthetic",
+          "asset_id": "test-pattern",
+          "title": "FFmpeg test pattern",
+          "creator": "Veyra",
+          "source_url": null,
+          "license": "Project-generated technical fixture",
+          "license_url": null,
+          "changes": "Synthetic transport fixture; no real scene evidence.",
+          "sha256": null
+        }
+      },
+      {
+        "id": "271c13bb-2775-4a9f-b0e8-b9780f4b1d2d",
+        "name": "Garden",
+        "source_id": "sample_2",
+        "enabled": false,
+        "cloud_analysis_allowed": false,
+        "status": "disabled",
+        "last_observed_at": "2026-10-27T15:25:35.525326Z",
+        "created_at": "2026-10-27T07:46:32.277777Z",
+        "group_name": "Development test sources",
+        "location": "Back garden \u00b7 synthetic test pattern",
+        "connection_error": null,
+        "source_media": {
+          "kind": "synthetic",
+          "asset_id": "test-pattern_2",
+          "title": "FFmpeg test pattern",
+          "creator": "Veyra",
+          "source_url": null,
+          "license": "Project-generated technical fixture",
+          "license_url": null,
+          "changes": "Synthetic transport fixture; no real scene evidence.",
+          "sha256": null
+        }
+      }
+    ]
+  },
+  "recordings": {
+    "items": [
+      {
+        "id": "a8d53949-fd0f-5e62-b066-00856933050d",
+        "camera_id": "82f995cb-8bee-469d-9063-a2da3439fbdb",
+        "started_at": "2026-10-27T15:09:18.509972Z",
+        "ended_at": "2026-10-27T15:11:31.942947Z",
+        "status": "ready",
+        "available_duration_ms": 132533,
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "trail-camera",
+          "title": "Dirt jump biking",
+          "creator": "Henry Geer",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3ADirt_jump_biking.webm",
+          "license": "CC BY 3.0",
+          "license_url": "https://creativecommons.org/licenses/by/3.0",
+          "changes": "Excerpt 2\u201338s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "69f1f1268b090b77f908e38653194b0af8e9b4be8ba48d13644b79663f6a7a8e"
+        }
+      },
+      {
+        "id": "fe34f95c-18d5-5469-b0e7-b3cbd3434093",
+        "camera_id": "48a3fb91-d509-414f-9479-48cfc886b775",
+        "started_at": "2026-10-27T15:09:18.508057Z",
+        "ended_at": "2026-10-27T15:11:32.141037Z",
+        "status": "ready",
+        "available_duration_ms": 132666,
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "garden-wildlife",
+          "title": "Red squirrels in Tresco Abbey Gardens",
+          "creator": "andrewrabbott",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3ARed_squirrels_in_Tresco_Abbey_Gardens.webm",
+          "license": "CC BY 4.0",
+          "license_url": "https://creativecommons.org/licenses/by/4.0",
+          "changes": "Excerpt 0\u201323.6s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "cfb0ad553e5f581003305eb7c5ae3a950167c190d0157550e146ee175bb3e4a1"
+        }
+      },
+      {
+        "id": "25809f13-01dd-5369-9302-bd12587a9ad5",
+        "camera_id": "d9102168-f60d-4feb-b47d-5b5012d2e1a4",
+        "started_at": "2026-10-27T15:09:18.507858Z",
+        "ended_at": "2026-10-27T15:11:32.207827Z",
+        "status": "ready",
+        "available_duration_ms": 132667,
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "street-approach",
+          "title": "Street traffic",
+          "creator": "Editor (YouTube)",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3AStreet_traffic.webm",
+          "license": "CC BY 3.0",
+          "license_url": "https://creativecommons.org/licenses/by/3.0",
+          "changes": "Excerpt 0\u201330s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "b52fdf7dab4c160b7321afe0c079322dc4f0709489f8079625dda342d5f44af0"
+        }
+      },
+      {
+        "id": "d14bd27d-594d-59fc-bd8f-3193e7a84542",
+        "camera_id": "736b2e6b-b93c-41ad-af97-be479405ac59",
+        "started_at": "2026-10-27T15:09:18.507818Z",
+        "ended_at": "2026-10-27T15:11:32.007756Z",
+        "status": "ready",
+        "available_duration_ms": 132467,
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "bicycle-parking",
+          "title": "Nieuwe fietsenstalling Jaarbeursplein Utrecht",
+          "creator": "ProRail",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3ANieuwe_fietsenstalling_Jaarbeursplein_Utrecht.webm",
+          "license": "CC BY 3.0",
+          "license_url": "https://creativecommons.org/licenses/by/3.0",
+          "changes": "Excerpt 46\u201378s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "be20a96a061a47b0fe2229b61589061fd9622b1c0eff44cbb3d68fcbcf054169"
+        }
+      },
+      {
+        "id": "39d296d9-6336-57bf-af7b-b59bc803fdd8",
+        "camera_id": "55163235-01fa-427f-99ce-27c24b7f30f1",
+        "started_at": "2026-10-27T15:09:18.507728Z",
+        "ended_at": "2026-10-27T15:11:32.274645Z",
+        "status": "ready",
+        "available_duration_ms": 132734,
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "entrance-gate",
+          "title": "Freedom Park-Entrance Gate 2",
+          "creator": "Olusola David, Ayibiowu",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3AFreedom_Park-Entrance_Gate_2.webm",
+          "license": "CC BY-SA 4.0",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+          "changes": "Excerpt 0\u201320.6s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "2ad7a6563bb23b5e4321ae42e5944aa753a01707c0c4f5c05960f443f6861c85"
+        }
+      },
+      {
+        "id": "4d914a7e-6c91-52b4-8271-73bd038125bb",
+        "camera_id": "b345aac7-984e-43f9-a927-37c639642e27",
+        "started_at": "2026-10-27T15:09:18.507671Z",
+        "ended_at": "2026-10-27T15:11:32.074451Z",
+        "status": "ready",
+        "available_duration_ms": 132667,
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "community-space",
+          "title": "Pedestrian area Ljubljana",
+          "creator": "Sounds of Changes",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3APedestrian_area_Ljubljana.webm",
+          "license": "CC BY 3.0",
+          "license_url": "https://creativecommons.org/licenses/by/3.0",
+          "changes": "Excerpt 0\u201336s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "5e9e466ba405af89cf4975b4658462157a6e00851a0fa2be13e0cbb0c550dfa9"
+        }
+      },
+      {
+        "id": "05636b39-cb53-59a1-aa49-4a117421ea4d",
+        "camera_id": "82f995cb-8bee-469d-9063-a2da3439fbdb",
+        "started_at": "2026-10-27T07:46:26.130283Z",
+        "ended_at": "2026-10-27T14:50:42.419454Z",
+        "status": "ready",
+        "available_duration_ms": 25455867,
+        "source_media": null
+      },
+      {
+        "id": "9a77165f-f7c8-5d01-9815-f6a1eaae36db",
+        "camera_id": "271c13bb-2775-4a9f-b0e8-b9780f4b1d2d",
+        "started_at": "2026-10-27T07:46:26.127565Z",
+        "ended_at": "2026-10-27T14:50:36.077257Z",
+        "status": "ready",
+        "available_duration_ms": 25450000,
+        "source_media": null
+      },
+      {
+        "id": "63522a18-cc71-5dbb-8561-57ab9f5992fe",
+        "camera_id": "0b014f6f-4cda-49d5-9d7f-9a8c758ab3ee",
+        "started_at": "2026-10-27T07:46:26.127309Z",
+        "ended_at": "2026-10-27T14:50:36.077173Z",
+        "status": "ready",
+        "available_duration_ms": 25450000,
+        "source_media": null
+      }
+    ],
+    "next_cursor": null
+  },
+  "layouts": {
+    "items": [
+      {
+        "name": "Video library \u00b7 four spaces",
+        "columns": 2,
+        "cells": [
+          {
+            "position": 0,
+            "camera_id": "55163235-01fa-427f-99ce-27c24b7f30f1"
+          },
+          {
+            "position": 1,
+            "camera_id": "d9102168-f60d-4feb-b47d-5b5012d2e1a4"
+          },
+          {
+            "position": 2,
+            "camera_id": "48a3fb91-d509-414f-9479-48cfc886b775"
+          },
+          {
+            "position": 3,
+            "camera_id": "b345aac7-984e-43f9-a927-37c639642e27"
+          }
+        ],
+        "id": "1ed069e6-4a32-4fd1-8c02-89347cb2f9a8",
+        "version": 1,
+        "created_at": "2026-10-27T15:09:54.841579Z",
+        "updated_at": "2026-10-27T15:09:54.841579Z"
+      },
+      {
+        "name": "Garden walk",
+        "columns": 2,
+        "cells": [
+          {
+            "position": 0,
+            "camera_id": "0b014f6f-4cda-49d5-9d7f-9a8c758ab3ee"
+          },
+          {
+            "position": 1,
+            "camera_id": "271c13bb-2775-4a9f-b0e8-b9780f4b1d2d"
+          },
+          {
+            "position": 2,
+            "camera_id": "82f995cb-8bee-469d-9063-a2da3439fbdb"
+          }
+        ],
+        "id": "6d091da0-746e-46b7-8350-7e3dad81fe8c",
+        "version": 1,
+        "created_at": "2026-10-27T08:10:04.060014Z",
+        "updated_at": "2026-10-27T08:10:04.060014Z"
+      },
+      {
+        "name": "Morning check-in",
+        "columns": 2,
+        "cells": [
+          {
+            "position": 0,
+            "camera_id": "0b014f6f-4cda-49d5-9d7f-9a8c758ab3ee"
+          },
+          {
+            "position": 1,
+            "camera_id": "271c13bb-2775-4a9f-b0e8-b9780f4b1d2d"
+          },
+          {
+            "position": 2,
+            "camera_id": "82f995cb-8bee-469d-9063-a2da3439fbdb"
+          }
+        ],
+        "id": "43d3711e-4714-4998-a0e9-d248cdf0fc9f",
+        "version": 1,
+        "created_at": "2026-10-27T08:08:33.863752Z",
+        "updated_at": "2026-10-27T08:08:33.863752Z"
+      },
+      {
+        "name": "Family room",
+        "columns": 2,
+        "cells": [
+          {
+            "position": 0,
+            "camera_id": "0b014f6f-4cda-49d5-9d7f-9a8c758ab3ee"
+          },
+          {
+            "position": 1,
+            "camera_id": "271c13bb-2775-4a9f-b0e8-b9780f4b1d2d"
+          },
+          {
+            "position": 2,
+            "camera_id": "82f995cb-8bee-469d-9063-a2da3439fbdb"
+          }
+        ],
+        "id": "7f4ec787-da37-45df-b668-90208477bbcd",
+        "version": 1,
+        "created_at": "2026-10-27T08:06:01.943262Z",
+        "updated_at": "2026-10-27T08:06:01.943262Z"
+      }
+    ]
+  },
+  "usage": {
+    "requests": 86,
+    "input_tokens": 327242,
+    "output_tokens": 110753,
+    "bytes_uploaded": 16702838,
+    "reserved_usd": 4.3,
+    "estimated_usd": null,
+    "billing": "unknown"
+  },
+  "sources": {
+    "items": [
+      {
+        "id": "sample",
+        "mode": "publisher",
+        "label": "Development test pattern",
+        "source_media": {
+          "kind": "synthetic",
+          "asset_id": "test-pattern",
+          "title": "FFmpeg test pattern",
+          "creator": "Veyra",
+          "source_url": null,
+          "license": "Project-generated technical fixture",
+          "license_url": null,
+          "changes": "Synthetic transport fixture; no real scene evidence.",
+          "sha256": null
+        }
+      },
+      {
+        "id": "sample_2",
+        "mode": "publisher",
+        "label": "Development test pattern",
+        "source_media": {
+          "kind": "synthetic",
+          "asset_id": "test-pattern_2",
+          "title": "FFmpeg test pattern",
+          "creator": "Veyra",
+          "source_url": null,
+          "license": "Project-generated technical fixture",
+          "license_url": null,
+          "changes": "Synthetic transport fixture; no real scene evidence.",
+          "sha256": null
+        }
+      },
+      {
+        "id": "sample_3",
+        "mode": "publisher",
+        "label": "Development test pattern",
+        "source_media": {
+          "kind": "synthetic",
+          "asset_id": "test-pattern_3",
+          "title": "FFmpeg test pattern",
+          "creator": "Veyra",
+          "source_url": null,
+          "license": "Project-generated technical fixture",
+          "license_url": null,
+          "changes": "Synthetic transport fixture; no real scene evidence.",
+          "sha256": null
+        }
+      },
+      {
+        "id": "sample_4",
+        "mode": "publisher",
+        "label": "Trail camera \u00b7 Prerecorded demo",
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "trail-camera",
+          "title": "Dirt jump biking",
+          "creator": "Henry Geer",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3ADirt_jump_biking.webm",
+          "license": "CC BY 3.0",
+          "license_url": "https://creativecommons.org/licenses/by/3.0",
+          "changes": "Excerpt 2\u201338s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "69f1f1268b090b77f908e38653194b0af8e9b4be8ba48d13644b79663f6a7a8e"
+        }
+      },
+      {
+        "id": "demo_entrance",
+        "mode": "publisher",
+        "label": "Entrance gate \u00b7 Prerecorded demo",
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "entrance-gate",
+          "title": "Freedom Park-Entrance Gate 2",
+          "creator": "Olusola David, Ayibiowu",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3AFreedom_Park-Entrance_Gate_2.webm",
+          "license": "CC BY-SA 4.0",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+          "changes": "Excerpt 0\u201320.6s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "2ad7a6563bb23b5e4321ae42e5944aa753a01707c0c4f5c05960f443f6861c85"
+        }
+      },
+      {
+        "id": "demo_street",
+        "mode": "publisher",
+        "label": "Street approach \u00b7 Prerecorded demo",
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "street-approach",
+          "title": "Street traffic",
+          "creator": "Editor (YouTube)",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3AStreet_traffic.webm",
+          "license": "CC BY 3.0",
+          "license_url": "https://creativecommons.org/licenses/by/3.0",
+          "changes": "Excerpt 0\u201330s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "b52fdf7dab4c160b7321afe0c079322dc4f0709489f8079625dda342d5f44af0"
+        }
+      },
+      {
+        "id": "demo_garden",
+        "mode": "publisher",
+        "label": "Garden wildlife \u00b7 Prerecorded demo",
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "garden-wildlife",
+          "title": "Red squirrels in Tresco Abbey Gardens",
+          "creator": "andrewrabbott",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3ARed_squirrels_in_Tresco_Abbey_Gardens.webm",
+          "license": "CC BY 4.0",
+          "license_url": "https://creativecommons.org/licenses/by/4.0",
+          "changes": "Excerpt 0\u201323.6s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "cfb0ad553e5f581003305eb7c5ae3a950167c190d0157550e146ee175bb3e4a1"
+        }
+      },
+      {
+        "id": "demo_community",
+        "mode": "publisher",
+        "label": "Community space \u00b7 Prerecorded demo",
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "community-space",
+          "title": "Pedestrian area Ljubljana",
+          "creator": "Sounds of Changes",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3APedestrian_area_Ljubljana.webm",
+          "license": "CC BY 3.0",
+          "license_url": "https://creativecommons.org/licenses/by/3.0",
+          "changes": "Excerpt 0\u201336s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "5e9e466ba405af89cf4975b4658462157a6e00851a0fa2be13e0cbb0c550dfa9"
+        }
+      },
+      {
+        "id": "demo_parking",
+        "mode": "publisher",
+        "label": "Bicycle parking \u00b7 Prerecorded demo",
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "bicycle-parking",
+          "title": "Nieuwe fietsenstalling Jaarbeursplein Utrecht",
+          "creator": "ProRail",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3ANieuwe_fietsenstalling_Jaarbeursplein_Utrecht.webm",
+          "license": "CC BY 3.0",
+          "license_url": "https://creativecommons.org/licenses/by/3.0",
+          "changes": "Excerpt 46\u201378s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "be20a96a061a47b0fe2229b61589061fd9622b1c0eff44cbb3d68fcbcf054169"
+        }
+      },
+      {
+        "id": "demo_station",
+        "mode": "publisher",
+        "label": "Station entrance \u00b7 Prerecorded demo",
+        "source_media": {
+          "kind": "prerecorded",
+          "asset_id": "station-entrance",
+          "title": "8 Street station entrance vc",
+          "creator": "rym (Flickr)",
+          "source_url": "https://commons.wikimedia.org/wiki/File%3A8_Street_station_entrance_vc.ogv",
+          "license": "CC BY 2.0",
+          "license_url": "https://creativecommons.org/licenses/by/2.0",
+          "changes": "Excerpt 0\u201310s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+          "sha256": "6f61be26a356a13161d8946d5c71890f3077fda2efbaf2dc3cfcd6b0b4faa43d"
+        }
+      }
+    ]
+  },
+  "ready": {
+    "status": "ready",
+    "version": "0.1.0"
+  },
+  "web_status": 200,
+  "demo_disclosure_in_bundle": false,
+  "migrations": [
+    {
+      "version": "001_initial"
+    },
+    {
+      "version": "002_vms"
+    },
+    {
+      "version": "003_agent"
+    },
+    {
+      "version": "004_indexing"
+    },
+    {
+      "version": "005_agent_usage"
+    },
+    {
+      "version": "006_demo_media"
+    }
+  ],
+  "counts": {
+    "cameras": 8,
+    "layouts": 4,
+    "recordings": 9,
+    "segments": 7721,
+    "video_metadata": 95
+  },
+  "index_states": [
+    {
+      "state": "waiting",
+      "count": 7686
+    },
+    {
+      "state": "succeeded",
+      "count": 35
+    }
+  ],
+  "new_observations": [
+    {
+      "name": "Community space",
+      "source_id": "demo_community",
+      "recording_id": "4d914a7e-6c91-52b4-8271-73bd038125bb",
+      "metadata_id": "aa1ae1da-60d6-4f27-aaab-138bb1922c79",
+      "segment_id": "cb6715d7-d771-5046-9744-4d1d8e570418",
+      "offset_ms": 0,
+      "observation_start_ms": 1000,
+      "observation_end_ms": 6000,
+      "summary": "Two persons walk across a cobblestone street from center toward the left and exit the frame.",
+      "evidence_text": "Foreground shows two figures moving left across cobbles in front of light-colored buildings as brightness increases; one carries a light tote bag; folded umbrellas and planters line the wall.",
+      "objects": [
+        {
+          "apparel": [
+            {
+              "kind": "shirt",
+              "colors": [
+                "blue"
+              ]
+            },
+            {
+              "kind": "pants",
+              "colors": [
+                "blue"
+              ]
+            }
+          ],
+          "category": "person",
+          "evidence": "person in blue striped short-sleeve shirt and blue pants walking left across cobbles",
+          "attributes": [
+            "moving"
+          ]
+        },
+        {
+          "apparel": [
+            {
+              "kind": "shirt",
+              "colors": [
+                "black"
+              ]
+            },
+            {
+              "kind": "pants",
+              "colors": [
+                "blue"
+              ]
+            }
+          ],
+          "category": "person",
+          "evidence": "person in dark short-sleeve shirt and dark pants walking left",
+          "attributes": [
+            "moving"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "bag",
+          "evidence": "light-colored tote bag carried on shoulder of second person",
+          "attributes": []
+        }
+      ],
+      "event_types": [
+        "person_visible",
+        "walking",
+        "object_carried"
+      ],
+      "uncertainty": "medium",
+      "uncertainty_notes": "Early frames are dark; clothing shades are approximate and exact motion onset is estimated.",
+      "model_id": "muse-spark-1.3",
+      "provenance": {
+        "provider": "meta_standard",
+        "timestamps": "recording_clock_plus_estimated_clip_offsets",
+        "clip_end_ms": 10000,
+        "clip_sha256": "e97fde502d200ada4dbc6e1a820e6a709f76b248b0757b15cbd50de6ac2e761a",
+        "audio_removed": true,
+        "clip_start_ms": 0,
+        "model_version": "muse-spark-1.3",
+        "motion_method": "ffmpeg_gray_mean_absolute_pixel_difference",
+        "source_sha256": "14d833c327914dfe0e4573c892279bd64d30f8de0025020073f5d2138b35934d",
+        "source_mtime_ns": 1793113768015916704,
+        "motion_threshold": 0.035,
+        "pipeline_version": "video-index-1-2b42febfdde1",
+        "source_size_bytes": 1946037,
+        "sampling_interval_ms": 500
+      }
+    },
+    {
+      "name": "Community space",
+      "source_id": "demo_community",
+      "recording_id": "4d914a7e-6c91-52b4-8271-73bd038125bb",
+      "metadata_id": "ab93ff47-3174-4c2c-bf8b-0ff7ec207cd6",
+      "segment_id": "cb6715d7-d771-5046-9744-4d1d8e570418",
+      "offset_ms": 0,
+      "observation_start_ms": 4000,
+      "observation_end_ms": 9800,
+      "summary": "Several distant persons walk along the cobblestone street, with one person approaching toward the camera.",
+      "evidence_text": "Background street between buildings shows small figures moving in both directions; one figure on the right side walks toward the foreground while others cross mid-distance near folded umbrellas.",
+      "objects": [
+        {
+          "apparel": [],
+          "category": "person",
+          "evidence": "figure in light top and dark patterned pants walking toward camera on right side",
+          "attributes": [
+            "moving"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "person",
+          "evidence": "figure in light shirt crossing street in mid-distance",
+          "attributes": [
+            "moving"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "person",
+          "evidence": "dark figure walking near far archway at end of street",
+          "attributes": [
+            "moving"
+          ]
+        }
+      ],
+      "event_types": [
+        "person_visible",
+        "walking"
+      ],
+      "uncertainty": "high",
+      "uncertainty_notes": "Figures are small and distant; clothing colors and details not clearly resolvable.",
+      "model_id": "muse-spark-1.3",
+      "provenance": {
+        "provider": "meta_standard",
+        "timestamps": "recording_clock_plus_estimated_clip_offsets",
+        "clip_end_ms": 10000,
+        "clip_sha256": "e97fde502d200ada4dbc6e1a820e6a709f76b248b0757b15cbd50de6ac2e761a",
+        "audio_removed": true,
+        "clip_start_ms": 0,
+        "model_version": "muse-spark-1.3",
+        "motion_method": "ffmpeg_gray_mean_absolute_pixel_difference",
+        "source_sha256": "14d833c327914dfe0e4573c892279bd64d30f8de0025020073f5d2138b35934d",
+        "source_mtime_ns": 1793113768015916704,
+        "motion_threshold": 0.035,
+        "pipeline_version": "video-index-1-2b42febfdde1",
+        "source_size_bytes": 1946037,
+        "sampling_interval_ms": 500
+      }
+    },
+    {
+      "name": "Entrance gate",
+      "source_id": "demo_entrance",
+      "recording_id": "39d296d9-6336-57bf-af7b-b59bc803fdd8",
+      "metadata_id": "e520fde3-3b77-4799-a1d6-40e621065602",
+      "segment_id": "c60030db-ba71-5ca3-a5df-934f4339ba77",
+      "offset_ms": 0,
+      "observation_start_ms": 0,
+      "observation_end_ms": 9000,
+      "summary": "Camera pans across a gated entrance with painted walls, red metal gates, a guard booth, a metal barrier, parked vehicles, and persons moving near the entrance.",
+      "evidence_text": "Red gates and striped walls with signage visible. White booth structure and metal crowd barrier in center driveway. Parked black car, yellow truck, and dark van in background lot among trees. Figures appear seated near booth and walking near right wall and center area while camera pans left then right.",
+      "objects": [
+        {
+          "apparel": [],
+          "category": "door",
+          "evidence": "Red barred gate panels on left side of entrance remain closed throughout pan.",
+          "attributes": [
+            "red",
+            "closed",
+            "stationary"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "door",
+          "evidence": "Narrow red pedestrian gate beside booth stands open.",
+          "attributes": [
+            "red",
+            "open",
+            "stationary"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "car",
+          "evidence": "Small dark car parked in background lot.",
+          "attributes": [
+            "black",
+            "stationary"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "truck",
+          "evidence": "Yellow truck parked in background lot.",
+          "attributes": [
+            "yellow",
+            "stationary"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "car",
+          "evidence": "Dark van-like vehicle parked beside yellow truck.",
+          "attributes": [
+            "black",
+            "stationary"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "person",
+          "evidence": "Figure seated beside white booth structure near stairs.",
+          "attributes": [
+            "stationary"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "person",
+          "evidence": "Figure in light top moves near barrier and booth area.",
+          "attributes": [
+            "moving"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "bag",
+          "evidence": "Dark bag carried by figure moving along right wall near entrance.",
+          "attributes": [
+            "black",
+            "moving"
+          ]
+        }
+      ],
+      "event_types": [
+        "person_visible",
+        "vehicle_visible",
+        "walking",
+        "object_carried"
+      ],
+      "uncertainty": "medium",
+      "uncertainty_notes": "Low resolution and distance limit clothing detail; vehicle types estimated by size and shape; times estimated from clip start.",
+      "model_id": "muse-spark-1.3",
+      "provenance": {
+        "provider": "meta_standard",
+        "timestamps": "recording_clock_plus_estimated_clip_offsets",
+        "clip_end_ms": 10000,
+        "clip_sha256": "6a31ff0f24e57ce29e1bfdf6c4184e609f0a595c87e6f46ca7def650cf085d4d",
+        "audio_removed": true,
+        "clip_start_ms": 0,
+        "model_version": "muse-spark-1.3",
+        "motion_method": "ffmpeg_gray_mean_absolute_pixel_difference",
+        "source_sha256": "5bda842618c1a7ba65bc8c7a6a130af54f83b7d5c789fc16c13d9401b5ad23b3",
+        "source_mtime_ns": 1793113768012069959,
+        "motion_threshold": 0.035,
+        "pipeline_version": "video-index-1-2b42febfdde1",
+        "source_size_bytes": 2488992,
+        "sampling_interval_ms": 500
+      }
+    },
+    {
+      "name": "Entrance gate",
+      "source_id": "demo_entrance",
+      "recording_id": "39d296d9-6336-57bf-af7b-b59bc803fdd8",
+      "metadata_id": "6762e4b6-0477-47f1-9c13-6919e1269635",
+      "segment_id": "c60030db-ba71-5ca3-a5df-934f4339ba77",
+      "offset_ms": 0,
+      "observation_start_ms": 8500,
+      "observation_end_ms": 10000,
+      "summary": "Yellow and black three-wheeled motor vehicle passes across the foreground in front of the entrance.",
+      "evidence_text": "Vehicle enters from right foreground and moves left across frame, partially obscuring barrier, booth and background vehicles.",
+      "objects": [
+        {
+          "apparel": [],
+          "category": "other",
+          "evidence": "Yellow body with black canopy three-wheeled vehicle moving across foreground.",
+          "attributes": [
+            "yellow",
+            "black",
+            "moving"
+          ]
+        }
+      ],
+      "event_types": [
+        "vehicle_visible"
+      ],
+      "uncertainty": "medium",
+      "uncertainty_notes": "Vehicle moves quickly and is partially cropped; category listed as other due to three-wheeled form; times estimated from clip start.",
+      "model_id": "muse-spark-1.3",
+      "provenance": {
+        "provider": "meta_standard",
+        "timestamps": "recording_clock_plus_estimated_clip_offsets",
+        "clip_end_ms": 10000,
+        "clip_sha256": "6a31ff0f24e57ce29e1bfdf6c4184e609f0a595c87e6f46ca7def650cf085d4d",
+        "audio_removed": true,
+        "clip_start_ms": 0,
+        "model_version": "muse-spark-1.3",
+        "motion_method": "ffmpeg_gray_mean_absolute_pixel_difference",
+        "source_sha256": "5bda842618c1a7ba65bc8c7a6a130af54f83b7d5c789fc16c13d9401b5ad23b3",
+        "source_mtime_ns": 1793113768012069959,
+        "motion_threshold": 0.035,
+        "pipeline_version": "video-index-1-2b42febfdde1",
+        "source_size_bytes": 2488992,
+        "sampling_interval_ms": 500
+      }
+    },
+    {
+      "name": "Garden wildlife",
+      "source_id": "demo_garden",
+      "recording_id": "fe34f95c-18d5-5469-b0e7-b3cbd3434093",
+      "metadata_id": "65a80446-bdf1-4df8-a266-5feebaa76bd3",
+      "segment_id": "b5aaa3ec-9500-5516-8fb3-850a3e374596",
+      "offset_ms": 0,
+      "observation_start_ms": 0,
+      "observation_end_ms": 10000,
+      "summary": "Two reddish-brown squirrels climb and jump on a small post-mounted feeder in a garden with dense green foliage",
+      "evidence_text": "Vertical garden view shows a wooden feeder on a post with circular base. Two small reddish-brown animals with bushy tails are on the feeder at start; one drops off to the left, one remains moving on top of the feeder, later jumps off to the left, and movement reappears at left edge. Green bamboo-like stems, ivy, ferns and brown mulch visible in background throughout.",
+      "objects": [
+        {
+          "apparel": [],
+          "category": "other",
+          "evidence": "reddish-brown squirrel with bushy tail sitting and moving on top of feeder",
+          "attributes": [
+            "brown",
+            "moving"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "other",
+          "evidence": "second reddish-brown squirrel with bushy tail clinging to side of feeder then jumping off left",
+          "attributes": [
+            "brown",
+            "moving"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "other",
+          "evidence": "small wooden box feeder mounted on post with round platform in center of garden",
+          "attributes": [
+            "stationary"
+          ]
+        }
+      ],
+      "event_types": [
+        "animal_visible"
+      ],
+      "uncertainty": "medium",
+      "uncertainty_notes": "Small distant subjects with motion blur and brief occlusions; exact continuity of individuals across jumps is uncertain in low-resolution vertical clip.",
+      "model_id": "muse-spark-1.3",
+      "provenance": {
+        "provider": "meta_standard",
+        "timestamps": "recording_clock_plus_estimated_clip_offsets",
+        "clip_end_ms": 10000,
+        "clip_sha256": "59d53b9db1052acc14ffee3194ac980822d643c27db2cf1e88e5dc343243d7dc",
+        "audio_removed": true,
+        "clip_start_ms": 0,
+        "model_version": "muse-spark-1.3",
+        "motion_method": "ffmpeg_gray_mean_absolute_pixel_difference",
+        "source_sha256": "d442856ebfe994aa9ca7472f570e37246368706125ab584572bdc1384feb55ea",
+        "source_mtime_ns": 1793113768013459291,
+        "motion_threshold": 0.035,
+        "pipeline_version": "video-index-1-2b42febfdde1",
+        "source_size_bytes": 2500374,
+        "sampling_interval_ms": 500
+      }
+    },
+    {
+      "name": "Bicycle parking",
+      "source_id": "demo_parking",
+      "recording_id": "d14bd27d-594d-59fc-bd8f-3193e7a84542",
+      "metadata_id": "29e60c08-ea27-4a4d-bf13-389339e71842",
+      "segment_id": "b54d775b-3f13-50c0-91b0-2d39524353da",
+      "offset_ms": 0,
+      "observation_start_ms": 0,
+      "observation_end_ms": 4200,
+      "summary": "First-person view from behind bicycle handlebars moving from outdoor pavement into a dark underpass and down a stair channel, passing a person walking upward.",
+      "evidence_text": "Silver handlebars and front wheel with hands gripping grips move forward from daylight pavement past balloon columns into dark interior stairs; a person carrying a colorful bag ascends the stairs and passes on the right as the camera descends the stepped channel.",
+      "objects": [
+        {
+          "apparel": [],
+          "category": "bicycle",
+          "evidence": "Silver handlebars, brake cables and front wheel in foreground moving forward down the stair channel.",
+          "attributes": [
+            "moving"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "person",
+          "evidence": "Hands and forearms gripping left and right handlebar grips in first-person view.",
+          "attributes": [
+            "moving"
+          ]
+        },
+        {
+          "apparel": [
+            {
+              "kind": "shirt",
+              "colors": [
+                "black"
+              ]
+            }
+          ],
+          "category": "person",
+          "evidence": "Person in dark sleeveless top walking up the stairs toward the camera.",
+          "attributes": [
+            "moving"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "bag",
+          "evidence": "Multicolored red and yellow bag carried in the hand of the person walking up.",
+          "attributes": [
+            "moving",
+            "red",
+            "yellow"
+          ]
+        }
+      ],
+      "event_types": [
+        "person_visible",
+        "vehicle_visible",
+        "walking",
+        "object_carried"
+      ],
+      "uncertainty": "medium",
+      "uncertainty_notes": "Motion blur and low light in underpass; rider's full body not visible, only hands; forward progress estimated from changing background.",
+      "model_id": "muse-spark-1.3",
+      "provenance": {
+        "provider": "meta_standard",
+        "timestamps": "recording_clock_plus_estimated_clip_offsets",
+        "clip_end_ms": 10000,
+        "clip_sha256": "f302cd8843d5c562b7e2c982177bf210e43bb70c615bb0874c9e8aebc7e4c5c3",
+        "audio_removed": true,
+        "clip_start_ms": 0,
+        "model_version": "muse-spark-1.3",
+        "motion_method": "ffmpeg_gray_mean_absolute_pixel_difference",
+        "source_sha256": "d4ee6f7162957e63ad9dca0f761d2ecd900df7888b43602d4d933031e0f877f3",
+        "source_mtime_ns": 1793113768014911622,
+        "motion_threshold": 0.035,
+        "pipeline_version": "video-index-1-2b42febfdde1",
+        "source_size_bytes": 2018689,
+        "sampling_interval_ms": 500
+      }
+    },
+    {
+      "name": "Bicycle parking",
+      "source_id": "demo_parking",
+      "recording_id": "d14bd27d-594d-59fc-bd8f-3193e7a84542",
+      "metadata_id": "28830fa8-77f8-4541-baf9-6c2405dae034",
+      "segment_id": "b54d775b-3f13-50c0-91b0-2d39524353da",
+      "offset_ms": 0,
+      "observation_start_ms": 4200,
+      "observation_end_ms": 8900,
+      "summary": "Outdoor daylight view of wide stairs with bicycle gutters where two people walk bicycles downward, with balloon columns, trees and buildings behind.",
+      "evidence_text": "Two people each guiding a bicycle down separate stair gutters from top of stairs toward camera; purple and white balloon columns on sides, green trees, buildings and sky in background; additional people with bicycles visible at top.",
+      "objects": [
+        {
+          "apparel": [
+            {
+              "kind": "shirt",
+              "colors": [
+                "white"
+              ]
+            },
+            {
+              "kind": "pants",
+              "colors": [
+                "black"
+              ]
+            }
+          ],
+          "category": "person",
+          "evidence": "Person on left stair gutter guiding bicycle downward.",
+          "attributes": [
+            "moving"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "bicycle",
+          "evidence": "Yellow-framed bicycle being walked down left gutter.",
+          "attributes": [
+            "moving"
+          ]
+        },
+        {
+          "apparel": [
+            {
+              "kind": "shirt",
+              "colors": [
+                "white"
+              ]
+            },
+            {
+              "kind": "pants",
+              "colors": [
+                "brown"
+              ]
+            }
+          ],
+          "category": "person",
+          "evidence": "Person on right stair gutter guiding bicycle downward.",
+          "attributes": [
+            "moving"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "bicycle",
+          "evidence": "Dark-framed bicycle being walked down right gutter.",
+          "attributes": [
+            "moving"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "other",
+          "evidence": "Vertical column of purple and white balloons beside the stairs.",
+          "attributes": [
+            "purple",
+            "white",
+            "stationary"
+          ]
+        }
+      ],
+      "event_types": [
+        "person_visible",
+        "vehicle_visible",
+        "walking"
+      ],
+      "uncertainty": "low",
+      "uncertainty_notes": "Daylight and clear view of stairs and subjects; distant background figures less detailed.",
+      "model_id": "muse-spark-1.3",
+      "provenance": {
+        "provider": "meta_standard",
+        "timestamps": "recording_clock_plus_estimated_clip_offsets",
+        "clip_end_ms": 10000,
+        "clip_sha256": "f302cd8843d5c562b7e2c982177bf210e43bb70c615bb0874c9e8aebc7e4c5c3",
+        "audio_removed": true,
+        "clip_start_ms": 0,
+        "model_version": "muse-spark-1.3",
+        "motion_method": "ffmpeg_gray_mean_absolute_pixel_difference",
+        "source_sha256": "d4ee6f7162957e63ad9dca0f761d2ecd900df7888b43602d4d933031e0f877f3",
+        "source_mtime_ns": 1793113768014911622,
+        "motion_threshold": 0.035,
+        "pipeline_version": "video-index-1-2b42febfdde1",
+        "source_size_bytes": 2018689,
+        "sampling_interval_ms": 500
+      }
+    },
+    {
+      "name": "Bicycle parking",
+      "source_id": "demo_parking",
+      "recording_id": "d14bd27d-594d-59fc-bd8f-3193e7a84542",
+      "metadata_id": "862f7f3e-b7b7-4e76-ae9e-77ad547613d6",
+      "segment_id": "b54d775b-3f13-50c0-91b0-2d39524353da",
+      "offset_ms": 0,
+      "observation_start_ms": 8900,
+      "observation_end_ms": 10000,
+      "summary": "Indoor hallway with wall sign and arrow, a person pushing a bicycle walks through a glass doorway toward the camera.",
+      "evidence_text": "Wall with text inchecken fiets and downward arrow with check-in device on left; ceiling lights and glass doors in background; person with shoulder bag pushing bicycle enters hallway.",
+      "objects": [
+        {
+          "apparel": [],
+          "category": "person",
+          "evidence": "Person in dark outer clothing walking while pushing bicycle in hallway.",
+          "attributes": [
+            "moving"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "bicycle",
+          "evidence": "Bicycle being pushed by the person through the doorway.",
+          "attributes": [
+            "moving"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "bag",
+          "evidence": "Brown bag carried over shoulder by the person.",
+          "attributes": [
+            "moving",
+            "brown"
+          ]
+        }
+      ],
+      "event_types": [
+        "person_visible",
+        "vehicle_visible",
+        "walking",
+        "object_carried"
+      ],
+      "uncertainty": "medium",
+      "uncertainty_notes": "Short clip segment with some blur; clothing details not sharply resolved so apparel colors omitted.",
+      "model_id": "muse-spark-1.3",
+      "provenance": {
+        "provider": "meta_standard",
+        "timestamps": "recording_clock_plus_estimated_clip_offsets",
+        "clip_end_ms": 10000,
+        "clip_sha256": "f302cd8843d5c562b7e2c982177bf210e43bb70c615bb0874c9e8aebc7e4c5c3",
+        "audio_removed": true,
+        "clip_start_ms": 0,
+        "model_version": "muse-spark-1.3",
+        "motion_method": "ffmpeg_gray_mean_absolute_pixel_difference",
+        "source_sha256": "d4ee6f7162957e63ad9dca0f761d2ecd900df7888b43602d4d933031e0f877f3",
+        "source_mtime_ns": 1793113768014911622,
+        "motion_threshold": 0.035,
+        "pipeline_version": "video-index-1-2b42febfdde1",
+        "source_size_bytes": 2018689,
+        "sampling_interval_ms": 500
+      }
+    },
+    {
+      "name": "Street approach",
+      "source_id": "demo_street",
+      "recording_id": "25809f13-01dd-5369-9302-bd12587a9ad5",
+      "metadata_id": "9b6c7d95-b885-4cb6-8411-1788540e4027",
+      "segment_id": "5343522c-7fcd-593f-9ac7-d5f862a89bb2",
+      "offset_ms": 0,
+      "observation_start_ms": 0,
+      "observation_end_ms": 10000,
+      "summary": "Multiple transit buses, a white utility truck, and cars occupy adjacent lanes on a tree-lined city street with overhead trolley wires, moving slowly forward in congested traffic.",
+      "evidence_text": "A white SKYLINE truck moves toward the camera in the center lane and exits left of frame, followed by a white trolleybus with roof poles advancing forward. A silver bus marked 38 remains on the left lane, while white buses move away on the right lane. Cars are visible between buses. Overhead wires, traffic signals, and trees line the street.",
+      "objects": [
+        {
+          "apparel": [],
+          "category": "truck",
+          "evidence": "White cab with SKYLINE text on front moves toward camera in center lane then passes left foreground.",
+          "attributes": [
+            "white",
+            "moving"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "bus",
+          "evidence": "Silver-gray bus with 38 destination display on left side of road remains largely in place near curb.",
+          "attributes": [
+            "gray",
+            "stationary"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "bus",
+          "evidence": "White trolleybus number 5572 with roof poles moves forward in center lane behind the truck toward camera.",
+          "attributes": [
+            "white",
+            "moving"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "bus",
+          "evidence": "White bus on right side of road moves away from camera down the street.",
+          "attributes": [
+            "white",
+            "moving"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "car",
+          "evidence": "Red car partially visible between buses in middle background lane.",
+          "attributes": [
+            "red",
+            "stationary"
+          ]
+        },
+        {
+          "apparel": [],
+          "category": "car",
+          "evidence": "Black car follows behind center trolleybus advancing forward in traffic.",
+          "attributes": [
+            "black",
+            "moving"
+          ]
+        }
+      ],
+      "event_types": [
+        "vehicle_visible"
+      ],
+      "uncertainty": "low",
+      "uncertainty_notes": "Vehicles clearly visible; millisecond boundaries are estimated from clip start.",
+      "model_id": "muse-spark-1.3",
+      "provenance": {
+        "provider": "meta_standard",
+        "timestamps": "recording_clock_plus_estimated_clip_offsets",
+        "clip_end_ms": 10000,
+        "clip_sha256": "ebd81894f1817f6414e51c49eed7aa35d8c3d216d5ecd58572531342658e97d4",
+        "audio_removed": true,
+        "clip_start_ms": 0,
+        "model_version": "muse-spark-1.3",
+        "motion_method": "ffmpeg_gray_mean_absolute_pixel_difference",
+        "source_sha256": "cdf7fa935b882b0a6b99a50264c16c3c4531f7e96ec45115535c80a9705ff816",
+        "source_mtime_ns": 1793113768015023913,
+        "motion_threshold": 0.035,
+        "pipeline_version": "video-index-1-2b42febfdde1",
+        "source_size_bytes": 2490862,
+        "sampling_interval_ms": 500
+      }
+    }
+  ],
+  "usage_groups": [
+    {
+      "operation": "agent_turn",
+      "state": "succeeded",
+      "error_code": null,
+      "count": 42,
+      "reserved_usd": "2.100000"
+    },
+    {
+      "operation": "delete",
+      "state": "succeeded",
+      "error_code": null,
+      "count": 38,
+      "reserved_usd": "0.000000"
+    },
+    {
+      "operation": "search_intent",
+      "state": "succeeded",
+      "error_code": null,
+      "count": 6,
+      "reserved_usd": "0.300000"
+    },
+    {
+      "operation": "upload",
+      "state": "succeeded",
+      "error_code": null,
+      "count": 38,
+      "reserved_usd": "0.000000"
+    },
+    {
+      "operation": "video_analysis",
+      "state": "failed",
+      "error_code": "INVALID_MODEL_OUTPUT",
+      "count": 1,
+      "reserved_usd": "0.050000"
+    },
+    {
+      "operation": "video_analysis",
+      "state": "failed",
+      "error_code": "MODEL_UNAVAILABLE",
+      "count": 2,
+      "reserved_usd": "0.100000"
+    },
+    {
+      "operation": "video_analysis",
+      "state": "succeeded",
+      "error_code": null,
+      "count": 35,
+      "reserved_usd": "1.750000"
+    }
+  ],
+  "preserved_database_rows": {
+    "segments": {
+      "before_rows": 7636,
+      "after_rows": 7636,
+      "before_sha256": "025c3f4db714300b4183cb96c85caf807ce4f3832857045ab5625cd066a02176",
+      "after_sha256": "025c3f4db714300b4183cb96c85caf807ce4f3832857045ab5625cd066a02176",
+      "unchanged": true
+    },
+    "video_metadata": {
+      "before_rows": 86,
+      "after_rows": 86,
+      "before_sha256": "c7db05862904a6e8f09cd9523ad1f50da68a6de79da4dbba821014fcbb8636d7",
+      "after_sha256": "c7db05862904a6e8f09cd9523ad1f50da68a6de79da4dbba821014fcbb8636d7",
+      "unchanged": true
+    },
+    "layout_cells": {
+      "before_rows": 9,
+      "after_rows": 9,
+      "before_sha256": "28ccd772eea890e32cb94f79c991099f1e08383f3b7f00ad695f7cda0b5b32b7",
+      "after_sha256": "28ccd772eea890e32cb94f79c991099f1e08383f3b7f00ad695f7cda0b5b32b7",
+      "unchanged": true
+    }
+  },
+  "preserved_recording_files": {
+    "before_file_count": 20389,
+    "missing": [],
+    "changed_size_or_mtime": [],
+    "original_bytes": 16900042002
+  },
+  "henry_geer_original_sha256": "68b94c8a7c38755b0394af728ac7f83446bef607d1faa37c38047f389870ddfb",
+  "recording_policy": [
+    {
+      "source_id": "sample_4",
+      "record": false
+    },
+    {
+      "source_id": "demo_entrance",
+      "record": false
+    },
+    {
+      "source_id": "demo_street",
+      "record": false
+    },
+    {
+      "source_id": "demo_garden",
+      "record": false
+    },
+    {
+      "source_id": "demo_community",
+      "record": false
+    },
+    {
+      "source_id": "demo_parking",
+      "record": false
+    }
+  ],
+  "build_id": "n6HxFOBuQOBYJfm4rSWqt"
+}

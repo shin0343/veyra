@@ -1,0 +1,16 @@
+{
+  "currentTime": 2.2126,
+  "width": 640,
+  "height": 360,
+  "readyState": 4,
+  "error": null,
+  "duration": 6.066,
+  "seekable": [
+    [
+      0,
+      6.066
+    ]
+  ],
+  "seekToSeconds": 2,
+  "actualSeekSeconds": 2
+}

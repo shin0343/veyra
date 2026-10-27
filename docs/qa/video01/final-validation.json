@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "mandatory_documents": 3,
+  "local_links_missing": 0,
+  "asset_hashes_verified": 21,
+  "browser_checks": 24,
+  "failure_recovery": "passed",
+  "original_rows_preserved": true,
+  "original_files_preserved": 20389,
+  "final_reservation_usd": 4.6,
+  "phase_usage": [
+    {
+      "operation": "agent_turn",
+      "state": "succeeded",
+      "error_code": null,
+      "count": 5,
+      "reserved_usd": "0.250000"
+    },
+    {
+      "operation": "delete",
+      "state": "succeeded",
+      "error_code": null,
+      "count": 6,
+      "reserved_usd": "0.000000"
+    },
+    {
+      "operation": "search_intent",
+      "state": "succeeded",
+      "error_code": null,
+      "count": 1,
+      "reserved_usd": "0.050000"
+    },
+    {
+      "operation": "upload",
+      "state": "succeeded",
+      "error_code": null,
+      "count": 6,
+      "reserved_usd": "0.000000"
+    },
+    {
+      "operation": "video_analysis",
+      "state": "failed",
+      "error_code": "MODEL_UNAVAILABLE",
+      "count": 1,
+      "reserved_usd": "0.050000"
+    },
+    {
+      "operation": "video_analysis",
+      "state": "succeeded",
+      "error_code": null,
+      "count": 5,
+      "reserved_usd": "0.250000"
+    }
+  ]
+}

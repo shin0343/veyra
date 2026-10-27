@@ -1,0 +1,233 @@
+[
+  {
+    "confirmation": "never",
+    "description": "Find UI features from the static catalog.",
+    "effect": "read",
+    "implemented": true,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "query": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "title": "DiscoverInput",
+      "type": "object"
+    },
+    "name": "features.discover",
+    "permission": "vms:read"
+  },
+  {
+    "confirmation": "never",
+    "description": "Propose navigation to a known feature.",
+    "effect": "navigation",
+    "implemented": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "feature_id": {
+          "enum": [
+            "live",
+            "cameras",
+            "layouts",
+            "recordings",
+            "search",
+            "events"
+          ],
+          "title": "Feature Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "feature_id"
+      ],
+      "title": "NavigateInput",
+      "type": "object"
+    },
+    "name": "features.navigate",
+    "permission": "vms:read"
+  },
+  {
+    "confirmation": "never",
+    "description": "List cameras visible to this principal.",
+    "effect": "read",
+    "implemented": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {},
+      "title": "EmptyInput",
+      "type": "object"
+    },
+    "name": "cameras.list",
+    "permission": "vms:read"
+  },
+  {
+    "confirmation": "explicit_request",
+    "description": "Create a saved camera layout.",
+    "effect": "write",
+    "implemented": false,
+    "input_schema": {
+      "$defs": {
+        "LayoutCell": {
+          "additionalProperties": false,
+          "properties": {
+            "camera_id": {
+              "format": "uuid",
+              "title": "Camera Id",
+              "type": "string"
+            },
+            "position": {
+              "maximum": 8,
+              "minimum": 0,
+              "title": "Position",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "position",
+            "camera_id"
+          ],
+          "title": "LayoutCell",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "cells": {
+          "items": {
+            "$ref": "#/$defs/LayoutCell"
+          },
+          "maxItems": 9,
+          "minItems": 1,
+          "title": "Cells",
+          "type": "array"
+        },
+        "columns": {
+          "enum": [
+            1,
+            2,
+            3
+          ],
+          "title": "Columns",
+          "type": "integer"
+        },
+        "name": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "columns",
+        "cells"
+      ],
+      "title": "LayoutCreate",
+      "type": "object"
+    },
+    "name": "layouts.create",
+    "permission": "layouts:write"
+  },
+  {
+    "confirmation": "never",
+    "description": "Search indexed, consented recording metadata.",
+    "effect": "read",
+    "implemented": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "camera_ids": {
+          "items": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "maxItems": 16,
+          "title": "Camera Ids",
+          "type": "array"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End"
+        },
+        "limit": {
+          "default": 10,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "query": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Query",
+          "type": "string"
+        },
+        "start": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start"
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "title": "SearchRequest",
+      "type": "object"
+    },
+    "name": "video.search",
+    "permission": "vms:read"
+  },
+  {
+    "confirmation": "never",
+    "description": "Propose playback of an authorized recording at an offset.",
+    "effect": "navigation",
+    "implemented": false,
+    "input_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "offset_ms": {
+          "minimum": 0,
+          "title": "Offset Ms",
+          "type": "integer"
+        },
+        "recording_id": {
+          "format": "uuid",
+          "title": "Recording Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "recording_id",
+        "offset_ms"
+      ],
+      "title": "OpenRecordingInput",
+      "type": "object"
+    },
+    "name": "recordings.open",
+    "permission": "vms:read"
+  }
+]

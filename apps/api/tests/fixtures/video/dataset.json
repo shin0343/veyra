@@ -1,0 +1,17 @@
+{
+  "source": "https://commons.wikimedia.org/wiki/File:Dirt_jump_biking.webm",
+  "author": "Henry Geer",
+  "license": "CC-BY-3.0",
+  "clips": [
+    {"file": "scenery.mp4", "source_start_ms": 0, "duration_ms": 3003,
+     "sha256": "d4899175721d6d163d321df401e1c2e1392657dde58de1e1f1a353b127862a0b",
+     "objects": [], "event_types": []},
+    {"file": "cycling.mp4", "source_start_ms": 8000, "duration_ms": 4004,
+     "sha256": "a70460b0c7af556fe5451eea065cbe7f4f3abfcf00d5f257e43dceaf2289c091",
+     "objects": ["person", "bicycle"], "event_types": ["cycling"]},
+    {"file": "green-shirt.mp4", "source_start_ms": 34000, "duration_ms": 4004,
+     "sha256": "2f64bb47a985dc638f6ec8cf8fc01db45721b9f6a1560afc650ee80a213ca09a",
+     "objects": ["person", "bicycle"], "person_attributes": ["green", "shirt"],
+     "event_types": ["cycling"]}
+  ]
+}

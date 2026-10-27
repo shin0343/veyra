@@ -1,0 +1,41 @@
+
+> veyra@0.1.0 build
+> npm run build --workspace @veyra/web
+
+
+> @veyra/web@0.1.0 build
+> next build --webpack
+
+▲ Next.js 16.4.3 (webpack)
+✓ Running next.config.ts took 10ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 736ms
+  Running TypeScript ...
+  Finished TypeScript in 1400ms ...
+  Collecting page data using 8 workers ...
+  Generating static pages using 8 workers (0/10) ...
+  Generating static pages using 8 workers (2/10) 
+  Generating static pages using 8 workers (4/10) 
+  Generating static pages using 8 workers (7/10) 
+✓ Generating static pages using 8 workers (10/10) in 377ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├   /[section]
+│ ├ ● /cameras
+│ ├ ● /events
+│ ├ ● /layouts
+│ └ ● [+4 more paths]
+├ ƒ /api/v1/[...path]
+├ ƒ /layouts/[layoutId]
+└ ƒ /recordings/[recordingId]
+
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+

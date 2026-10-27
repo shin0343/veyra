@@ -1,0 +1,579 @@
+{
+  "actual_model_cost_usd": null,
+  "camera_id": "fb043ead-2806-442c-b461-905bf730d568",
+  "genuine_inference_verified": true,
+  "indexing_wall_seconds": 45.092992916936055,
+  "job": {
+    "attempts": 1,
+    "created_at": "2026-10-27T07:23:05.275163Z",
+    "error": null,
+    "id": "59025722-68a0-4aec-9b0e-b1f9fde9016f",
+    "pipeline_version": "video-index-1-2b42febfdde1",
+    "processing_ms": 45064,
+    "progress": 1.0,
+    "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+    "segments": [
+      {
+        "analyzed_end_ms": 10000,
+        "analyzed_start_ms": 0,
+        "error_code": null,
+        "pipeline_version": "video-index-1-2b42febfdde1",
+        "processing_ms": 28279,
+        "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20",
+        "state": "succeeded"
+      },
+      {
+        "analyzed_end_ms": 1067,
+        "analyzed_start_ms": 0,
+        "error_code": null,
+        "pipeline_version": "video-index-1-2b42febfdde1",
+        "processing_ms": 16785,
+        "segment_id": "4d8cd004-4675-5336-a529-50fc4b72dddc",
+        "state": "succeeded"
+      }
+    ],
+    "selected_duration_ms": 11067,
+    "selected_segments": 2,
+    "state": "succeeded",
+    "updated_at": "2026-10-27T07:23:50.371870Z",
+    "usage": {
+      "billing": "unknown",
+      "bytes_uploaded": 507835,
+      "estimated_usd": null,
+      "input_tokens": 4292,
+      "output_tokens": 4800,
+      "requests": 2,
+      "reserved_usd": 0.1
+    }
+  },
+  "media": "licensed film replay -> actual RTSP/MediaMTX recording -> FFmpeg",
+  "observed_at": "2026-10-27T07:23:54.630849+00:00",
+  "playback": {
+    "decoded_frame_bytes": 18751,
+    "media_info": {
+      "codec": "h264",
+      "duration_ms": 2067,
+      "frame_rate": "2790000/185999",
+      "height": 480,
+      "start_pts_seconds": 0.0,
+      "width": 640
+    },
+    "range_status": 206,
+    "requested_offset_ms": 0,
+    "session": {
+      "actual_start_offset_ms": 0,
+      "expires_at": "2026-10-27T07:28:54.579324Z",
+      "id": "e4a5f412-8e55-440f-8a3c-889b4e654979",
+      "seek_offset_ms": 0,
+      "transport": "mp4",
+      "url": "/api/v1/media/sessions/e4a5f412-8e55-440f-8a3c-889b4e654979/clip.mp4"
+    }
+  },
+  "provider": "genuine Meta Muse",
+  "recording": {
+    "available_duration_ms": 11067,
+    "camera_id": "fb043ead-2806-442c-b461-905bf730d568",
+    "ended_at": "2026-10-27T07:23:04.738485Z",
+    "id": "07aba673-7903-51da-b2e3-92927258173d",
+    "started_at": "2026-10-27T07:22:54.676496Z",
+    "status": "ready"
+  },
+  "search": {
+    "analyzed_ms": 10062,
+    "available_ms": 10062,
+    "constraints": {
+      "camera_ids": [
+        "fb043ead-2806-442c-b461-905bf730d568"
+      ],
+      "camera_names": [],
+      "end": "2026-10-27T07:23:06.743496Z",
+      "event_types": [],
+      "keywords": [],
+      "limit": 10,
+      "motion_only": false,
+      "objects": [
+        {
+          "apparel": [],
+          "attributes": [],
+          "category": "bicycle"
+        }
+      ],
+      "start": "2026-10-27T07:22:54.676496Z",
+      "unsupported_reason": null
+    },
+    "coverage": "complete",
+    "explanation": "Found 5 indexed intervals. Analyzed 10062 of 10062 available milliseconds. Sampled analysis can miss events; this does not prove absence of activity.",
+    "items": [
+      {
+        "action": {
+          "kind": "navigate",
+          "label": "Play matching footage",
+          "target": {
+            "kind": "recording",
+            "offset_ms": 0,
+            "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+            "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20"
+          }
+        },
+        "camera_id": "fb043ead-2806-442c-b461-905bf730d568",
+        "camera_name": "Licensed cycling replay",
+        "end": "2026-10-27T07:22:56.676496Z",
+        "event_types": [
+          "person_visible",
+          "cycling"
+        ],
+        "evidence": {
+          "boundary_accuracy": "model_estimated_within_verified_clip",
+          "end_offset_ms": 2000,
+          "event_id": null,
+          "kind": "recording_interval",
+          "metadata_id": "b2515889-cd61-43be-bffe-44395226fde3",
+          "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+          "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20",
+          "start_offset_ms": 0
+        },
+        "evidence_text": "A rider on a two-wheeled bicycle is seen from behind moving along a dirt path toward the tree line and disappearing into green foliage. Overlaid text reading Dirt Biking is visible.",
+        "indexed_at": "2026-10-27T07:23:33.571485Z",
+        "metadata_id": "b2515889-cd61-43be-bffe-44395226fde3",
+        "model_id": "muse-spark-1.3",
+        "objects": [
+          {
+            "apparel": [
+              {
+                "colors": [
+                  "blue"
+                ],
+                "kind": "shirt"
+              },
+              {
+                "colors": [
+                  "white"
+                ],
+                "kind": "helmet"
+              }
+            ],
+            "attributes": [
+              "moving",
+              "helmet"
+            ],
+            "category": "person",
+            "evidence": "Person seated on bicycle pedaling away, wearing blue top and light-colored helmet."
+          },
+          {
+            "apparel": [],
+            "attributes": [
+              "moving"
+            ],
+            "category": "bicycle",
+            "evidence": "Two-wheeled bicycle under the rider moving along the dirt path."
+          }
+        ],
+        "offset_ms": 0,
+        "playback_request": {
+          "duration_ms": 10000,
+          "offset_ms": 0,
+          "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+          "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20"
+        },
+        "prompt_version": "observable-video-2",
+        "provenance": {
+          "audio_removed": true,
+          "clip_end_ms": 10000,
+          "clip_sha256": "b21bcbc036dcc1ae14eb31e9cb9fee4a17ea1cc93eaf0fc6b48cd0754bb0490a",
+          "clip_start_ms": 0,
+          "model_version": "muse-spark-1.3",
+          "motion_method": "ffmpeg_gray_mean_absolute_pixel_difference",
+          "motion_threshold": 0.035,
+          "pipeline_version": "video-index-1-2b42febfdde1",
+          "provider": "meta_standard",
+          "sampling_interval_ms": 500,
+          "source_mtime_ns": 1793085784116386865,
+          "source_sha256": "a8e11015e2c10c636f718301b55f27996ba331b9da8d3331e3a136e04fe8b4a9",
+          "source_size_bytes": 1989112,
+          "timestamps": "recording_clock_plus_estimated_clip_offsets"
+        },
+        "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+        "relevance": 1.0,
+        "schema_version": "observations-2",
+        "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20",
+        "start": "2026-10-27T07:22:54.676496Z",
+        "summary": "A person wearing a helmet rides a bicycle away from the camera along a dirt path into dense green trees.",
+        "uncertainty": "medium",
+        "uncertainty_notes": "Low resolution and motion blur limit detail; clothing and helmet colors are approximate."
+      },
+      {
+        "action": {
+          "kind": "navigate",
+          "label": "Play matching footage",
+          "target": {
+            "kind": "recording",
+            "offset_ms": 2000,
+            "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+            "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20"
+          }
+        },
+        "camera_id": "fb043ead-2806-442c-b461-905bf730d568",
+        "camera_name": "Licensed cycling replay",
+        "end": "2026-10-27T07:22:58.676496Z",
+        "event_types": [
+          "person_visible",
+          "cycling"
+        ],
+        "evidence": {
+          "boundary_accuracy": "model_estimated_within_verified_clip",
+          "end_offset_ms": 4000,
+          "event_id": null,
+          "kind": "recording_interval",
+          "metadata_id": "613adfb8-2a88-4b2b-989e-58552725124f",
+          "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+          "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20",
+          "start_offset_ms": 2000
+        },
+        "evidence_text": "A small distant figure on a bicycle descends from the top of a rocky hill along a winding dirt trail with sparse vegetation and clear sky.",
+        "indexed_at": "2026-10-27T07:23:33.571485Z",
+        "metadata_id": "613adfb8-2a88-4b2b-989e-58552725124f",
+        "model_id": "muse-spark-1.3",
+        "objects": [
+          {
+            "apparel": [],
+            "attributes": [
+              "moving"
+            ],
+            "category": "person",
+            "evidence": "Distant person on bicycle moving downhill from hilltop toward lower trail."
+          },
+          {
+            "apparel": [],
+            "attributes": [
+              "moving"
+            ],
+            "category": "bicycle",
+            "evidence": "Bicycle visible under rider while descending the hill trail."
+          }
+        ],
+        "offset_ms": 2000,
+        "playback_request": {
+          "duration_ms": 10000,
+          "offset_ms": 2000,
+          "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+          "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20"
+        },
+        "prompt_version": "observable-video-2",
+        "provenance": {
+          "audio_removed": true,
+          "clip_end_ms": 10000,
+          "clip_sha256": "b21bcbc036dcc1ae14eb31e9cb9fee4a17ea1cc93eaf0fc6b48cd0754bb0490a",
+          "clip_start_ms": 0,
+          "model_version": "muse-spark-1.3",
+          "motion_method": "ffmpeg_gray_mean_absolute_pixel_difference",
+          "motion_threshold": 0.035,
+          "pipeline_version": "video-index-1-2b42febfdde1",
+          "provider": "meta_standard",
+          "sampling_interval_ms": 500,
+          "source_mtime_ns": 1793085784116386865,
+          "source_sha256": "a8e11015e2c10c636f718301b55f27996ba331b9da8d3331e3a136e04fe8b4a9",
+          "source_size_bytes": 1989112,
+          "timestamps": "recording_clock_plus_estimated_clip_offsets"
+        },
+        "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+        "relevance": 1.0,
+        "schema_version": "observations-2",
+        "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20",
+        "start": "2026-10-27T07:22:56.676496Z",
+        "summary": "A person rides a bicycle down a steep light-colored hill trail beside bare trees.",
+        "uncertainty": "high",
+        "uncertainty_notes": "Figure is very small and distant with low resolution, so clothing colors and details cannot be confirmed."
+      },
+      {
+        "action": {
+          "kind": "navigate",
+          "label": "Play matching footage",
+          "target": {
+            "kind": "recording",
+            "offset_ms": 4000,
+            "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+            "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20"
+          }
+        },
+        "camera_id": "fb043ead-2806-442c-b461-905bf730d568",
+        "camera_name": "Licensed cycling replay",
+        "end": "2026-10-27T07:23:00.676496Z",
+        "event_types": [
+          "person_visible",
+          "cycling"
+        ],
+        "evidence": {
+          "boundary_accuracy": "model_estimated_within_verified_clip",
+          "end_offset_ms": 6000,
+          "event_id": null,
+          "kind": "recording_interval",
+          "metadata_id": "745aa6ef-9370-4cd2-9b3e-d4108ba83f9b",
+          "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+          "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20",
+          "start_offset_ms": 4000
+        },
+        "evidence_text": "A rider on a bicycle is seen from behind moving along the dirt path toward the tree line and disappearing into green foliage.",
+        "indexed_at": "2026-10-27T07:23:33.571485Z",
+        "metadata_id": "745aa6ef-9370-4cd2-9b3e-d4108ba83f9b",
+        "model_id": "muse-spark-1.3",
+        "objects": [
+          {
+            "apparel": [
+              {
+                "colors": [
+                  "blue"
+                ],
+                "kind": "shirt"
+              },
+              {
+                "colors": [
+                  "white"
+                ],
+                "kind": "helmet"
+              }
+            ],
+            "attributes": [
+              "moving",
+              "helmet"
+            ],
+            "category": "person",
+            "evidence": "Person seated on bicycle pedaling away, wearing blue top and light-colored helmet."
+          },
+          {
+            "apparel": [],
+            "attributes": [
+              "moving"
+            ],
+            "category": "bicycle",
+            "evidence": "Two-wheeled bicycle under the rider moving along the dirt path."
+          }
+        ],
+        "offset_ms": 4000,
+        "playback_request": {
+          "duration_ms": 10000,
+          "offset_ms": 4000,
+          "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+          "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20"
+        },
+        "prompt_version": "observable-video-2",
+        "provenance": {
+          "audio_removed": true,
+          "clip_end_ms": 10000,
+          "clip_sha256": "b21bcbc036dcc1ae14eb31e9cb9fee4a17ea1cc93eaf0fc6b48cd0754bb0490a",
+          "clip_start_ms": 0,
+          "model_version": "muse-spark-1.3",
+          "motion_method": "ffmpeg_gray_mean_absolute_pixel_difference",
+          "motion_threshold": 0.035,
+          "pipeline_version": "video-index-1-2b42febfdde1",
+          "provider": "meta_standard",
+          "sampling_interval_ms": 500,
+          "source_mtime_ns": 1793085784116386865,
+          "source_sha256": "a8e11015e2c10c636f718301b55f27996ba331b9da8d3331e3a136e04fe8b4a9",
+          "source_size_bytes": 1989112,
+          "timestamps": "recording_clock_plus_estimated_clip_offsets"
+        },
+        "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+        "relevance": 1.0,
+        "schema_version": "observations-2",
+        "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20",
+        "start": "2026-10-27T07:22:58.676496Z",
+        "summary": "A person wearing a helmet rides a bicycle away from the camera along a dirt path into dense green trees.",
+        "uncertainty": "medium",
+        "uncertainty_notes": "Low resolution and motion blur limit detail; clothing and helmet colors are approximate."
+      },
+      {
+        "action": {
+          "kind": "navigate",
+          "label": "Play matching footage",
+          "target": {
+            "kind": "recording",
+            "offset_ms": 6000,
+            "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+            "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20"
+          }
+        },
+        "camera_id": "fb043ead-2806-442c-b461-905bf730d568",
+        "camera_name": "Licensed cycling replay",
+        "end": "2026-10-27T07:23:02.676496Z",
+        "event_types": [
+          "person_visible",
+          "cycling"
+        ],
+        "evidence": {
+          "boundary_accuracy": "model_estimated_within_verified_clip",
+          "end_offset_ms": 8000,
+          "event_id": null,
+          "kind": "recording_interval",
+          "metadata_id": "90064ef0-dc0f-4de2-9682-82e9c855eeb8",
+          "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+          "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20",
+          "start_offset_ms": 6000
+        },
+        "evidence_text": "A small distant figure on a bicycle descends from the hilltop along the winding dirt trail with sparse bushes and trees.",
+        "indexed_at": "2026-10-27T07:23:33.571485Z",
+        "metadata_id": "90064ef0-dc0f-4de2-9682-82e9c855eeb8",
+        "model_id": "muse-spark-1.3",
+        "objects": [
+          {
+            "apparel": [],
+            "attributes": [
+              "moving"
+            ],
+            "category": "person",
+            "evidence": "Distant person on bicycle moving downhill along the trail."
+          },
+          {
+            "apparel": [],
+            "attributes": [
+              "moving"
+            ],
+            "category": "bicycle",
+            "evidence": "Bicycle visible under rider while descending the hill trail."
+          }
+        ],
+        "offset_ms": 6000,
+        "playback_request": {
+          "duration_ms": 10000,
+          "offset_ms": 6000,
+          "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+          "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20"
+        },
+        "prompt_version": "observable-video-2",
+        "provenance": {
+          "audio_removed": true,
+          "clip_end_ms": 10000,
+          "clip_sha256": "b21bcbc036dcc1ae14eb31e9cb9fee4a17ea1cc93eaf0fc6b48cd0754bb0490a",
+          "clip_start_ms": 0,
+          "model_version": "muse-spark-1.3",
+          "motion_method": "ffmpeg_gray_mean_absolute_pixel_difference",
+          "motion_threshold": 0.035,
+          "pipeline_version": "video-index-1-2b42febfdde1",
+          "provider": "meta_standard",
+          "sampling_interval_ms": 500,
+          "source_mtime_ns": 1793085784116386865,
+          "source_sha256": "a8e11015e2c10c636f718301b55f27996ba331b9da8d3331e3a136e04fe8b4a9",
+          "source_size_bytes": 1989112,
+          "timestamps": "recording_clock_plus_estimated_clip_offsets"
+        },
+        "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+        "relevance": 1.0,
+        "schema_version": "observations-2",
+        "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20",
+        "start": "2026-10-27T07:23:00.676496Z",
+        "summary": "A person rides a bicycle down a steep light-colored hill trail beside bare trees.",
+        "uncertainty": "high",
+        "uncertainty_notes": "Figure is very small and distant with low resolution, so clothing colors and details cannot be confirmed."
+      },
+      {
+        "action": {
+          "kind": "navigate",
+          "label": "Play matching footage",
+          "target": {
+            "kind": "recording",
+            "offset_ms": 8000,
+            "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+            "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20"
+          }
+        },
+        "camera_id": "fb043ead-2806-442c-b461-905bf730d568",
+        "camera_name": "Licensed cycling replay",
+        "end": "2026-10-27T07:23:04.676496Z",
+        "event_types": [
+          "person_visible",
+          "cycling"
+        ],
+        "evidence": {
+          "boundary_accuracy": "model_estimated_within_verified_clip",
+          "end_offset_ms": 10000,
+          "event_id": null,
+          "kind": "recording_interval",
+          "metadata_id": "2252ac6e-bd4c-4fc9-946b-d61e5ea8e143",
+          "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+          "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20",
+          "start_offset_ms": 8000
+        },
+        "evidence_text": "A rider on a bicycle is seen from behind moving along the dirt path toward the tree line and disappearing into green foliage. Overlaid text reading Dirt Biking is visible.",
+        "indexed_at": "2026-10-27T07:23:33.571485Z",
+        "metadata_id": "2252ac6e-bd4c-4fc9-946b-d61e5ea8e143",
+        "model_id": "muse-spark-1.3",
+        "objects": [
+          {
+            "apparel": [
+              {
+                "colors": [
+                  "blue"
+                ],
+                "kind": "shirt"
+              },
+              {
+                "colors": [
+                  "white"
+                ],
+                "kind": "helmet"
+              }
+            ],
+            "attributes": [
+              "moving",
+              "helmet"
+            ],
+            "category": "person",
+            "evidence": "Person seated on bicycle pedaling away, wearing blue top and light-colored helmet."
+          },
+          {
+            "apparel": [],
+            "attributes": [
+              "moving"
+            ],
+            "category": "bicycle",
+            "evidence": "Two-wheeled bicycle under the rider moving along the dirt path."
+          }
+        ],
+        "offset_ms": 8000,
+        "playback_request": {
+          "duration_ms": 10000,
+          "offset_ms": 8000,
+          "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+          "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20"
+        },
+        "prompt_version": "observable-video-2",
+        "provenance": {
+          "audio_removed": true,
+          "clip_end_ms": 10000,
+          "clip_sha256": "b21bcbc036dcc1ae14eb31e9cb9fee4a17ea1cc93eaf0fc6b48cd0754bb0490a",
+          "clip_start_ms": 0,
+          "model_version": "muse-spark-1.3",
+          "motion_method": "ffmpeg_gray_mean_absolute_pixel_difference",
+          "motion_threshold": 0.035,
+          "pipeline_version": "video-index-1-2b42febfdde1",
+          "provider": "meta_standard",
+          "sampling_interval_ms": 500,
+          "source_mtime_ns": 1793085784116386865,
+          "source_sha256": "a8e11015e2c10c636f718301b55f27996ba331b9da8d3331e3a136e04fe8b4a9",
+          "source_size_bytes": 1989112,
+          "timestamps": "recording_clock_plus_estimated_clip_offsets"
+        },
+        "recording_id": "07aba673-7903-51da-b2e3-92927258173d",
+        "relevance": 1.0,
+        "schema_version": "observations-2",
+        "segment_id": "a37a0108-0306-5d77-bb0b-eb63bd40dd20",
+        "start": "2026-10-27T07:23:02.676496Z",
+        "summary": "A person wearing a helmet rides a bicycle away from the camera along a dirt path into dense green trees.",
+        "uncertainty": "medium",
+        "uncertainty_notes": "Low resolution and motion blur limit detail; clothing and helmet colors are approximate."
+      }
+    ],
+    "latency_ms": 4165,
+    "query": "Find footage with a bicycle.",
+    "retrieval": "postgres_fts"
+  },
+  "status": "passed",
+  "usage": {
+    "billing": "unknown",
+    "bytes_uploaded": 507835,
+    "estimated_usd": null,
+    "input_tokens": 5156,
+    "output_tokens": 5394,
+    "requests": 3,
+    "reserved_usd": 0.15
+  }
+}

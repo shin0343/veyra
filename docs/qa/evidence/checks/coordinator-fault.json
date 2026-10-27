@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "mode": "explicit coordinator fault injection; no media or cloud calls",
+  "expected_coordinator_exit": 1,
+  "actual_coordinator_exit": 1,
+  "failure_artifact_status": "failed"
+}

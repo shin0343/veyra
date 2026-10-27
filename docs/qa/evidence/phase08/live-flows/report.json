@@ -1,0 +1,98 @@
+{
+  "flows": {
+    "2": {
+      "title": "Open actual recorded media and navigate by timestamp",
+      "status": "passed",
+      "observations": {
+        "library_rows": 3,
+        "first_frames_ms": 295,
+        "seek_url": "?offset_ms=10000",
+        "position_label": "00:10",
+        "histogram_bins": 67,
+        "histogram_recorded_bins": 67,
+        "histogram_navigated_to": "/recordings/05636b39-cb53-59a1-aa49-4a117421ea4d?offset_ms=30000&segment_id=dd08be0f-7f21-563b-8251-9fa6186934ce",
+        "after_histogram_frames_ms": 77,
+        "jump_to": "?offset_ms=5000"
+      },
+      "duration_ms": 2081
+    },
+    "4": {
+      "title": "Ask Muse to find a feature and navigate",
+      "status": "passed",
+      "observations": {
+        "muse_ms": 3322,
+        "status": "Answered from your workspace",
+        "message": "Available functions: Cameras: Change camera settings, names, location, enabled state and cloud consent. Change camera settings, names, location, enabled state and cloud consent.",
+        "steps": [
+          "",
+          ""
+        ],
+        "action_label": "Open Cameras",
+        "navigated_to": "/cameras"
+      },
+      "duration_ms": 4338
+    },
+    "7": {
+      "title": "Unavailable camera, empty search, and tool failures",
+      "status": "passed",
+      "observations": {
+        "offline_camera": null,
+        "empty_search": "No moments match those words Try a shorter description, another camera, or a different day. This doesn\u2019t prove that it didn\u2019t happen. Start a new search",
+        "empty_search_results": 0,
+        "unsupported_search": "Try describing it a little differently Veyra couldn\u2019t turn these words into a search it supports. Nothing was searched. This request includes an unsupported or ambiguous search condition. UNSUPPORTED_SEARCH_CONSTRAINT \u00b7 Reference 23d1942c E",
+        "not_found_ms": 3330,
+        "not_found": "Open the live view of the Basement camera. Not fully completed The request was not fully completed. No camera matches. Choose an existing camera name. Part of this didn\u2019t work No camera matches. Choose an existing camera name. CAMERA_NOT_FOUND What Muse did \u00b7 2 steps",
+        "not_found_failure_receipts": 1,
+        "missing_camera_ms": 2824,
+        "missing_camera": "Create a 2x2 view with Basement, Attic, Roof and Pool cameras. Not fully completed The request was not fully completed. No camera matches. Choose an existing camera name. Part of this didn\u2019t work No camera matches. Choose an existing camera name. CAMERA_NOT_FOUND What Muse did \u00b7 2 steps",
+        "missing_camera_proposal": 0,
+        "unsupported": "Recognize everyone who enters the front door. Not fully completed The request was not fully completed. Identity recognition is unsupported. No recognition rule or identity processing was enabled. Not something Veyra does Identity recognition is unsupported. No recognition rule or identity processing"
+      },
+      "duration_ms": 33003
+    },
+    "8": {
+      "title": "Responsive, accessible real-data pages",
+      "status": "passed",
+      "observations": {
+        "pages": [
+          "mobile / overflow=false",
+          "mobile /cameras overflow=false",
+          "mobile /live overflow=false",
+          "mobile /recordings/05636b39-cb53-59a1-aa49-4a117421ea4d overflow=false",
+          "mobile /search overflow=false",
+          "mobile /events overflow=false",
+          "mobile /layouts overflow=false",
+          "mobile /settings overflow=false",
+          "tablet / overflow=false",
+          "tablet /cameras overflow=false",
+          "tablet /live overflow=false",
+          "tablet /recordings/05636b39-cb53-59a1-aa49-4a117421ea4d overflow=false",
+          "tablet /search overflow=false",
+          "tablet /events overflow=false",
+          "tablet /layouts overflow=false",
+          "tablet /settings overflow=false"
+        ],
+        "histogram_keyboard_focus": "12:34:00 AM to 1:04:00 AM, 58% recorded, 9% with motion, 52 Muse events. Open recording"
+      },
+      "duration_ms": 13031
+    }
+  },
+  "observed_at": "2026-10-27T08:03:03.859Z",
+  "mode": "real stack: Next production build, FastAPI, PostgreSQL, MediaMTX, worker, Meta Muse",
+  "accessibility": {
+    "recording": [],
+    "muse-response": [],
+    "mobile /": [],
+    "mobile /cameras": [],
+    "mobile /live": [],
+    "mobile /recordings/05636b39-cb53-59a1-aa49-4a117421ea4d": [],
+    "mobile /search": [],
+    "mobile /events": [],
+    "mobile /layouts": [],
+    "mobile /settings": []
+  },
+  "page_errors": [
+    "Failed to load resource: the server responded with a status of 422 (Unprocessable Entity)"
+  ],
+  "note": "Phase 08 run of apps/web/tests/live-flows.mjs FLOWS=2,4,7,8 against the fresh runtime/demo stack (port 3200). Other flows not rerun here."
+}

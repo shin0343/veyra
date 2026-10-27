@@ -1,0 +1,89 @@
+{
+  "phase": "03",
+  "status": "passed",
+  "observed_at": "2026-10-27T06:52:38.797184+00:00",
+  "fixture": "Real FFmpeg testsrc2; no human footage",
+  "docker": "not available",
+  "offline_camera": true,
+  "registered_camera_ids": [
+    "4c4e9742-70e1-4431-b86d-69b72260548c",
+    "623d4965-5b10-4744-b708-a06ca4959fbc",
+    "715ebcb7-6994-4948-a4dc-d2b8ab854e26",
+    "9c571c6a-e12b-4aa7-8511-64242cf88119"
+  ],
+  "online_cameras": 4,
+  "authenticated_hls": true,
+  "layout_id": "0609229c-911d-42e1-ab65-c620606ab967",
+  "persisted_2x2_layout": true,
+  "recording_id": "9e021514-4622-51d8-99a7-adb9d10af103",
+  "recording_started_at": "2026-10-27T06:52:40.282720Z",
+  "recorded_duration_ms": 60000,
+  "segment_count": 6,
+  "playback_bytes": 1357855,
+  "mp4_range": true,
+  "playback_duration_seconds": 8.533,
+  "playback_requested_offset_ms": 52000,
+  "playback_actual_start_ms": 49496,
+  "playback_seek_offset_ms": 2504,
+  "browser": {
+    "status": "passed",
+    "source": "Unmodified Phase 02 Next.js UI + real Phase 03 API/media",
+    "live": [
+      {
+        "width": 640,
+        "height": 360,
+        "time": 5.0072,
+        "readyState": 4,
+        "error": null
+      },
+      {
+        "width": 640,
+        "height": 360,
+        "time": 5.0074,
+        "readyState": 4,
+        "error": null
+      },
+      {
+        "width": 640,
+        "height": 360,
+        "time": 5.0084,
+        "readyState": 4,
+        "error": null
+      },
+      {
+        "width": 640,
+        "height": 360,
+        "time": 5.0075,
+        "readyState": 4,
+        "error": null
+      }
+    ],
+    "requestedOffsetMs": 52000,
+    "initialTime": 2.5127,
+    "actualStartOffsetMs": 49496,
+    "seekOffsetMs": 2504,
+    "playback": {
+      "width": 640,
+      "height": 360,
+      "currentTime": 5,
+      "duration": 10,
+      "seekable": [
+        [
+          0,
+          10
+        ]
+      ],
+      "error": null
+    }
+  },
+  "backend_restart_persistence": true,
+  "missing_media": "RECORDING_UNAVAILABLE",
+  "missing_recording_directory": true,
+  "unsupported_codec": true,
+  "recovered_segment_id": "85bfa16a-1cd5-51fc-8504-cb6202111093",
+  "stream_recovery": true,
+  "camera_crud": true,
+  "audit_records": 8,
+  "expired_session": true,
+  "media_outage": true
+}

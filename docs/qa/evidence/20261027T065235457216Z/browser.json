@@ -1,0 +1,349 @@
+{
+  "observed_at": "2026-10-27T06:53:37.984Z",
+  "mode": "genuine live integration",
+  "scenarios": {
+    "A": {
+      "status": "passed",
+      "recording_id": "85537edb-04db-5034-a1cd-b75a47a7c1c4",
+      "available_duration_ms": 60000,
+      "initial_seek_error_ms": 227,
+      "duration_ms": 13709
+    },
+    "B": {
+      "status": "passed",
+      "operations": [
+        {
+          "prompt": "Where can I change a camera's settings?",
+          "model_ms": 3366,
+          "completion_ms": 3449,
+          "route": "/cameras",
+          "receipts": [
+            {
+              "tool": "features.discover",
+              "status": "succeeded"
+            },
+            {
+              "tool": "features.navigate",
+              "status": "succeeded"
+            }
+          ]
+        },
+        {
+          "prompt": "Open the live view of Front entrance.",
+          "model_ms": 3151,
+          "completion_ms": 3229,
+          "route": "/live?camera_id=ae8643c3-74d3-4cb9-82cb-a0c3a8668a9d",
+          "receipts": [
+            {
+              "tool": "cameras.navigate",
+              "status": "succeeded"
+            }
+          ]
+        }
+      ],
+      "duration_ms": 7824
+    },
+    "manual_layout": {
+      "status": "passed",
+      "completion_ms": 317,
+      "layout_id": "35a3eedd-6e79-4a5f-a479-078403ad33e7",
+      "duration_ms": 870
+    },
+    "C": {
+      "status": "passed",
+      "model_ms": 1899,
+      "absent_before_approval": true,
+      "completion_ms": 2369,
+      "layout_id": "c3699a8e-1f0b-45db-bda7-e34322f80401",
+      "persisted_cells": 4,
+      "duration_ms": 3942
+    },
+    "D": {
+      "status": "passed",
+      "indexing_wall_ms": 41483,
+      "job": {
+        "id": "d44668c7-e700-438d-b914-212f180b14a0",
+        "recording_id": "f649be1c-3502-5637-b875-f1835e9ec1cb",
+        "state": "succeeded",
+        "progress": 1,
+        "attempts": 1,
+        "error": null,
+        "created_at": "2026-10-27T06:54:05.707513Z",
+        "updated_at": "2026-10-27T06:54:46.300989Z",
+        "pipeline_version": "video-index-1-2b42febfdde1",
+        "selected_segments": 2,
+        "selected_duration_ms": 11133,
+        "processing_ms": 38566,
+        "segments": [
+          {
+            "segment_id": "370eb27e-29bc-5fe8-83bd-e76c27a3b322",
+            "state": "succeeded",
+            "pipeline_version": "video-index-1-2b42febfdde1",
+            "analyzed_start_ms": 0,
+            "analyzed_end_ms": 10000,
+            "error_code": null,
+            "processing_ms": 21472
+          },
+          {
+            "segment_id": "bcfaa2e1-8b1b-5909-b43b-f4be971354ca",
+            "state": "succeeded",
+            "pipeline_version": "video-index-1-2b42febfdde1",
+            "analyzed_start_ms": 0,
+            "analyzed_end_ms": 1133,
+            "error_code": null,
+            "processing_ms": 17094
+          }
+        ],
+        "usage": {
+          "requests": 2,
+          "input_tokens": 4292,
+          "output_tokens": 4871,
+          "bytes_uploaded": 510246,
+          "reserved_usd": 0.1,
+          "estimated_usd": null,
+          "billing": "unknown"
+        }
+      },
+      "queries": [
+        {
+          "query": "a person riding a bicycle",
+          "elapsed_ms": 7391,
+          "hits": 5,
+          "coverage": "partial"
+        },
+        {
+          "query": "Find footage with a bicycle.",
+          "elapsed_ms": 5338,
+          "hits": 5,
+          "coverage": "partial"
+        },
+        {
+          "query": "Find cycling events.",
+          "elapsed_ms": 2870,
+          "hits": 5,
+          "coverage": "partial"
+        }
+      ],
+      "grounded_hit": {
+        "segment_id": "370eb27e-29bc-5fe8-83bd-e76c27a3b322",
+        "camera_id": "637081e2-2e42-46bc-a2ce-f94dcc6d032e",
+        "recording_id": "f649be1c-3502-5637-b875-f1835e9ec1cb",
+        "start": "2026-10-27T06:52:37.915900Z",
+        "end": "2026-10-27T06:52:40.015900Z",
+        "offset_ms": 0,
+        "summary": "A person wearing a helmet rides a bicycle away from the camera along a dirt path into dense green woods.",
+        "evidence_text": "A rider on a bicycle moves away from the camera along a dirt path bordered by green trees and grass. White overlaid text reads 'Dirt Biking'. The rider veers left off the path into foliage and disappears, leaving an empty path.",
+        "model_id": "muse-spark-1.3",
+        "indexed_at": "2026-10-27T06:54:29.189262Z",
+        "relevance": 1,
+        "action": {
+          "kind": "navigate",
+          "label": "Play matching footage",
+          "target": {
+            "kind": "recording",
+            "recording_id": "f649be1c-3502-5637-b875-f1835e9ec1cb",
+            "offset_ms": 0
+          }
+        },
+        "camera_name": "Trail camera",
+        "metadata_id": "1addf3d5-cd89-4c26-a992-c4f280c8dd3d",
+        "objects": [
+          {
+            "category": "person",
+            "attributes": [
+              "moving"
+            ],
+            "apparel": [
+              {
+                "kind": "helmet",
+                "colors": [
+                  "white"
+                ]
+              },
+              {
+                "kind": "shirt",
+                "colors": [
+                  "blue"
+                ]
+              }
+            ],
+            "evidence": "Figure seated on bicycle moving away, white head covering consistent with helmet and blue upper clothing visible despite blur."
+          },
+          {
+            "category": "bicycle",
+            "attributes": [
+              "moving"
+            ],
+            "apparel": [],
+            "evidence": "Two-wheeled bicycle under rider moving along dirt path and into grassy edge."
+          }
+        ],
+        "event_types": [
+          "person_visible",
+          "cycling"
+        ],
+        "uncertainty": "medium",
+        "uncertainty_notes": "Low resolution and motion blur limit clothing detail; interval times are estimated.",
+        "prompt_version": "observable-video-2",
+        "schema_version": "observations-2",
+        "provenance": {
+          "provider": "meta_standard",
+          "timestamps": "recording_clock_plus_estimated_clip_offsets",
+          "clip_end_ms": 10000,
+          "clip_sha256": "b21bcbc036dcc1ae14eb31e9cb9fee4a17ea1cc93eaf0fc6b48cd0754bb0490a",
+          "audio_removed": true,
+          "clip_start_ms": 0,
+          "model_version": "muse-spark-1.3",
+          "motion_method": "ffmpeg_gray_mean_absolute_pixel_difference",
+          "source_sha256": "0ba2e21de3bfaaa1736840dde6554516f3b6cf0be18a22967c288cabc7434899",
+          "source_mtime_ns": 1793083967348310500,
+          "motion_threshold": 0.035,
+          "pipeline_version": "video-index-1-2b42febfdde1",
+          "source_size_bytes": 1989112,
+          "sampling_interval_ms": 500
+        },
+        "evidence": {
+          "metadata_id": "1addf3d5-cd89-4c26-a992-c4f280c8dd3d",
+          "event_id": null,
+          "kind": "recording_interval",
+          "recording_id": "f649be1c-3502-5637-b875-f1835e9ec1cb",
+          "segment_id": "370eb27e-29bc-5fe8-83bd-e76c27a3b322",
+          "start_offset_ms": 0,
+          "end_offset_ms": 2100,
+          "boundary_accuracy": "model_estimated_within_verified_clip"
+        },
+        "playback_request": {
+          "recording_id": "f649be1c-3502-5637-b875-f1835e9ec1cb",
+          "offset_ms": 0,
+          "duration_ms": 10000,
+          "segment_id": "370eb27e-29bc-5fe8-83bd-e76c27a3b322"
+        }
+      },
+      "player_seek_error_ms": 4,
+      "duration_ms": 60228
+    },
+    "E": {
+      "status": "passed",
+      "offline_video_count": 0,
+      "empty_query_status": 422,
+      "missing_recording_status": 404,
+      "cross_origin_status": 403,
+      "unknown_proxy_path_status": 404,
+      "no_match": {
+        "status": 200,
+        "count": 0,
+        "coverage": "partial"
+      },
+      "duration_ms": 9466
+    },
+    "responsive": {
+      "status": "passed",
+      "routes": [
+        {
+          "width": 390,
+          "route": "/"
+        },
+        {
+          "width": 390,
+          "route": "/cameras"
+        },
+        {
+          "width": 390,
+          "route": "/recordings"
+        },
+        {
+          "width": 390,
+          "route": "/search"
+        },
+        {
+          "width": 390,
+          "route": "/layouts"
+        },
+        {
+          "width": 390,
+          "route": "/settings"
+        },
+        {
+          "width": 834,
+          "route": "/"
+        },
+        {
+          "width": 834,
+          "route": "/cameras"
+        },
+        {
+          "width": 834,
+          "route": "/recordings"
+        },
+        {
+          "width": 834,
+          "route": "/search"
+        },
+        {
+          "width": 834,
+          "route": "/layouts"
+        },
+        {
+          "width": 834,
+          "route": "/settings"
+        }
+      ],
+      "duration_ms": 6896
+    }
+  },
+  "metrics": {
+    "live_startup_ms": [
+      636,
+      581,
+      581
+    ],
+    "recording_retrieval_ms": [
+      33,
+      34,
+      38
+    ],
+    "search_ms": [
+      7391,
+      5338,
+      2870
+    ]
+  },
+  "page_errors": [],
+  "failed_http": [
+    {
+      "path": "/api/v1/playback-sessions",
+      "status": 409
+    },
+    {
+      "path": "/api/v1/search",
+      "status": 422
+    },
+    {
+      "path": "/api/v1/recordings/00000000-0000-4000-8000-000000000099",
+      "status": 404
+    },
+    {
+      "path": "/api/v1/arbitrary-http",
+      "status": 404
+    }
+  ],
+  "accessibility": [
+    {
+      "name": "recording",
+      "violations": []
+    },
+    {
+      "name": "layout",
+      "violations": []
+    },
+    {
+      "name": "search",
+      "violations": []
+    },
+    {
+      "name": "mobile-settings",
+      "violations": []
+    }
+  ],
+  "status": "passed"
+}

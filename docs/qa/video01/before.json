@@ -1,0 +1,166 @@
+{
+  "checked_at": "2026-10-27T15:03:59.327790+00:00",
+  "migrations": [
+    {
+      "version": "001_initial"
+    },
+    {
+      "version": "002_vms"
+    },
+    {
+      "version": "003_agent"
+    },
+    {
+      "version": "004_indexing"
+    },
+    {
+      "version": "005_agent_usage"
+    }
+  ],
+  "cameras": [
+    {
+      "id": "0b014f6f-4cda-49d5-9d7f-9a8c758ab3ee",
+      "name": "Front entrance",
+      "source_id": "sample",
+      "media_path": "fixture",
+      "enabled": true,
+      "cloud_analysis_allowed": false,
+      "status": "online",
+      "created_at": "2026-10-27 07:46:32.271295+00:00"
+    },
+    {
+      "id": "271c13bb-2775-4a9f-b0e8-b9780f4b1d2d",
+      "name": "Garden",
+      "source_id": "sample_2",
+      "media_path": "fixture_2",
+      "enabled": true,
+      "cloud_analysis_allowed": false,
+      "status": "online",
+      "created_at": "2026-10-27 07:46:32.277777+00:00"
+    },
+    {
+      "id": "82f995cb-8bee-469d-9063-a2da3439fbdb",
+      "name": "Trail camera",
+      "source_id": "sample_4",
+      "media_path": "fixture_4",
+      "enabled": true,
+      "cloud_analysis_allowed": true,
+      "status": "online",
+      "created_at": "2026-10-27 07:46:32.281841+00:00"
+    }
+  ],
+  "layouts": [
+    {
+      "id": "7f4ec787-da37-45df-b668-90208477bbcd",
+      "name": "Family room",
+      "columns": 2
+    },
+    {
+      "id": "43d3711e-4714-4998-a0e9-d248cdf0fc9f",
+      "name": "Morning check-in",
+      "columns": 2
+    },
+    {
+      "id": "6d091da0-746e-46b7-8350-7e3dad81fe8c",
+      "name": "Garden walk",
+      "columns": 2
+    }
+  ],
+  "recordings": [
+    {
+      "id": "63522a18-cc71-5dbb-8561-57ab9f5992fe",
+      "camera_id": "0b014f6f-4cda-49d5-9d7f-9a8c758ab3ee",
+      "started_at": "2026-10-27 07:46:26.127309+00:00",
+      "ended_at": null,
+      "status": "recording",
+      "available_duration_ms": 25450000
+    },
+    {
+      "id": "9a77165f-f7c8-5d01-9815-f6a1eaae36db",
+      "camera_id": "271c13bb-2775-4a9f-b0e8-b9780f4b1d2d",
+      "started_at": "2026-10-27 07:46:26.127565+00:00",
+      "ended_at": null,
+      "status": "recording",
+      "available_duration_ms": 25450000
+    },
+    {
+      "id": "05636b39-cb53-59a1-aa49-4a117421ea4d",
+      "camera_id": "82f995cb-8bee-469d-9063-a2da3439fbdb",
+      "started_at": "2026-10-27 07:46:26.130283+00:00",
+      "ended_at": null,
+      "status": "recording",
+      "available_duration_ms": 25455867
+    }
+  ],
+  "segment_counts": [
+    {
+      "status": "ready",
+      "count": 7636
+    }
+  ],
+  "metadata": [
+    {
+      "count": 86
+    }
+  ],
+  "indexes": [
+    {
+      "state": "waiting",
+      "count": 7606
+    },
+    {
+      "state": "succeeded",
+      "count": 30
+    }
+  ],
+  "usage": [
+    {
+      "utc_day": "2026-10-27",
+      "operation": "agent_turn",
+      "state": "succeeded",
+      "count": 42,
+      "reserved_usd": "2.100000"
+    },
+    {
+      "utc_day": "2026-10-27",
+      "operation": "delete",
+      "state": "succeeded",
+      "count": 32,
+      "reserved_usd": "0.000000"
+    },
+    {
+      "utc_day": "2026-10-27",
+      "operation": "search_intent",
+      "state": "succeeded",
+      "count": 6,
+      "reserved_usd": "0.300000"
+    },
+    {
+      "utc_day": "2026-10-27",
+      "operation": "upload",
+      "state": "succeeded",
+      "count": 32,
+      "reserved_usd": "0.000000"
+    },
+    {
+      "utc_day": "2026-10-27",
+      "operation": "video_analysis",
+      "state": "failed",
+      "count": 2,
+      "reserved_usd": "0.100000"
+    },
+    {
+      "utc_day": "2026-10-27",
+      "operation": "video_analysis",
+      "state": "succeeded",
+      "count": 30,
+      "reserved_usd": "1.500000"
+    }
+  ],
+  "jobs": [
+    {
+      "state": "succeeded",
+      "count": 1
+    }
+  ]
+}

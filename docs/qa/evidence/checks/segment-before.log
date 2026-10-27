@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_muse_search_navigation_retains_the_grounded_segment ___________
+
+indexed_env = (<starlette.testclient.TestClient object at 0x10cc94ef0>, <veyra.db.Database object at 0x10cc94cb0>, [{'id': '621e7617...-8139-0bd353db5c6b'), UUID('a17eef1d-53e3-48a4-b80a-a3bb9d04fade'), UUID('48d6e95a-556c-4afc-aca9-80872b198d39')], ...)
+
+    def test_muse_search_navigation_retains_the_grounded_segment(indexed_env):
+        # Regression: QA-005, /qa 2026-10-27; docs/qa/E2E_REPORT.md.
+        client, _, _, _, _, segment_ids, *_ = indexed_env
+        run_index(indexed_env)
+        args = structured(objects=[{"category": "bicycle", "attributes": []}]).model_dump(mode="json")
+        muse(client, call("video.search", args), completion())
+        body = send(client, "Find bicycle footage").json()
+        assert body["status"] == "completed"
+        targets = [item["target"] for item in body["suggested_actions"]]
+>       assert targets and all(target.get("segment_id") for target in targets)
+E       AssertionError: assert ([{'kind': 'recording', 'recording_id': 'a758f0e5-2801-4b92-a2b1-299b2612b617', 'offset_ms': 7257}, {'kind': 'recording', 'recording_id': 'a758f0e5-2801-4b92-a2b1-299b2612b617', 'offset_ms': 3253}] and False)
+E        +  where False = all(<generator object test_muse_search_navigation_retains_the_grounded_segment.<locals>.<genexpr> at 0x10cec12f0>)
+
+apps/api/tests/test_phase07_regressions.py:146: AssertionError
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/sjh/Hackaton & Contest/meta-ai-hackaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED apps/api/tests/test_phase07_regressions.py::test_muse_search_navigation_retains_the_grounded_segment
+1 failed, 5 deselected, 1 warning in 1.84s

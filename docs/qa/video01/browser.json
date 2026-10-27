@@ -1,0 +1,485 @@
+{
+  "base": "http://127.0.0.1:3200",
+  "started_at": "2026-10-27T15:40:31.011Z",
+  "checks": [
+    {
+      "name": "overview",
+      "status": "passed",
+      "video": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 4.0922,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 5
+        }
+      ]
+    },
+    {
+      "name": "video-thumbnails",
+      "status": "passed",
+      "posters": [
+        {
+          "src": "http://127.0.0.1:3200/api/v1/cameras/82f995cb-8bee-469d-9063-a2da3439fbdb/thumbnail",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "src": "http://127.0.0.1:3200/api/v1/cameras/55163235-01fa-427f-99ce-27c24b7f30f1/thumbnail",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "src": "http://127.0.0.1:3200/api/v1/cameras/d9102168-f60d-4feb-b47d-5b5012d2e1a4/thumbnail",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "src": "http://127.0.0.1:3200/api/v1/cameras/48a3fb91-d509-414f-9479-48cfc886b775/thumbnail",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "src": "http://127.0.0.1:3200/api/v1/cameras/b345aac7-984e-43f9-a927-37c639642e27/thumbnail",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "src": "http://127.0.0.1:3200/api/v1/cameras/736b2e6b-b93c-41ad-af97-be479405ac59/thumbnail",
+          "width": 960,
+          "height": 540
+        }
+      ]
+    },
+    {
+      "name": "stream-sample_4",
+      "status": "passed",
+      "camera_id": "82f995cb-8bee-469d-9063-a2da3439fbdb",
+      "before": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 4.0018,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 4
+        }
+      ],
+      "after": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 4.9049,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 18
+        }
+      ],
+      "sha256": "69f1f1268b090b77f908e38653194b0af8e9b4be8ba48d13644b79663f6a7a8e"
+    },
+    {
+      "name": "stream-demo_entrance",
+      "status": "passed",
+      "camera_id": "55163235-01fa-427f-99ce-27c24b7f30f1",
+      "before": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 1.0012,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 4
+        }
+      ],
+      "after": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 1.9041,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 18
+        }
+      ],
+      "sha256": "2ad7a6563bb23b5e4321ae42e5944aa753a01707c0c4f5c05960f443f6861c85"
+    },
+    {
+      "name": "stream-demo_street",
+      "status": "passed",
+      "camera_id": "d9102168-f60d-4feb-b47d-5b5012d2e1a4",
+      "before": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 4.0011,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 4
+        }
+      ],
+      "after": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 4.9041,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 18
+        }
+      ],
+      "sha256": "b52fdf7dab4c160b7321afe0c079322dc4f0709489f8079625dda342d5f44af0"
+    },
+    {
+      "name": "stream-demo_garden",
+      "status": "passed",
+      "camera_id": "48a3fb91-d509-414f-9479-48cfc886b775",
+      "before": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 1.0013,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 4
+        }
+      ],
+      "after": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 1.9044,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 18
+        }
+      ],
+      "sha256": "724e8867f2113c9b791fa7737af5d0d7531c8ed6896c4551dc4dec26c5316cb3"
+    },
+    {
+      "name": "stream-demo_community",
+      "status": "passed",
+      "camera_id": "b345aac7-984e-43f9-a927-37c639642e27",
+      "before": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 4.0003,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 4
+        }
+      ],
+      "after": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 4.9024,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 18
+        }
+      ],
+      "sha256": "5e9e466ba405af89cf4975b4658462157a6e00851a0fa2be13e0cbb0c550dfa9"
+    },
+    {
+      "name": "stream-demo_parking",
+      "status": "passed",
+      "camera_id": "736b2e6b-b93c-41ad-af97-be479405ac59",
+      "before": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 4.0014,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 4
+        }
+      ],
+      "after": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 4.905,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 18
+        }
+      ],
+      "sha256": "be20a96a061a47b0fe2229b61589061fd9622b1c0eff44cbb3d68fcbcf054169"
+    },
+    {
+      "name": "default-2x2",
+      "status": "passed",
+      "videos": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 4.1669,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 7
+        },
+        {
+          "width": 960,
+          "height": 540,
+          "time": 1.1503,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 6
+        },
+        {
+          "width": 960,
+          "height": 540,
+          "time": 4.1178,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 5
+        },
+        {
+          "width": 960,
+          "height": 540,
+          "time": 1.1337,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 6
+        }
+      ],
+      "names": [
+        "Trail camera",
+        "Entrance gate",
+        "Street approach",
+        "Garden wildlife"
+      ]
+    },
+    {
+      "name": "saved-2x2",
+      "status": "passed",
+      "videos": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 1.1634,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 7
+        },
+        {
+          "width": 960,
+          "height": 540,
+          "time": 4.1994,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 8
+        },
+        {
+          "width": 960,
+          "height": 540,
+          "time": 1.1832,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 8
+        },
+        {
+          "width": 960,
+          "height": 540,
+          "time": 4.1633,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 7
+        }
+      ]
+    },
+    {
+      "name": "recording-sample_4",
+      "status": "passed",
+      "recording_id": "a8d53949-fd0f-5e62-b066-00856933050d",
+      "available_duration_ms": 132533,
+      "video": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 5.1212,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 8
+        }
+      ],
+      "range": {
+        "status": 206,
+        "content_range": "bytes 0-2047/4668773",
+        "bytes": 2048
+      },
+      "actual_start_offset_ms": 0,
+      "seek_offset_ms": 5000,
+      "timeline": null
+    },
+    {
+      "name": "recording-demo_entrance",
+      "status": "passed",
+      "recording_id": "39d296d9-6336-57bf-af7b-b59bc803fdd8",
+      "available_duration_ms": 132734,
+      "video": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 5.125,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 8
+        }
+      ],
+      "range": {
+        "status": 206,
+        "content_range": "bytes 0-2047/4820320",
+        "bytes": 2048
+      },
+      "actual_start_offset_ms": 0,
+      "seek_offset_ms": 5000,
+      "timeline": null
+    },
+    {
+      "name": "recording-demo_street",
+      "status": "passed",
+      "recording_id": "25809f13-01dd-5369-9302-bd12587a9ad5",
+      "available_duration_ms": 132667,
+      "video": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 5.1317,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 8
+        }
+      ],
+      "range": {
+        "status": 206,
+        "content_range": "bytes 0-2047/6942454",
+        "bytes": 2048
+      },
+      "actual_start_offset_ms": 0,
+      "seek_offset_ms": 5000,
+      "timeline": null
+    },
+    {
+      "name": "recording-demo_garden",
+      "status": "passed",
+      "recording_id": "2aefe1d9-6331-541b-b921-fed79ce1b622",
+      "available_duration_ms": 24733,
+      "video": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 5.1065,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 6
+        }
+      ],
+      "range": {
+        "status": 206,
+        "content_range": "bytes 0-2047/5725569",
+        "bytes": 2048
+      },
+      "actual_start_offset_ms": 0,
+      "seek_offset_ms": 5000,
+      "timeline": null
+    },
+    {
+      "name": "recording-demo_community",
+      "status": "passed",
+      "recording_id": "4d914a7e-6c91-52b4-8271-73bd038125bb",
+      "available_duration_ms": 132667,
+      "video": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 8.0389,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 21
+        }
+      ],
+      "range": {
+        "status": 206,
+        "content_range": "bytes 0-2047/6070801",
+        "bytes": 2048
+      },
+      "actual_start_offset_ms": 0,
+      "seek_offset_ms": 5000,
+      "timeline": {
+        "clicked": true,
+        "requested_offset_ms": 7933,
+        "advancing_video": true
+      }
+    },
+    {
+      "name": "recording-demo_parking",
+      "status": "passed",
+      "recording_id": "d14bd27d-594d-59fc-bd8f-3193e7a84542",
+      "available_duration_ms": 132467,
+      "video": [
+        {
+          "width": 960,
+          "height": 540,
+          "time": 5.1241,
+          "ready_state": 4,
+          "error": null,
+          "decoded_frames": 8
+        }
+      ],
+      "range": {
+        "status": 206,
+        "content_range": "bytes 0-2047/4804815",
+        "bytes": 2048
+      },
+      "actual_start_offset_ms": 0,
+      "seek_offset_ms": 5000,
+      "timeline": null
+    },
+    {
+      "name": "page-recordings",
+      "status": "passed"
+    },
+    {
+      "name": "page-events",
+      "status": "passed"
+    },
+    {
+      "name": "page-search",
+      "status": "passed"
+    },
+    {
+      "name": "page-layouts",
+      "status": "passed"
+    },
+    {
+      "name": "page-settings",
+      "status": "passed"
+    },
+    {
+      "name": "camera-registration-dialog",
+      "status": "passed",
+      "source": "demo_station",
+      "submitted": false,
+      "note": "Reserved real source remains available for the live presentation."
+    },
+    {
+      "name": "paused-development-source",
+      "status": "passed",
+      "camera_status": "disabled",
+      "video_count": 0
+    },
+    {
+      "name": "phone-layout",
+      "status": "passed",
+      "width": 390,
+      "horizontal_overflow": false
+    }
+  ],
+  "page_errors": [],
+  "failures": [],
+  "status": "passed",
+  "completed_at": "2026-10-27T15:40:47.725Z"
+}

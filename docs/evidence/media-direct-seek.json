@@ -1,0 +1,23 @@
+{
+  "mode": "playback",
+  "status": "failed",
+  "diagnostic": {
+    "currentTime": 0,
+    "readyState": 4,
+    "seeking": false,
+    "duration": "6.066",
+    "error": null,
+    "buffered": [
+      [
+        0,
+        4.666656
+      ]
+    ],
+    "seekable": [
+      [
+        0,
+        0
+      ]
+    ]
+  }
+}

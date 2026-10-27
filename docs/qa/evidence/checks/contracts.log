@@ -1,0 +1,6 @@
+.venv/bin/python -E scripts/check_contracts.py
+✨ openapi-typescript 7.13.0
+🚀 /Users/sjh/Hackaton & Contest/meta-ai-hackaton/packages/contracts/openapi.json → /var/folders/qj/c80m8xdj13z7w_hj05ytxnq00000gn/T/tmpoajywcld/api.d.ts [44.7ms]
+Frozen OpenAPI and generated TypeScript match their sources
+.venv/bin/python -E scripts/export_agent_contracts.py --check
+Phase 05 runtime OpenAPI, TypeScript and executable tool catalog match

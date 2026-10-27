@@ -1,0 +1,236 @@
+{
+  "observed_at": "2026-10-27T06:59:27.599Z",
+  "mode": "genuine live integration",
+  "scenarios": {
+    "A": {
+      "status": "passed",
+      "recording_id": "c51bbef9-447e-5755-884a-2948c2ebc74f",
+      "available_duration_ms": 60000,
+      "initial_seek_error_ms": 229,
+      "duration_ms": 13731
+    },
+    "B": {
+      "status": "passed",
+      "operations": [
+        {
+          "prompt": "Where can I change a camera's settings?",
+          "model_ms": 3060,
+          "completion_ms": 3149,
+          "route": "/cameras",
+          "receipts": [
+            {
+              "tool": "features.discover",
+              "status": "succeeded"
+            },
+            {
+              "tool": "features.navigate",
+              "status": "succeeded"
+            }
+          ]
+        },
+        {
+          "prompt": "Open the live view of Front entrance.",
+          "model_ms": 1928,
+          "completion_ms": 2019,
+          "route": "/live?camera_id=f021d4d7-70cc-4ac8-93fb-3e1e5cd32b67",
+          "receipts": [
+            {
+              "tool": "cameras.navigate",
+              "status": "succeeded"
+            }
+          ]
+        }
+      ],
+      "duration_ms": 6303
+    },
+    "manual_layout": {
+      "status": "passed",
+      "completion_ms": 313,
+      "layout_id": "cb551916-d99a-4b37-9522-d164da275255",
+      "duration_ms": 867
+    },
+    "C": {
+      "status": "passed",
+      "model_ms": 1939,
+      "absent_before_approval": true,
+      "completion_ms": 2391,
+      "layout_id": "f24c8750-e0c0-465e-ad3d-17de68d5e327",
+      "persisted_cells": 4,
+      "duration_ms": 3962
+    },
+    "D": {
+      "status": "failed",
+      "indexing_wall_ms": 30966,
+      "job": {
+        "id": "cc16d5ed-dfdb-42bb-9145-f244b0ec0864",
+        "recording_id": "935d1c49-d741-53d6-8295-0ff75f6a1b94",
+        "state": "failed",
+        "progress": 0,
+        "attempts": 1,
+        "error": {
+          "code": "INVALID_MODEL_OUTPUT",
+          "message": "Analysis could not complete.",
+          "retryable": false,
+          "fields": []
+        },
+        "created_at": "2026-10-27T06:59:53.818766Z",
+        "updated_at": "2026-10-27T07:00:22.666950Z",
+        "pipeline_version": "video-index-1-2b42febfdde1",
+        "selected_segments": 2,
+        "selected_duration_ms": 11133,
+        "processing_ms": 0,
+        "segments": [
+          {
+            "segment_id": "a68ef610-3ec6-5606-89bf-54b3484f3796",
+            "state": "failed",
+            "pipeline_version": "video-index-1-2b42febfdde1",
+            "analyzed_start_ms": null,
+            "analyzed_end_ms": null,
+            "error_code": "INVALID_MODEL_OUTPUT",
+            "processing_ms": 0
+          },
+          {
+            "segment_id": "7e25edd4-d54d-505d-8561-b227baf0bcd0",
+            "state": "waiting",
+            "pipeline_version": "video-index-1-2b42febfdde1",
+            "analyzed_start_ms": null,
+            "analyzed_end_ms": null,
+            "error_code": null,
+            "processing_ms": 0
+          }
+        ],
+        "usage": {
+          "requests": 1,
+          "input_tokens": 3316,
+          "output_tokens": 3329,
+          "bytes_uploaded": 456948,
+          "reserved_usd": 0.05,
+          "estimated_usd": null,
+          "billing": "unknown"
+        }
+      },
+      "error": "Analysis failed. Analysis could not complete.\nINVALID_MODEL_OUTPUT\n+ actual - expected\n\n+ 'failed'\n- 'succeeded'\n",
+      "duration_ms": 31631
+    },
+    "Muse_search": {
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n\n'failed' !== 'passed'\n",
+      "duration_ms": 49
+    },
+    "E": {
+      "status": "passed",
+      "offline_video_count": 0,
+      "empty_query_status": 422,
+      "missing_recording_status": 404,
+      "cross_origin_status": 403,
+      "unknown_proxy_path_status": 404,
+      "no_match": {
+        "status": 200,
+        "count": 0,
+        "coverage": "none"
+      },
+      "duration_ms": 10550
+    },
+    "responsive": {
+      "status": "passed",
+      "routes": [
+        {
+          "width": 390,
+          "route": "/"
+        },
+        {
+          "width": 390,
+          "route": "/cameras"
+        },
+        {
+          "width": 390,
+          "route": "/recordings"
+        },
+        {
+          "width": 390,
+          "route": "/search"
+        },
+        {
+          "width": 390,
+          "route": "/layouts"
+        },
+        {
+          "width": 390,
+          "route": "/settings"
+        },
+        {
+          "width": 834,
+          "route": "/"
+        },
+        {
+          "width": 834,
+          "route": "/cameras"
+        },
+        {
+          "width": 834,
+          "route": "/recordings"
+        },
+        {
+          "width": 834,
+          "route": "/search"
+        },
+        {
+          "width": 834,
+          "route": "/layouts"
+        },
+        {
+          "width": 834,
+          "route": "/settings"
+        }
+      ],
+      "duration_ms": 6799
+    }
+  },
+  "metrics": {
+    "live_startup_ms": [
+      633,
+      582,
+      588
+    ],
+    "recording_retrieval_ms": [
+      35,
+      32,
+      34
+    ],
+    "search_ms": []
+  },
+  "page_errors": [],
+  "failed_http": [
+    {
+      "path": "/api/v1/playback-sessions",
+      "status": 503
+    },
+    {
+      "path": "/api/v1/search",
+      "status": 422
+    },
+    {
+      "path": "/api/v1/recordings/00000000-0000-4000-8000-000000000099",
+      "status": 404
+    },
+    {
+      "path": "/api/v1/arbitrary-http",
+      "status": 404
+    }
+  ],
+  "accessibility": [
+    {
+      "name": "recording",
+      "violations": []
+    },
+    {
+      "name": "layout",
+      "violations": []
+    },
+    {
+      "name": "mobile-settings",
+      "violations": []
+    }
+  ],
+  "status": "failed"
+}

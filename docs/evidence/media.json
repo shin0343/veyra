@@ -1,0 +1,11 @@
+{
+  "observed_at": "2026-10-26T21:09:17.535845+00:00",
+  "fixture": "FFmpeg lavfi testsrc2; no human footage",
+  "status": "passed",
+  "hls_manifest": true,
+  "rtsp_pull": true,
+  "live_browser": true,
+  "recorded_duration_seconds": 6.066,
+  "cached_mp4_range_206": true,
+  "playback_browser": true
+}

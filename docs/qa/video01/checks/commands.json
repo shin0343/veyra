@@ -1,0 +1,36 @@
+[
+  {
+    "command": "make check",
+    "exit_code": 0,
+    "result": "174 passed / 1 skipped; Ruff, typecheck, frozen/runtime contracts pass",
+    "log": "checks/make-check.log"
+  },
+  {
+    "command": "npm run build",
+    "exit_code": 0,
+    "result": "Production Next build passed",
+    "log": "checks/build.log"
+  },
+  {
+    "command": "npm run lint --workspace @veyra/web",
+    "exit_code": 0,
+    "result": "Zero warnings"
+  },
+  {
+    "command": "npx prettier --check <edited frontend files>",
+    "exit_code": 0,
+    "log": "checks/prettier.log"
+  },
+  {
+    "command": ".venv/bin/python -E -m pytest -q apps/api/tests/test_video01.py",
+    "exit_code": 0,
+    "result": "12 passed",
+    "log": "checks/video01-regressions.log"
+  },
+  {
+    "command": ".venv/bin/python -E scripts/phase07_security_scan.py",
+    "exit_code": 0,
+    "result": "No exact known credentials or server key identifiers in committable files or static browser bundles",
+    "log": "checks/known-secret-scan.json"
+  }
+]

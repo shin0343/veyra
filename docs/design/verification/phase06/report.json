@@ -1,0 +1,182 @@
+{
+  "flows": {
+    "2": {
+      "title": "Open actual recorded media and navigate by timestamp",
+      "status": "passed",
+      "observations": {
+        "library_rows": 4,
+        "first_frames_ms": 313,
+        "seek_url": "?offset_ms=10000",
+        "position_label": "00:10",
+        "histogram_bins": 70,
+        "histogram_recorded_bins": 69,
+        "histogram_navigated_to": "/recordings/13720294-7cb2-53a3-9d04-670f7d2d5d4b?offset_ms=120000",
+        "after_histogram_frames_ms": 78,
+        "jump_to": "?offset_ms=5000"
+      },
+      "duration_ms": 18137
+    },
+    "3": {
+      "title": "Create, open and persist a layout",
+      "status": "passed",
+      "observations": {
+        "layout_id": "1eab9d11-2a2a-4f35-b6b8-b9140aae0331",
+        "tiles": 4,
+        "first_frames_ms": 7,
+        "persisted": true,
+        "persisted_cells": 4
+      },
+      "duration_ms": 3003
+    },
+    "4": {
+      "title": "Ask Muse to find a feature and navigate",
+      "status": "passed",
+      "observations": {
+        "muse_ms": 4320,
+        "status": "Answered from your workspace",
+        "message": "Available functions: Cameras: Change camera settings, names, location, enabled state and cloud consent. Change camera settings, names, location, enabled state and cloud consent.",
+        "steps": [
+          "",
+          ""
+        ],
+        "action_label": "Open Cameras",
+        "navigated_to": "/cameras"
+      },
+      "duration_ms": 5345
+    },
+    "5": {
+      "title": "Ask Muse to create a layout, approve, and verify it exists",
+      "status": "passed",
+      "observations": {
+        "muse_ms": 2816,
+        "proposal_cells": [
+          "Front entrance\nConnected",
+          "Garden\nConnected",
+          "Garage\nOffline",
+          "Trail camera\nConnected"
+        ],
+        "exists_before_approval": false,
+        "receipt": "Saved and verified “Muse quad mvqae2tv” was re-read from the database after saving: 4 cameras, 2 columns. Open saved layout",
+        "layout_id": "c7e6d439-5b16-460c-a360-bc371f0065d6",
+        "tiles": 4,
+        "api_columns": 2,
+        "api_cells": 4,
+        "first_frames_ms": 47,
+        "listed_in_saved_views": true
+      },
+      "duration_ms": 4952
+    },
+    "6": {
+      "title": "Search indexed video and open the corresponding recording",
+      "status": "passed",
+      "observations": {
+        "search_ms": 11363,
+        "heading": "20 moments to look at",
+        "coverage": "Only part of this window is analyzed",
+        "explanation": "Found 20 indexed intervals. Analyzed 359530 of 15437231 available milliseconds. Sampled analysis can miss events; this does not prove absence of activity.",
+        "chips": [
+          "person",
+          "bicycle",
+          "Cycling",
+          "Oct 25, 11:10 PM – Oct 26, 11:10 PM"
+        ],
+        "results": 20,
+        "first_caption": "A person rides a bicycle down a sloped dirt trail beside grassy ground with trees and sky visible in a tilted view.",
+        "first_time": "Oct 26, 10:20:05 PM\nAt 18:39 in recording · 5s",
+        "opened": "/recordings/13720294-7cb2-53a3-9d04-670f7d2d5d4b?offset_ms=1119520&segment_id=10903318-8bc5-56d9-bed7-eab1b6c16a84",
+        "first_frames_ms": 181,
+        "player_position": "18:39"
+      },
+      "duration_ms": 14053
+    },
+    "7": {
+      "title": "Unavailable camera, empty search, and tool failures",
+      "status": "passed",
+      "observations": {
+        "offline_camera": "Garage:offline",
+        "offline_message": "This camera is offline\n\nThe camera is not providing a stream. Check its connection.\n\nSOURCE_OFFLINE",
+        "offline_has_video": 0,
+        "empty_search": "No moments match those words Try a shorter description, another camera, or a different day. This doesn’t prove that it didn’t happen. Start a new search",
+        "empty_search_results": 0,
+        "unsupported_search": "Try describing it a little differently Veyra couldn’t turn these words into a search it supports. Nothing was searched. This request includes an unsupported or ambiguous search condition. UNSUPPORTED_SEARCH_CONSTRAINT · Reference 4d935bba E",
+        "not_found_ms": 2317,
+        "not_found": "Open the live view of the Basement camera. Not fully completed The request was not fully completed. No camera matches. Choose an existing camera name. Part of this didn’t work No camera matches. Choose an existing camera name. CAMERA_NOT_FOUND What Muse did · 2 steps",
+        "not_found_failure_receipts": 1,
+        "missing_camera_ms": 1813,
+        "missing_camera": "Create a 2x2 view with Basement, Attic, Roof and Pool cameras. Answered from your workspace Found 4 cameras. Status reflects backend observations. What Muse did · 1 step",
+        "missing_camera_proposal": 0,
+        "unsupported": "Recognize everyone who enters the front door. Not fully completed The request was not fully completed. Identity recognition is unsupported. No recognition rule or identity processing was enabled. Not something Veyra does Identity recognition is unsupported. No recognition rule or identity processing"
+      },
+      "duration_ms": 19713
+    },
+    "8": {
+      "title": "Responsive, accessible real-data pages",
+      "status": "passed",
+      "observations": {
+        "pages": [
+          "mobile / overflow=false",
+          "mobile /cameras overflow=false",
+          "mobile /live overflow=false",
+          "mobile /recordings/13720294-7cb2-53a3-9d04-670f7d2d5d4b overflow=false",
+          "mobile /search overflow=false",
+          "mobile /events overflow=false",
+          "mobile /layouts overflow=false",
+          "mobile /settings overflow=false",
+          "tablet / overflow=false",
+          "tablet /cameras overflow=false",
+          "tablet /live overflow=false",
+          "tablet /recordings/13720294-7cb2-53a3-9d04-670f7d2d5d4b overflow=false",
+          "tablet /search overflow=false",
+          "tablet /events overflow=false",
+          "tablet /layouts overflow=false",
+          "tablet /settings overflow=false"
+        ],
+        "histogram_keyboard_focus": "10:43:00 PM to 11:13:00 PM, 96% recorded, motion not measured, not analyzed by Muse. Open recording"
+      },
+      "duration_ms": 51132
+    },
+    "6i": {
+      "title": "Make a consented recording searchable through the UI",
+      "status": "failed",
+      "observations": {
+        "camera": "Trail camera",
+        "recording_id": "13720294-7cb2-53a3-9d04-670f7d2d5d4b",
+        "attempts": [
+          {
+            "wall_ms": 68599,
+            "result": "Analysis failed. Analysis could not complete. INVALID_MODEL_OUTPUT"
+          },
+          {
+            "wall_ms": 313290,
+            "result": "Analysis failed. Analysis could not complete. INVALID_MODEL_OUTPUT"
+          },
+          {
+            "wall_ms": 51529,
+            "result": "Analysis failed. Analysis could not complete. INVALID_MODEL_OUTPUT"
+          }
+        ],
+        "status_line": "36 of 291 segments analyzed · 106 failed"
+      },
+      "error": "Indexing did not finish",
+      "duration_ms": 456162
+    }
+  },
+  "observed_at": "2026-10-27T06:10:08.696Z",
+  "mode": "real stack: Next production build, FastAPI, PostgreSQL, MediaMTX, worker, Meta Muse",
+  "accessibility": {
+    "recording": [],
+    "layout": [],
+    "muse-response": [],
+    "mobile /": [],
+    "mobile /cameras": [],
+    "mobile /live": [],
+    "mobile /recordings/13720294-7cb2-53a3-9d04-670f7d2d5d4b": [],
+    "mobile /search": [],
+    "mobile /events": [],
+    "mobile /layouts": [],
+    "mobile /settings": []
+  },
+  "page_errors": [
+    "Failed to load resource: the server responded with a status of 422 (Unprocessable Entity)"
+  ]
+}

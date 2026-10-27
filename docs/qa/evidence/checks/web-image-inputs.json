@@ -1,0 +1,7 @@
+{
+  "scope": "native TypeScript over staged Docker source inputs; not a container",
+  "old_missing_contract_reproduced": true,
+  "corrected_inputs_typecheck_exit_code": 0,
+  "dockerfile_copy_present": true,
+  "status": "passed"
+}

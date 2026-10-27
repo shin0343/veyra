@@ -1,0 +1,65 @@
+{
+  "live_startup_ms": {
+    "n": 3,
+    "samples_ms": [
+      114,
+      75,
+      76
+    ],
+    "median_ms": 76,
+    "max_ms": 114
+  },
+  "recording_retrieval_ms": {
+    "n": 3,
+    "samples_ms": [
+      35,
+      35,
+      34
+    ],
+    "median_ms": 35,
+    "max_ms": 35
+  },
+  "search_ms": {
+    "n": 3,
+    "samples_ms": [
+      7490,
+      4239,
+      3015
+    ],
+    "median_ms": 4239,
+    "max_ms": 7490
+  },
+  "indexing_clips": [
+    {
+      "state": "succeeded",
+      "processing_ms": 28324,
+      "analyzed_ms": 10000,
+      "error_code": null
+    },
+    {
+      "state": "succeeded",
+      "processing_ms": 20743,
+      "analyzed_ms": 1067,
+      "error_code": null
+    }
+  ],
+  "usage": {
+    "requests": 15,
+    "input_tokens": 45701,
+    "output_tokens": 11549,
+    "bytes_uploaded": 507835,
+    "reserved_usd": 0.75,
+    "estimated_usd": null,
+    "billing": "unknown"
+  },
+  "final_agent_operations": {
+    "attempted": 4,
+    "completed": 4
+  },
+  "browser_development_history": {
+    "runs": 6,
+    "attempted_agent_tasks": 21,
+    "completed_agent_tasks": 19,
+    "note": "Different code revisions; not a post-fix reliability estimate. Includes verified layout completion before the first axe harness failure; excludes precondition-only and API-only probes."
+  }
+}

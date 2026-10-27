@@ -1,0 +1,339 @@
+{
+  "observed_at": "2026-10-27T07:03:58.322Z",
+  "mode": "genuine live integration",
+  "scenarios": {
+    "A": {
+      "status": "failed",
+      "recording_id": "7a94e22a-b702-5883-b650-e13da4401f29",
+      "available_duration_ms": 60000,
+      "error": "Expected values to be strictly equal:\n\nNaN !== 52000\n",
+      "duration_ms": 1966
+    },
+    "B": {
+      "status": "passed",
+      "operations": [
+        {
+          "prompt": "Where can I change a camera's settings?",
+          "model_ms": 2968,
+          "completion_ms": 3051,
+          "route": "/cameras",
+          "receipts": [
+            {
+              "tool": "features.discover",
+              "status": "succeeded"
+            },
+            {
+              "tool": "features.navigate",
+              "status": "succeeded"
+            }
+          ]
+        },
+        {
+          "prompt": "Open the live view of Front entrance.",
+          "model_ms": 2234,
+          "completion_ms": 2344,
+          "route": "/live?camera_id=257eca0c-bc26-4a3c-9852-67ccb9ff4251",
+          "receipts": [
+            {
+              "tool": "cameras.navigate",
+              "status": "succeeded"
+            }
+          ]
+        }
+      ],
+      "duration_ms": 6540
+    },
+    "manual_layout": {
+      "status": "passed",
+      "completion_ms": 330,
+      "layout_id": "2be6eb32-3984-4f00-b2db-b135f7f39192",
+      "duration_ms": 887
+    },
+    "C": {
+      "status": "passed",
+      "model_ms": 2511,
+      "absent_before_approval": true,
+      "completion_ms": 2989,
+      "layout_id": "d180512a-87f5-400f-934b-8f7c5c54f517",
+      "persisted_cells": 4,
+      "duration_ms": 4661
+    },
+    "D": {
+      "status": "passed",
+      "indexing_wall_ms": 41519,
+      "job": {
+        "id": "d3b9e91d-5e61-41e6-ae3d-af37ddc4acbf",
+        "recording_id": "8bc04ef8-5e82-5268-9ac4-d025b55fc151",
+        "state": "succeeded",
+        "progress": 1,
+        "attempts": 1,
+        "error": null,
+        "created_at": "2026-10-27T07:04:13.788116Z",
+        "updated_at": "2026-10-27T07:04:54.756089Z",
+        "pipeline_version": "video-index-1-2b42febfdde1",
+        "selected_segments": 2,
+        "selected_duration_ms": 11133,
+        "processing_ms": 40739,
+        "segments": [
+          {
+            "segment_id": "ebc937bf-9ba4-5354-8ef4-c33439ae8651",
+            "state": "succeeded",
+            "pipeline_version": "video-index-1-2b42febfdde1",
+            "analyzed_start_ms": 0,
+            "analyzed_end_ms": 10000,
+            "error_code": null,
+            "processing_ms": 21964
+          },
+          {
+            "segment_id": "11dfd032-9721-5b42-823b-7e262aeee6b8",
+            "state": "succeeded",
+            "pipeline_version": "video-index-1-2b42febfdde1",
+            "analyzed_start_ms": 0,
+            "analyzed_end_ms": 1133,
+            "error_code": null,
+            "processing_ms": 18775
+          }
+        ],
+        "usage": {
+          "requests": 2,
+          "input_tokens": 4292,
+          "output_tokens": 5492,
+          "bytes_uploaded": 510246,
+          "reserved_usd": 0.1,
+          "estimated_usd": null,
+          "billing": "unknown"
+        }
+      },
+      "queries": [
+        {
+          "query": "a person riding a bicycle",
+          "elapsed_ms": 6920,
+          "hits": 6,
+          "coverage": "partial"
+        },
+        {
+          "query": "Find footage with a bicycle.",
+          "elapsed_ms": 5324,
+          "hits": 6,
+          "coverage": "partial"
+        },
+        {
+          "query": "Find cycling events.",
+          "elapsed_ms": 4681,
+          "hits": 6,
+          "coverage": "partial"
+        }
+      ],
+      "grounded_hit": {
+        "segment_id": "11dfd032-9721-5b42-823b-7e262aeee6b8",
+        "camera_id": "84f316de-3126-4c84-b631-3482fde0bc6d",
+        "recording_id": "8bc04ef8-5e82-5268-9ac4-d025b55fc151",
+        "start": "2026-10-27T07:03:07.109651Z",
+        "end": "2026-10-27T07:03:08.242651Z",
+        "offset_ms": 8993,
+        "summary": "A person on a bicycle is airborne above a dirt mound on a forest trail surrounded by dense green trees.",
+        "evidence_text": "Dirt trail and light-colored mound in foreground, dense green forest in background, small dark figure with bicycle-like shape visible in center above the mound.",
+        "model_id": "muse-spark-1.3",
+        "indexed_at": "2026-10-27T07:04:54.750600Z",
+        "relevance": 1,
+        "action": {
+          "kind": "navigate",
+          "label": "Play matching footage",
+          "target": {
+            "kind": "recording",
+            "recording_id": "8bc04ef8-5e82-5268-9ac4-d025b55fc151",
+            "offset_ms": 8993,
+            "segment_id": "11dfd032-9721-5b42-823b-7e262aeee6b8"
+          }
+        },
+        "camera_name": "Trail camera",
+        "metadata_id": "44ab765e-d652-42a5-8232-dd0b181a0642",
+        "objects": [
+          {
+            "category": "person",
+            "attributes": [
+              "moving"
+            ],
+            "apparel": [],
+            "evidence": "Small dark figure in mid-distance above trail, shape consistent with a rider but details not resolvable due to distance and blur."
+          },
+          {
+            "category": "bicycle",
+            "attributes": [
+              "moving"
+            ],
+            "apparel": [],
+            "evidence": "Small dark shape beneath the figure consistent with bicycle frame and wheels, details not resolvable due to distance and blur."
+          }
+        ],
+        "event_types": [
+          "person_visible",
+          "vehicle_visible",
+          "cycling"
+        ],
+        "uncertainty": "high",
+        "uncertainty_notes": "Figure is small, distant and blurry in low-resolution short clip; bicycle details and apparel colors cannot be clearly resolved.",
+        "prompt_version": "observable-video-2",
+        "schema_version": "observations-2",
+        "provenance": {
+          "provider": "meta_standard",
+          "timestamps": "recording_clock_plus_estimated_clip_offsets",
+          "clip_end_ms": 1133,
+          "clip_sha256": "11729bbd178aa10339d2779c09b067cfef166f405665d07e6a96857a21f17c42",
+          "audio_removed": true,
+          "clip_start_ms": 0,
+          "model_version": "muse-spark-1.3",
+          "motion_method": "ffmpeg_gray_mean_absolute_pixel_difference",
+          "source_sha256": "c1d2b0332ed50a18e4355e75acfdb33b09343ae6631c291ea7e1fde6b4a65cc4",
+          "source_mtime_ns": 1793084588123145200,
+          "motion_threshold": 0.035,
+          "pipeline_version": "video-index-1-2b42febfdde1",
+          "source_size_bytes": 238507,
+          "sampling_interval_ms": 500
+        },
+        "evidence": {
+          "metadata_id": "44ab765e-d652-42a5-8232-dd0b181a0642",
+          "event_id": null,
+          "kind": "recording_interval",
+          "recording_id": "8bc04ef8-5e82-5268-9ac4-d025b55fc151",
+          "segment_id": "11dfd032-9721-5b42-823b-7e262aeee6b8",
+          "start_offset_ms": 8993,
+          "end_offset_ms": 10126,
+          "boundary_accuracy": "model_estimated_within_verified_clip"
+        },
+        "playback_request": {
+          "recording_id": "8bc04ef8-5e82-5268-9ac4-d025b55fc151",
+          "offset_ms": 8993,
+          "duration_ms": 10000,
+          "segment_id": "11dfd032-9721-5b42-823b-7e262aeee6b8"
+        }
+      },
+      "player_seek_error_ms": 3,
+      "duration_ms": 61596
+    },
+    "Muse_search": {
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'failed'\n- 'completed'\n",
+      "duration_ms": 24347
+    },
+    "E": {
+      "status": "passed",
+      "offline_video_count": 0,
+      "empty_query_status": 422,
+      "missing_recording_status": 404,
+      "cross_origin_status": 403,
+      "unknown_proxy_path_status": 404,
+      "no_match": {
+        "status": 200,
+        "count": 0,
+        "coverage": "partial"
+      },
+      "duration_ms": 7839
+    },
+    "responsive": {
+      "status": "passed",
+      "routes": [
+        {
+          "width": 390,
+          "route": "/"
+        },
+        {
+          "width": 390,
+          "route": "/cameras"
+        },
+        {
+          "width": 390,
+          "route": "/recordings"
+        },
+        {
+          "width": 390,
+          "route": "/search"
+        },
+        {
+          "width": 390,
+          "route": "/layouts"
+        },
+        {
+          "width": 390,
+          "route": "/settings"
+        },
+        {
+          "width": 834,
+          "route": "/"
+        },
+        {
+          "width": 834,
+          "route": "/cameras"
+        },
+        {
+          "width": 834,
+          "route": "/recordings"
+        },
+        {
+          "width": 834,
+          "route": "/search"
+        },
+        {
+          "width": 834,
+          "route": "/layouts"
+        },
+        {
+          "width": 834,
+          "route": "/settings"
+        }
+      ],
+      "duration_ms": 6855
+    }
+  },
+  "metrics": {
+    "live_startup_ms": [
+      113,
+      79,
+      76
+    ],
+    "recording_retrieval_ms": [],
+    "search_ms": [
+      6920,
+      5324,
+      4681
+    ]
+  },
+  "page_errors": [],
+  "failed_http": [
+    {
+      "path": "/api/v1/playback-sessions",
+      "status": 503
+    },
+    {
+      "path": "/api/v1/playback-sessions",
+      "status": 409
+    },
+    {
+      "path": "/api/v1/search",
+      "status": 422
+    },
+    {
+      "path": "/api/v1/recordings/00000000-0000-4000-8000-000000000099",
+      "status": 404
+    },
+    {
+      "path": "/api/v1/arbitrary-http",
+      "status": 404
+    }
+  ],
+  "accessibility": [
+    {
+      "name": "layout",
+      "violations": []
+    },
+    {
+      "name": "search",
+      "violations": []
+    },
+    {
+      "name": "mobile-settings",
+      "violations": []
+    }
+  ],
+  "status": "failed"
+}

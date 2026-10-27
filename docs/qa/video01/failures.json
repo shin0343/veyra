@@ -1,0 +1,27 @@
+{
+  "started_at": "2026-10-27T15:29:43.584Z",
+  "page_errors": [],
+  "browser_network_outage": {
+    "buffering_visible": true,
+    "camera_status_label": "Not checked",
+    "mechanism": "Chromium context offline; backend and publisher remain running."
+  },
+  "browser_network_recovery": {
+    "advancing_frames": true,
+    "camera_status_label": "Connected"
+  },
+  "publisher_disconnect": {
+    "source_id": "demo_entrance",
+    "actual_publisher_stopped": true,
+    "camera_status": "offline",
+    "error_code": "SOURCE_OFFLINE",
+    "video_count": 0
+  },
+  "status": "passed",
+  "updated_at": "2026-10-27T15:33:20.531Z",
+  "publisher_recovery": {
+    "status": "online",
+    "video_width": 960,
+    "after_restart": true
+  }
+}

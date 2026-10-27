@@ -1,0 +1,9 @@
+.git
+.env*
+.venv
+.cache
+node_modules
+**/node_modules
+**/.next
+**/__pycache__
+runtime

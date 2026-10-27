@@ -1,0 +1,7 @@
+docker compose config --quiet
+exit 127: zsh: command not found: docker
+
+docker compose --profile fixture up --build --wait
+exit 127: zsh: command not found: docker
+
+BLOCKED: Docker/Compose absent; no images, network or firewall execution claimed.

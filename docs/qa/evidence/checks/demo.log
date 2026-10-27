@@ -1,0 +1,10 @@
+Four real RTSP publishers online; recording licensed and synthetic fixtures.
+A: passed
+B: passed
+manual_layout: passed
+C: passed
+D: passed
+Muse_search: passed
+E: passed
+responsive: passed
+{"status": "passed", "evidence": "docs/qa/evidence/20261027T072125917447Z"}

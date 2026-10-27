@@ -1,0 +1,35 @@
+.venv/bin/python -E scripts/meta_smoke.py
+{
+  "observed_at": "2026-10-27T06:54:04.895750+00:00",
+  "model": "muse-spark-1.3",
+  "status": "passed",
+  "video": "not tested: no media uploaded in this minimal smoke test",
+  "model_availability": {
+    "status": "passed",
+    "model": "muse-spark-1.3"
+  },
+  "text": {
+    "status": "passed",
+    "id": "chatcmpl-01a17c23-3b2a-71f0-86be-25fe476b0c5a",
+    "usage": {
+      "completion_tokens": 18,
+      "prompt_tokens": 14,
+      "total_tokens": 32,
+      "completion_tokens_details": {
+        "reasoning_tokens": 8
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    }
+  },
+  "structured_output": {
+    "status": "passed",
+    "id": "chatcmpl-01a17c23-3fe3-7638-8247-b290e62acd23"
+  },
+  "tool_calling": {
+    "status": "passed",
+    "id": "chatcmpl-01a17c23-46b3-74cf-b921-487e4d12cc29",
+    "executed": "features.discover (read-only)"
+  }
+}

@@ -1,0 +1,24 @@
+.venv/bin/python -E scripts/agent_acceptance.py --require-live
+.................................................................        [100%]
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/sjh/Hackaton & Contest/meta-ai-hackaton/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+65 passed, 1 warning in 6.66s
+{
+  "observed_at": "2026-10-27T07:20:27.417263+00:00",
+  "status": "passed",
+  "scope": "PostgreSQL + actual REST/application tools; scripted Meta HTTP except explicitly named genuine test",
+  "live_meta": {
+    "name": "test_genuine_muse_natural_language_to_persisted_layout",
+    "status": "passed"
+  },
+  "passed": 65,
+  "skipped": 0,
+  "failed": 0,
+  "backend_acceptance": "passed",
+  "full_acceptance_gate": "passed",
+  "require_live": true
+}

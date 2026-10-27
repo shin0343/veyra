@@ -1,0 +1,51 @@
+# Internal local-development media service. No public media/control ports in compose.yml.
+logLevel: info
+api: true
+apiAddress: :9997
+playback: true
+playbackAddress: :9996
+rtsp: true
+rtspTransports: [tcp]
+rtmp: false
+webrtc: false
+srt: false
+moq: false
+hls: true
+hlsAddress: :8888
+hlsVariant: fmp4
+hlsAlwaysRemux: true
+hlsAllowOrigins: ["http://localhost:3000"]
+playbackAllowOrigins: ["http://localhost:3000"]
+authMethod: internal
+authInternalUsers:
+  - user: any
+    ips: []
+    permissions:
+      - action: publish
+        path: fixture
+      - action: publish
+        path: fixture_2
+      - action: publish
+        path: fixture_3
+      - action: publish
+        path: fixture_4
+      - action: read
+      - action: playback
+      - action: api
+pathDefaults:
+  source: publisher
+  record: true
+  recordPath: ./runtime/recordings/%path/%Y-%m-%d_%H-%M-%S-%f_%z
+  recordFormat: fmp4
+  recordPartDuration: 1s
+  recordSegmentDuration: 10s
+  recordDeleteAfter: 24h
+paths:
+  fixture:
+    source: publisher
+  fixture_2:
+    source: publisher
+  fixture_3:
+    source: publisher
+  fixture_4:
+    source: publisher
