@@ -383,14 +383,14 @@ await check("overview_video_first", async () => {
 
 await check("activity_anchored_with_frames", async () => {
   await page.goto(base + "/events", { waitUntil: "domcontentloaded" });
-  await page.waitForSelector(".event-card-framed .evidence-frame.is-ready", {
+  await page.waitForSelector(".log-row .evidence-frame.is-ready", {
     timeout: 30000,
   });
   await page.waitForTimeout(1000);
   await shot("activity-1440");
   return {
-    cards: await page.locator(".event-card").count(),
-    first: await page.locator(".event-card time").first().innerText(),
+    cards: await page.locator(".log-row").count(),
+    first: await page.locator(".log-row time").first().innerText(),
   };
 });
 

@@ -2,19 +2,13 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import {
-  ArrowUpRight,
-  Camera,
-  Check,
-  Grid2X2,
-  Plus,
-  Sparkles,
-} from "lucide-react";
+import { ArrowUpRight, Check, Pencil, Plus, Sparkles } from "lucide-react";
 import { mutationOptions, request } from "@/lib/client-api";
+import { isTestCamera, isTestLayout, plural, testCameraIds } from "@/lib/demo";
 import { useRequestKey } from "@/lib/use-request-key";
-import type { Layout, Schema } from "@/lib/types";
+import type { Camera, Layout, Schema } from "@/lib/types";
 import { useWorkspace } from "../workspace-provider";
-import { suggestedPrompts } from "../muse-panel";
+import { CameraFrame } from "../camera-card";
 import { ResourceState } from "../resource-state";
 import { Button } from "../ui/button";
 import { Dialog } from "../ui/dialog";
@@ -26,157 +20,239 @@ import {
 } from "../ui/primitives";
 
 export function LayoutsScreen() {
-  const { layouts, cameras, href, preview, openMuse } = useWorkspace();
-  const [creating, setCreating] = useState(false);
+  const {
+    layouts,
+    cameras,
+    href,
+    preview,
+    showTestSources,
+    setShowTestSources,
+  } = useWorkspace();
+  const [editor, setEditor] = useState<{ layout?: Layout } | null>(null);
+  const cameraData = cameras.state === "ready" ? cameras.data : [];
+  const testIds = testCameraIds(cameraData);
+  const all = layouts.state === "ready" ? layouts.data : [];
+  const tests = all.filter((layout) => isTestLayout(layout, testIds));
   return (
-    <>
+    <div className="views">
       <PageHeading
         title="Saved views"
-        description="Save an arrangement that feels right for your day."
+        description={
+          layouts.state === "ready" ? (
+            <>
+              <span>
+                {plural(
+                  all.length - (showTestSources ? 0 : tests.length),
+                  "view",
+                )}
+              </span>
+              {!showTestSources && !!tests.length && (
+                <span>
+                  {plural(tests.length, "view")} with test sources hidden
+                </span>
+              )}
+            </>
+          ) : undefined
+        }
       >
-        <Button
-          variant="secondary"
-          onClick={() =>
-            openMuse(
-              suggestedPrompts(
-                cameras.state === "ready" ? cameras.data : [],
-              )[1],
-            )
-          }
-        >
-          <Sparkles size={16} />
-          Plan with Muse
-        </Button>
-        <Button onClick={() => setCreating(true)}>
-          <Plus size={17} />
-          Create a view
+        {!!tests.length && (
+          <label className="test-toggle">
+            <input
+              type="checkbox"
+              role="switch"
+              checked={showTestSources}
+              onChange={(event) => setShowTestSources(event.target.checked)}
+            />
+            Show test views ({tests.length})
+          </label>
+        )}
+        <Button onClick={() => setEditor({})}>
+          <Plus size={16} />
+          New view
         </Button>
       </PageHeading>
       <ResourceState
         resource={layouts}
-        emptyTitle="A view that feels like yours"
-        emptyDescription="Choose a few cameras and save their arrangement. Your favorite spaces will be one click away."
+        emptyTitle="No saved views yet"
+        emptyDescription="A saved view keeps several cameras side by side, one click away."
         emptyAction={
-          <Button onClick={() => setCreating(true)}>
+          <Button onClick={() => setEditor({})}>
             <Plus size={16} />
             Create your first view
           </Button>
         }
       >
-        {(data) => (
-          <div className="layout-card-grid">
-            {data.map((layout) => (
-              <article key={layout.id} className="layout-card">
-                <Link
-                  href={href(`/layouts/${layout.id}`)}
-                  className="layout-mosaic"
-                  aria-label={`Open ${layout.name}`}
-                  style={{
-                    gridTemplateColumns: `repeat(${layout.columns}, 1fr)`,
-                  }}
-                >
-                  {[...layout.cells]
-                    .sort((a, b) => a.position - b.position)
-                    .map((cell) => (
-                      <span
-                        key={cell.position}
-                        style={{
-                          gridColumn: (cell.position % layout.columns) + 1,
-                          gridRow:
-                            Math.floor(cell.position / layout.columns) + 1,
-                        }}
-                      >
-                        <Camera size={22} strokeWidth={1.4} />
-                        <span>
-                          {cameras.state === "ready"
-                            ? (cameras.data.find(
-                                (camera) => camera.id === cell.camera_id,
-                              )?.name ?? "Camera")
-                            : "Camera"}
-                        </span>
-                      </span>
-                    ))}
-                </Link>
-                <div className="layout-card-body">
-                  <div>
-                    <h2>{layout.name}</h2>
-                    <p>
-                      {layout.cells.length} cameras · {layout.columns} columns
-                    </p>
-                  </div>
+        {(data) => {
+          const shown = showTestSources
+            ? data
+            : data.filter((layout) => !isTestLayout(layout, testIds));
+          return (
+            <ul className="views-gallery">
+              {shown.map((layout) => (
+                <li key={layout.id} className="views-item">
                   <Link
                     href={href(`/layouts/${layout.id}`)}
-                    aria-label={`Open ${layout.name}`}
+                    className="views-open"
                   >
-                    <ArrowUpRight size={21} />
+                    <ViewMosaic layout={layout} cameras={cameraData} />
+                    <span className="views-name">{layout.name}</span>
                   </Link>
-                </div>
-                {preview && (
-                  <span className="layout-preview-note">
-                    Preview arrangement · no video
-                  </span>
-                )}
-              </article>
-            ))}
-            <button
-              className="create-layout-card"
-              onClick={() => setCreating(true)}
-            >
-              <span>
-                <Plus size={24} />
-              </span>
-              <strong>Create another view</strong>
-              <small>Make a little room for your routine.</small>
-            </button>
-          </div>
-        )}
+                  <p className="views-meta">
+                    {layout.cells
+                      .map(
+                        (cell) =>
+                          cameraData.find((c) => c.id === cell.camera_id)
+                            ?.name ?? "Removed camera",
+                      )
+                      .join(" · ")}
+                  </p>
+                  <p className="views-meta">
+                    {plural(layout.columns, "column")} · version{" "}
+                    {layout.version}
+                    {preview && " · preview arrangement, no video"}
+                    <button
+                      className="text-button"
+                      onClick={() => setEditor({ layout })}
+                      aria-label={`Edit ${layout.name}`}
+                    >
+                      <Pencil size={12} />
+                      Edit
+                    </button>
+                  </p>
+                </li>
+              ))}
+            </ul>
+          );
+        }}
       </ResourceState>
-      {creating && <CreateLayout open={creating} onOpenChange={setCreating} />}
-    </>
+      {editor && (
+        <LayoutEditor
+          layout={editor.layout}
+          open
+          onOpenChange={(open) => !open && setEditor(null)}
+        />
+      )}
+    </div>
   );
 }
 
-function CreateLayout({
+/** A saved arrangement drawn with each camera's real preview frame, at its saved position. */
+export function ViewMosaic({
+  layout,
+  cameras,
+}: {
+  layout: Pick<Layout, "columns" | "cells">;
+  cameras: Camera[];
+}) {
+  const last = Math.max(0, ...layout.cells.map((cell) => cell.position));
+  const rows = Math.floor(last / layout.columns) + 1;
+  return (
+    <span
+      className="view-mosaic"
+      aria-hidden="true"
+      style={{
+        gridTemplateColumns: `repeat(${layout.columns}, minmax(0, 1fr))`,
+        gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
+      }}
+    >
+      {Array.from({ length: rows * layout.columns }, (_, position) => {
+        const cell = layout.cells.find((item) => item.position === position);
+        const camera = cameras.find((item) => item.id === cell?.camera_id);
+        return camera ? (
+          <CameraFrame key={position} camera={camera} />
+        ) : (
+          <span key={position} className="view-mosaic-empty" />
+        );
+      })}
+    </span>
+  );
+}
+
+/**
+ * Create a view, or edit one: name, cameras in order and columns. Editing replaces the saved
+ * view with `expected_version`, so a concurrent change is rejected instead of overwritten.
+ */
+export function LayoutEditor({
+  layout,
+  initialCameraIds,
   open,
   onOpenChange,
 }: {
+  layout?: Layout;
+  /** Cameras to start a new view from, such as the ones on the live wall. */
+  initialCameraIds?: string[];
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
-  const { cameras, preview, addPreviewLayout, reload, href } = useWorkspace();
-  const [name, setName] = useState("");
-  const [selected, setSelected] = useState<string[]>([]);
-  const [columns, setColumns] = useState<1 | 2 | 3>(2);
+  const {
+    cameras,
+    preview,
+    addPreviewLayout,
+    reload,
+    href,
+    openMuse,
+    showTestSources,
+  } = useWorkspace();
+  const [name, setName] = useState(layout?.name ?? "");
+  const [selected, setSelected] = useState<string[]>(
+    layout
+      ? [...layout.cells]
+          .sort((a, b) => a.position - b.position)
+          .map((cell) => cell.camera_id)
+      : (initialCameraIds ?? []).slice(0, 9),
+  );
+  const [columns, setColumns] = useState<1 | 2 | 3>(layout?.columns ?? 2);
   const [reviewing, setReviewing] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<unknown>(null);
-  const [created, setCreated] = useState<Layout | null>(null);
+  const [saved, setSaved] = useState<Layout | null>(null);
   const requestKey = useRequestKey();
-  async function create() {
+  const cameraData = cameras.state === "ready" ? cameras.data : [];
+  const choices = cameraData.filter(
+    (camera) =>
+      showTestSources || !isTestCamera(camera) || selected.includes(camera.id),
+  );
+  const cells = selected.map((camera_id, position) => ({
+    camera_id,
+    position,
+  }));
+  const names = selected.map(
+    (id) => cameraData.find((camera) => camera.id === id)?.name ?? "Camera",
+  );
+  async function save() {
     setBusy(true);
     setError(null);
-    const body: Schema["LayoutCreate"] = {
-      name: name.trim(),
-      columns,
-      cells: selected.map((camera_id, position) => ({ camera_id, position })),
-    };
+    const body = { name: name.trim(), columns, cells };
     try {
       if (preview) {
-        const layout: Layout = {
+        const local: Layout = {
           ...body,
           id: crypto.randomUUID(),
           version: 1,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         };
-        addPreviewLayout(layout);
-        setCreated(layout);
-      } else {
-        const layout = await request<Schema["Layout"]>(
-          "/layouts",
-          mutationOptions(body, requestKey(body)),
+        addPreviewLayout(local);
+        setSaved(local);
+      } else if (layout) {
+        const replace: Schema["LayoutReplace"] = {
+          ...body,
+          expected_version: layout.version,
+        };
+        setSaved(
+          await request<Layout>(
+            `/layouts/${layout.id}`,
+            mutationOptions(replace, requestKey(replace), "PUT"),
+          ),
         );
-        setCreated(layout);
+        reload();
+      } else {
+        setSaved(
+          await request<Layout>(
+            "/layouts",
+            mutationOptions(body, requestKey(body)),
+          ),
+        );
         reload();
       }
     } catch (value) {
@@ -185,82 +261,66 @@ function CreateLayout({
       setBusy(false);
     }
   }
+  const editing = Boolean(layout);
   return (
     <Dialog
       open={open}
-      onOpenChange={(value) => {
-        onOpenChange(value);
-        if (!value) {
-          setReviewing(false);
-          setCreated(null);
-          setError(null);
-        }
-      }}
+      onOpenChange={onOpenChange}
+      className="view-editor"
       title={
-        created
+        saved
           ? preview
             ? "Preview view created"
-            : "Your view is ready"
+            : editing
+              ? "View updated"
+              : "View saved"
           : reviewing
-            ? "A quick look before saving"
-            : "Create a saved view"
+            ? "Check before saving"
+            : editing
+              ? `Edit “${layout!.name}”`
+              : "New saved view"
       }
       description={
-        created
+        saved
           ? preview
             ? "Saved in this preview session only. Nothing changed on the server."
-            : "Your camera arrangement has been saved to this workspace."
-          : "Bring the cameras you care about into one place."
+            : "The workspace confirmed this arrangement."
+          : "Choose cameras in the order they should appear."
       }
     >
-      {created ? (
-        <div className="dialog-note">
-          <span className="created-check">
-            <Check size={24} />
-          </span>
-          <h3>{created.name}</h3>
-          <p>
-            {created.cells.length} cameras, arranged in {created.columns}{" "}
-            columns.
-          </p>
-          {preview && (
-            <Badge tone="blue">Disappears when this tab is refreshed</Badge>
-          )}
-          <div className="dialog-actions">
-            <Button asChild>
-              <Link
-                href={href(`/layouts/${created.id}`)}
-                onClick={() => onOpenChange(false)}
-              >
-                Open saved view
-                <ArrowUpRight size={16} />
-              </Link>
-            </Button>
+      {saved ? (
+        <div className="review-receipt" role="status">
+          <Check size={18} />
+          <div>
+            <strong>
+              {editing ? "Updated" : "Saved"} “{saved.name}”
+            </strong>
+            <p>
+              {plural(saved.cells.length, "camera")} ·{" "}
+              {plural(saved.columns, "column")} · version {saved.version}
+            </p>
           </div>
+          <Button asChild size="sm">
+            <Link
+              href={href(`/layouts/${saved.id}`)}
+              onClick={() => onOpenChange(false)}
+            >
+              Open view <ArrowUpRight size={14} />
+            </Link>
+          </Button>
         </div>
       ) : reviewing ? (
         <>
-          <div className="layout-review">
-            <Grid2X2 size={28} />
-            <h3>{name}</h3>
+          <div className="review-plan">
+            <span>{editing ? "This will replace" : "This will create"}</span>
             <p>
-              {selected.length} cameras ·{" "}
-              {["One column", "Two columns", "Three columns"][columns - 1]}
+              “{name.trim()}” with {names.join(", ")} in{" "}
+              {plural(columns, "column")}.
+              {editing &&
+                ` The current version (${layout!.version}) is replaced; if someone changed it since you opened it, nothing is saved.`}
             </p>
-            {cameras.state === "ready" &&
-              selected.map((id) => (
-                <span key={id}>
-                  <Camera size={15} />
-                  {cameras.data.find((camera) => camera.id === id)?.name}
-                </span>
-              ))}
+            <ViewMosaic layout={{ columns, cells }} cameras={cameraData} />
           </div>
-          {preview && (
-            <p className="muted">
-              This creates a local preview arrangement, not a saved server
-              resource.
-            </p>
-          )}
           {!!error && (
             <ProblemMessage
               error={error}
@@ -271,8 +331,14 @@ function CreateLayout({
             <Button variant="secondary" onClick={() => setReviewing(false)}>
               Go back
             </Button>
-            <Button onClick={() => void create()} disabled={busy}>
-              {busy ? "Saving…" : preview ? "Create preview view" : "Save view"}
+            <Button onClick={() => void save()} disabled={busy}>
+              {busy
+                ? "Saving…"
+                : preview
+                  ? "Create preview view"
+                  : editing
+                    ? "Replace view"
+                    : "Save view"}
             </Button>
           </div>
         </>
@@ -283,72 +349,111 @@ function CreateLayout({
             <input
               value={name}
               onChange={(event) => setName(event.target.value)}
-              placeholder="For example, Everyday spaces"
+              placeholder="For example, Morning walk-through"
               maxLength={100}
             />
           </label>
-          <fieldset className="camera-picker">
+          <fieldset className="view-picker">
             <legend>
-              Choose up to nine cameras, in the order they should appear
+              Cameras{" "}
+              <small>{selected.length} of up to 9 · order is position</small>
             </legend>
-            {cameras.state === "ready" &&
-              cameras.data.map((camera) => (
-                <label key={camera.id}>
-                  <input
-                    type="checkbox"
-                    checked={selected.includes(camera.id)}
-                    disabled={
-                      !selected.includes(camera.id) && selected.length >= 9
-                    }
-                    onChange={(event) =>
-                      setSelected((current) =>
-                        event.target.checked
-                          ? [...current, camera.id]
-                          : current.filter((id) => id !== camera.id),
-                      )
-                    }
-                  />
-                  <span>
-                    <strong>{camera.name}</strong>
-                    <CameraStatus status={camera.status} />
-                  </span>
-                </label>
-              ))}
-            {cameras.state !== "ready" && (
+            {cameras.state !== "ready" ? (
               <p className="muted">
-                Camera choices will appear when the workspace is connected.
+                Cameras appear when the workspace is connected.
               </p>
-            )}
-            {cameras.state === "ready" && !cameras.data.length && (
-              <p className="muted">
-                Connect at least one camera to create a saved view.
-              </p>
+            ) : !choices.length ? (
+              <p className="muted">Connect a camera to create a saved view.</p>
+            ) : (
+              <ul>
+                {choices.map((camera) => {
+                  const index = selected.indexOf(camera.id);
+                  return (
+                    <li key={camera.id}>
+                      <button
+                        type="button"
+                        className={index >= 0 ? "is-chosen" : ""}
+                        aria-pressed={index >= 0}
+                        disabled={index < 0 && selected.length >= 9}
+                        onClick={() =>
+                          setSelected((current) =>
+                            index >= 0
+                              ? current.filter((id) => id !== camera.id)
+                              : [...current, camera.id],
+                          )
+                        }
+                      >
+                        <CameraFrame camera={camera} />
+                        {index >= 0 && (
+                          <span
+                            className="view-picker-order"
+                            aria-hidden="true"
+                          >
+                            {index + 1}
+                          </span>
+                        )}
+                        <strong>{camera.name}</strong>
+                        <CameraStatus status={camera.status} />
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
             )}
           </fieldset>
-          <label className="form-field">
-            Arrangement
-            <select
-              value={columns}
-              onChange={(event) =>
-                setColumns(Number(event.target.value) as 1 | 2 | 3)
-              }
-            >
-              <option value={2}>Two columns (2 × 2 for four cameras)</option>
-              <option value={1}>One column</option>
-              <option value={3}>Three columns</option>
-            </select>
-          </label>
+          <div className="view-editor-row">
+            <div className="segmented-control" aria-label="Columns">
+              {([1, 2, 3] as const).map((value) => (
+                <button
+                  key={value}
+                  type="button"
+                  aria-pressed={columns === value}
+                  onClick={() => setColumns(value)}
+                >
+                  {plural(value, "column")}
+                </button>
+              ))}
+            </div>
+            {!!selected.length && (
+              <ViewMosaic layout={{ columns, cells }} cameras={cameraData} />
+            )}
+          </div>
+          {preview && editing && (
+            <p className="muted">Editing needs a connected workspace.</p>
+          )}
           <div className="dialog-actions">
+            {!preview && !editing && (
+              <Button
+                variant="ghost"
+                disabled={!selected.length}
+                onClick={() => {
+                  onOpenChange(false);
+                  openMuse(
+                    `Create a ${columns}-column saved view named "${name.trim() || "New view"}" with ${names.join(", ")}.`,
+                  );
+                }}
+              >
+                <Sparkles size={14} />
+                Write it for Muse instead
+              </Button>
+            )}
             <Button variant="secondary" onClick={() => onOpenChange(false)}>
               Cancel
             </Button>
             <Button
-              disabled={!name.trim() || !selected.length}
+              disabled={
+                !name.trim() || !selected.length || (preview && editing)
+              }
               onClick={() => setReviewing(true)}
             >
               Review view
             </Button>
           </div>
+          {preview && !editing && (
+            <Badge tone="blue">
+              Preview views disappear when this tab is refreshed
+            </Badge>
+          )}
         </>
       )}
     </Dialog>

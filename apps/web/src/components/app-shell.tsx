@@ -22,6 +22,8 @@ import {
   Waves,
   X,
 } from "lucide-react";
+import { isTestLayout, plural, testCameraIds } from "@/lib/demo";
+import type { Camera as CameraType, Layout } from "@/lib/types";
 import {
   appRoutes,
   destinations,
@@ -262,7 +264,9 @@ function ShellContent({ children }: { children: ReactNode }) {
 type PaletteOption =
   | { kind: "muse"; id: string }
   | { kind: "search"; id: string }
-  | { kind: "destination"; id: string; item: (typeof destinations)[number] };
+  | { kind: "destination"; id: string; item: (typeof destinations)[number] }
+  | { kind: "camera"; id: string; camera: CameraType }
+  | { kind: "view"; id: string; layout: Layout };
 
 function CommandPalette({
   open,
@@ -272,12 +276,48 @@ function CommandPalette({
   onOpenChange: (open: boolean) => void;
 }) {
   const [query, setQuery] = useState("");
-  const { href, openMuse } = useWorkspace();
+  const { href, openMuse, cameras, layouts, showTestSources } = useWorkspace();
   const router = useRouter();
   const text = query.trim();
-  const places: PaletteOption[] = (
-    text ? findDestinations(query) : destinations.slice(0, 5)
-  ).map((item) => ({ kind: "destination", id: item.id, item }));
+  const needle = text.toLowerCase();
+  // Real cameras and saved views are matched locally, for free, before any Muse option.
+  const testIds = testCameraIds(cameras.state === "ready" ? cameras.data : []);
+  const things: PaletteOption[] = text
+    ? [
+        ...(cameras.state === "ready" ? cameras.data : [])
+          .filter(
+            (camera) =>
+              (showTestSources || !testIds.has(camera.id)) &&
+              [camera.name, camera.location, camera.group_name].some((v) =>
+                v?.toLowerCase().includes(needle),
+              ),
+          )
+          .slice(0, 3)
+          .map((camera) => ({
+            kind: "camera" as const,
+            id: `camera-${camera.id}`,
+            camera,
+          })),
+        ...(layouts.state === "ready" ? layouts.data : [])
+          .filter(
+            (layout) =>
+              (showTestSources || !isTestLayout(layout, testIds)) &&
+              layout.name.toLowerCase().includes(needle),
+          )
+          .slice(0, 3)
+          .map((layout) => ({
+            kind: "view" as const,
+            id: `view-${layout.id}`,
+            layout,
+          })),
+      ]
+    : [];
+  const places: PaletteOption[] = [
+    ...(text ? findDestinations(query) : destinations.slice(0, 5)).map(
+      (item) => ({ kind: "destination" as const, id: item.id, item }),
+    ),
+    ...things,
+  ];
   const actions: PaletteOption[] = text
     ? [
         { kind: "muse", id: "ask-muse" },
@@ -296,6 +336,10 @@ function CommandPalette({
       router.push(
         href(`/explore?q=${encodeURIComponent(text.slice(0, 2000))}&run=1`),
       );
+    else if (option.kind === "camera")
+      router.push(href(`/cameras?camera=${option.camera.id}`));
+    else if (option.kind === "view")
+      router.push(href(`/layouts/${option.layout.id}`));
     else router.push(href(appRoutes[option.item.id]));
     setQuery("");
   }
@@ -303,8 +347,8 @@ function CommandPalette({
     <Dialog
       open={open}
       onOpenChange={onOpenChange}
-      title="Find your next step"
-      description="Go to a feature, search your video, or ask Muse to do it."
+      title="Go to, find or ask"
+      description="Pages, cameras and saved views open for free. Asking Muse uses a request."
       className="command-dialog"
     >
       <div className="palette-input">
@@ -370,11 +414,15 @@ function CommandPalette({
           >
             <span className="command-result-icon">
               {option.kind === "muse" ? (
-                <Sparkles size={18} />
+                <Sparkles size={16} />
               ) : option.kind === "search" ? (
-                <Search size={18} />
+                <Search size={16} />
+              ) : option.kind === "camera" ? (
+                <Camera size={16} />
+              ) : option.kind === "view" ? (
+                <Grid2X2 size={16} />
               ) : (
-                <ChevronRight size={18} />
+                <ChevronRight size={16} />
               )}
             </span>
             <span>
@@ -383,17 +431,25 @@ function CommandPalette({
                   ? `Ask Muse: “${text}”`
                   : option.kind === "search"
                     ? `Find “${text}” in your video`
-                    : option.item.title}
+                    : option.kind === "camera"
+                      ? option.camera.name
+                      : option.kind === "view"
+                        ? option.layout.name
+                        : option.item.title}
               </strong>
               <small>
                 {option.kind === "muse"
                   ? "Ask Muse · 1 request · it can prepare views for your approval"
                   : option.kind === "search"
                     ? "Ask Muse · 1 request · reads stored analysis, then opens Explore"
-                    : `${option.item.description} No request.`}
+                    : option.kind === "camera"
+                      ? `Camera · ${option.camera.location ?? option.camera.group_name ?? "no location"} · No request`
+                      : option.kind === "view"
+                        ? `Saved view · ${plural(option.layout.cells.length, "camera")} · No request`
+                        : `${option.item.description} No request.`}
               </small>
             </span>
-            {option.kind === "destination" ? (
+            {option.kind !== "muse" && option.kind !== "search" ? (
               <ArrowUpRight size={17} />
             ) : (
               <CornerDownLeft size={16} className="command-enter" />

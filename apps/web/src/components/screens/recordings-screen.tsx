@@ -6,11 +6,11 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
   CalendarDays,
   Camera,
-  ChevronRight,
   Clock3,
   Film,
   Play,
   Redo2,
+  ScanSearch,
   ShieldCheck,
   Sparkles,
   Undo2,
@@ -18,7 +18,9 @@ import {
 import { ApiError, isAbort, mutationOptions, request } from "@/lib/client-api";
 import { eventTitle } from "@/lib/events";
 import { frameUrl } from "@/lib/explore";
+import { isTestRecording, plural, testCameraIds } from "@/lib/demo";
 import { uuidPattern } from "@/lib/navigation";
+import { useCoverage } from "@/lib/use-coverage";
 import { useRequestKey } from "@/lib/use-request-key";
 import { useWorkspace } from "../workspace-provider";
 import { SourceMediaCredit } from "../source-media";
@@ -121,23 +123,53 @@ export function RecordingsScreen({ recordingId }: { recordingId?: string }) {
   const cameraData =
     workspace.cameras.state === "ready" ? workspace.cameras.data : [];
   const selected = useRecording(recordingId, workspace.recordings);
+  const coverage = useCoverage(!workspace.preview);
+  const testIds = testCameraIds(cameraData);
+  const all =
+    workspace.recordings.state === "ready"
+      ? workspace.recordings.data.filter((r) => r.status !== "deleted")
+      : [];
+  const hiddenTests = workspace.showTestSources
+    ? 0
+    : all.filter((r) => isTestRecording(r, testIds)).length;
+  // Open on the recording that holds the newest Muse observation, not merely the newest file.
+  const latestObservation =
+    coverage.state === "ready"
+      ? coverage.data.items
+          .filter((item) => item.last_observation_at)
+          .sort(
+            (a, b) =>
+              Date.parse(b.last_observation_at!) -
+              Date.parse(a.last_observation_at!),
+          )[0]
+      : undefined;
+  const withMoments = latestObservation
+    ? all.find(
+        (r) =>
+          r.camera_id === latestObservation.camera_id &&
+          Date.parse(r.started_at) <=
+            Date.parse(latestObservation.last_observation_at!) &&
+          Date.parse(latestObservation.last_observation_at!) <=
+            Date.parse(r.started_at) + recordingSpan(r),
+      )
+    : undefined;
   return (
-    <>
+    <div className="rec">
       <PageHeading
         title="Recordings"
-        description="Your recordings, with a little more context."
-      >
-        <Button
-          variant="secondary"
-          onClick={() =>
-            workspace.openMuse("Help me find a moment in my recordings")
-          }
-        >
-          <Sparkles size={16} />
-          Find with Muse
-        </Button>
-      </PageHeading>
-      <div className="filter-toolbar">
+        description={
+          workspace.recordings.state === "ready" ? (
+            <>
+              <span>{plural(all.length - hiddenTests, "recording")}</span>
+              {!!hiddenTests && (
+                <span>{plural(hiddenTests, "test recording")} hidden</span>
+              )}
+              <span>times in {timezone}</span>
+            </>
+          ) : undefined
+        }
+      />
+      <div className="filter-toolbar rec-filters">
         <label className="select-field">
           <Camera size={16} />
           <select
@@ -162,7 +194,19 @@ export function RecordingsScreen({ recordingId }: { recordingId?: string }) {
             onChange={(event) => setDate(event.target.value)}
           />
         </label>
-        <span className="filter-timezone">Times shown in {timezone}</span>
+        {!!testIds.size && (
+          <label className="test-toggle">
+            <input
+              type="checkbox"
+              role="switch"
+              checked={workspace.showTestSources}
+              onChange={(event) =>
+                workspace.setShowTestSources(event.target.checked)
+              }
+            />
+            Show test recordings
+          </label>
+        )}
       </div>
       <ResourceState
         resource={workspace.recordings}
@@ -179,6 +223,9 @@ export function RecordingsScreen({ recordingId }: { recordingId?: string }) {
             .filter(
               (recording) =>
                 recording.status !== "deleted" &&
+                (workspace.showTestSources ||
+                  !isTestRecording(recording, testIds) ||
+                  recording.id === recordingId) &&
                 (cameraFilter === "all" ||
                   recording.camera_id === cameraFilter) &&
                 (!date || localDay(recording.started_at) === date),
@@ -186,21 +233,23 @@ export function RecordingsScreen({ recordingId }: { recordingId?: string }) {
             .sort(
               (a, b) => Date.parse(b.started_at) - Date.parse(a.started_at),
             );
+          const fallback =
+            filtered.find((item) => item.id === withMoments?.id) ?? filtered[0];
           const library = (
             <RecordingLibrary
               recordings={filtered}
               cameras={cameraData}
-              current={recordingId ?? filtered[0]?.id}
+              current={recordingId ?? fallback?.id}
             />
           );
           if (selected?.state === "loading")
             return (
               <div className="recording-layout">
+                {library}
                 <section className="recording-main" aria-busy="true">
                   <Skeleton className="skeleton-title" />
                   <div className="media-player" />
                 </section>
-                {library}
               </div>
             );
           const recording =
@@ -208,10 +257,11 @@ export function RecordingsScreen({ recordingId }: { recordingId?: string }) {
               ? selected.data
               : recordingId
                 ? undefined
-                : filtered[0];
+                : fallback;
           if (!recording)
             return (
               <div className="recording-layout">
+                {library}
                 <StatePanel
                   kind="search"
                   title={
@@ -225,7 +275,6 @@ export function RecordingsScreen({ recordingId }: { recordingId?: string }) {
                       : "Try a different date or camera."
                   }
                 />
-                {library}
               </div>
             );
           if (invalidOffset)
@@ -238,6 +287,7 @@ export function RecordingsScreen({ recordingId }: { recordingId?: string }) {
             );
           return (
             <div className="recording-layout">
+              {library}
               <RecordingDetail
                 key={recording.id}
                 recording={recording}
@@ -253,12 +303,11 @@ export function RecordingsScreen({ recordingId }: { recordingId?: string }) {
                   )
                 }
               />
-              {library}
             </div>
           );
         }}
       </ResourceState>
-    </>
+    </div>
   );
 }
 
@@ -273,11 +322,7 @@ function RecordingLibrary({
 }) {
   const { href, preview } = useWorkspace();
   return (
-    <aside className="recording-library">
-      <div className="section-heading">
-        <h2>Recording library</h2>
-        <span>{recordings.length}</span>
-      </div>
+    <aside className="recording-library" aria-label="Recording library">
       {recordings.map((item) => (
         <Link
           className={`library-row ${item.id === current ? "selected" : ""}`}
@@ -303,27 +348,25 @@ function RecordingLibrary({
             <strong>
               {cameras.find((c) => c.id === item.camera_id)?.name ?? "Camera"}
             </strong>
-            <small>
+            <small className="tc">
               {new Date(item.started_at).toLocaleString(undefined, {
                 month: "short",
                 day: "numeric",
                 hour: "numeric",
                 minute: "2-digit",
-              })}{" "}
-              · {formatOffset(item.available_duration_ms)}
+              })}
+            </small>
+            <small>
+              {formatOffset(item.available_duration_ms)} long
               {item.status === "recording" ? " · recording now" : ""}
+              {!item.source_media && !preview ? " · earlier ingest" : ""}
             </small>
           </span>
-          <ChevronRight size={15} />
         </Link>
       ))}
-      <div className="library-note">
-        <Clock3 size={17} />
-        <p>
-          Availability is based on recorded video. An empty interval doesn’t
-          mean nothing happened.
-        </p>
-      </div>
+      {!recordings.length && (
+        <p className="muted">No recordings match these filters.</p>
+      )}
     </aside>
   );
 }
@@ -365,15 +408,8 @@ function RecordingDetail({
   return (
     <section className="recording-main">
       <div className="recording-player-heading">
-        <div>
-          <Camera size={17} />
-          <h2>{camera?.name ?? "Recording"}</h2>
-          <Badge>
-            {workspace.preview ? "Sample recording" : recording.status}
-          </Badge>
-          {segmentId && <Badge tone="teal">Exact evidence clip</Badge>}
-        </div>
-        <span>
+        <h2>{camera?.name ?? "Recording"}</h2>
+        <span className="tc">
           {new Date(recording.started_at).toLocaleString(undefined, {
             month: "short",
             day: "numeric",
@@ -381,6 +417,14 @@ function RecordingDetail({
             minute: "2-digit",
           })}
         </span>
+        <span className="rec-state">
+          {workspace.preview
+            ? "Sample recording"
+            : recording.status === "recording"
+              ? "Recording now"
+              : "Finished"}
+        </span>
+        {segmentId && <Badge tone="teal">Exact evidence clip</Badge>}
       </div>
       <MediaPlayer
         key={`${recording.id}-${offset}-${segmentId ?? ""}`}
@@ -399,13 +443,6 @@ function RecordingDetail({
         }}
         onResume={(value) => onSeek(value, segmentId)}
       />
-      <SourceMediaCredit media={recording.source_media} />
-      {!recording.source_media && camera?.source_media && (
-        <p className="quiet-note">
-          Historical demo ingest. This older recording may include development
-          test patterns; its original data has been preserved.
-        </p>
-      )}
       <div className="playback-controls" aria-label="Timestamp navigation">
         <span className="playback-position" aria-live="off">
           <Clock3 size={15} />
@@ -440,6 +477,7 @@ function RecordingDetail({
             variant="ghost"
             size="sm"
             disabled={!previousMoment}
+            aria-label="Previous moment"
             onClick={() =>
               previousMoment &&
               onSeek(
@@ -448,18 +486,19 @@ function RecordingDetail({
               )
             }
           >
-            Previous moment
+            ‹ Moment
           </Button>
           <Button
             variant="ghost"
             size="sm"
             disabled={!nextMoment}
+            aria-label="Next moment"
             onClick={() =>
               nextMoment &&
               onSeek(nextMoment.evidence_offset_ms, nextMoment.segment_id)
             }
           >
-            Next moment
+            Moment ›
           </Button>
         </div>
         <form
@@ -504,30 +543,64 @@ function RecordingDetail({
         offset={position}
         onSeek={seek}
       />
-      {!workspace.preview && (
-        <ActivityHistogram
+      <div className="rec-lower">
+        <MomentList
+          related={related}
+          preview={workspace.preview}
+          filter={momentFilter}
+          onFilter={(value) => {
+            setMomentFilter(value);
+            setShowAllMoments(false);
+          }}
+          showAll={showAllMoments}
+          onShowAll={() => setShowAllMoments(true)}
+          onSeek={onSeek}
+          position={position}
           cameraId={recording.camera_id}
-          start={windowStart}
-          end={windowEnd}
-          cursor={Date.parse(recording.started_at) + position}
-          title="Activity in this recording"
         />
-      )}
-      {!workspace.preview && (
-        <IndexingPanel recording={recording} camera={camera} />
-      )}
-      <MomentList
-        related={related}
-        preview={workspace.preview}
-        filter={momentFilter}
-        onFilter={(value) => {
-          setMomentFilter(value);
-          setShowAllMoments(false);
-        }}
-        showAll={showAllMoments}
-        onShowAll={() => setShowAllMoments(true)}
-        onSeek={onSeek}
-      />
+        <aside className="rec-about" aria-label="About this recording">
+          <h3>About this recording</h3>
+          <dl className="facts-list">
+            <dt>Camera</dt>
+            <dd>{camera?.name ?? "Unknown"}</dd>
+            <dt>Started</dt>
+            <dd>
+              {new Date(recording.started_at).toLocaleString(undefined, {
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "2-digit",
+                second: "2-digit",
+              })}
+            </dd>
+            <dt>Length</dt>
+            <dd>{formatOffset(span)}</dd>
+          </dl>
+          <SourceMediaCredit media={recording.source_media} />
+          {!recording.source_media && camera?.source_media && (
+            <p className="muted">
+              Earlier ingest from this camera, kept as recorded. It carries no
+              footage credit of its own and may include development test
+              patterns.
+            </p>
+          )}
+          {!workspace.preview && (
+            <IndexingPanel recording={recording} camera={camera} />
+          )}
+          {!workspace.preview && (
+            <details className="rec-chart">
+              <summary>Motion and analysis over time</summary>
+              <ActivityHistogram
+                cameraId={recording.camera_id}
+                start={windowStart}
+                end={windowEnd}
+                cursor={Date.parse(recording.started_at) + position}
+                title="Activity in this recording"
+              />
+            </details>
+          )}
+        </aside>
+      </div>
     </section>
   );
 }
@@ -543,7 +616,11 @@ function MomentList({
   showAll,
   onShowAll,
   onSeek,
+  position,
+  cameraId,
 }: {
+  position: number;
+  cameraId: string;
   related: Schema["Event"][];
   preview: boolean;
   filter: "muse" | "all";
@@ -556,10 +633,11 @@ function MomentList({
   const effective = muse.length ? filter : "all";
   const listed = effective === "muse" ? muse : related;
   const shown = showAll ? listed : listed.slice(0, MOMENT_LIMIT);
+  const { href } = useWorkspace();
   return (
     <div className="moment-section">
       <div className="section-heading">
-        <h2>Moments in this recording</h2>
+        <h2>Moments</h2>
         {muse.length > 0 && muse.length < related.length ? (
           <div className="segmented-control" aria-label="Moments to show">
             <button
@@ -585,7 +663,7 @@ function MomentList({
         shown.map((event) => (
           <button
             key={event.id}
-            className="moment-row"
+            className={`moment-row ${Math.abs(event.evidence_offset_ms - position) < 5000 ? "is-current" : ""}`}
             onClick={() => onSeek(event.evidence_offset_ms, event.segment_id)}
           >
             {!preview && event.provenance === "muse" && (
@@ -603,17 +681,26 @@ function MomentList({
               <Play size={12} />
               {formatOffset(event.evidence_offset_ms)}
             </span>
-            <span>{eventTitle(event, preview)}</span>
-            <Badge tone={event.kind === "motion" ? "neutral" : "blue"}>
+            <span className="moment-text">{eventTitle(event, preview)}</span>
+            <span className="moment-kind">
               {event.provenance === "muse" ? "Muse" : "Motion"}
-            </Badge>
-            <ChevronRight size={16} />
+            </span>
           </button>
         ))
       ) : (
         <p className="muted">
-          No indexed moments are available for this recording yet.
+          Muse hasn’t analyzed this recording, so it has no moments yet. Only
+          analyzed clips can show moments.
         </p>
+      )}
+      {!preview && muse.length > 0 && (
+        <Link
+          className="text-button"
+          href={href(`/explore?camera=${cameraId}`)}
+        >
+          <ScanSearch size={13} />
+          Compare with other moments on this camera
+        </Link>
       )}
       {shown.length < listed.length && (
         <Button variant="ghost" size="sm" onClick={onShowAll}>
@@ -739,7 +826,7 @@ function AvailabilityTimeline({
   return (
     <div className="timeline">
       <div className="timeline-heading">
-        <h3>Recording availability</h3>
+        <h3>Recorded</h3>
         <span>
           <span className="timeline-key" />
           {preview

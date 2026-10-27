@@ -1,0 +1,511 @@
+{
+  "base": "http://127.0.0.1:3600",
+  "captured_at": "2026-10-27T21:36:52.177Z",
+  "blocked": [],
+  "pages": [
+    {
+      "name": "home",
+      "route": "/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1427,
+      "videos": 1,
+      "first_media_top": 293,
+      "page_errors": []
+    },
+    {
+      "name": "explore",
+      "route": "/explore",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 900,
+      "videos": 1,
+      "first_media_top": 335,
+      "page_errors": []
+    },
+    {
+      "name": "cameras",
+      "route": "/cameras",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1073,
+      "videos": 0,
+      "first_media_top": 261,
+      "page_errors": []
+    },
+    {
+      "name": "live",
+      "route": "/live",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1053,
+      "videos": 4,
+      "first_media_top": 215,
+      "page_errors": []
+    },
+    {
+      "name": "recordings",
+      "route": "/recordings",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1412,
+      "videos": 1,
+      "first_media_top": 223,
+      "page_errors": []
+    },
+    {
+      "name": "events",
+      "route": "/events",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 3407,
+      "videos": 0,
+      "first_media_top": 313,
+      "page_errors": []
+    },
+    {
+      "name": "layouts",
+      "route": "/layouts",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 900,
+      "videos": 0,
+      "first_media_top": 174,
+      "page_errors": []
+    },
+    {
+      "name": "settings",
+      "route": "/settings",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1784,
+      "videos": 0,
+      "first_media_top": null,
+      "page_errors": []
+    },
+    {
+      "name": "layout-detail",
+      "route": "/layouts/dee12ecc-548f-42d2-a4d1-5c275e389d63",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 925,
+      "videos": 1,
+      "first_media_top": 215,
+      "page_errors": []
+    },
+    {
+      "name": "recording-detail",
+      "route": "/recordings/2aefe1d9-6331-541b-b921-fed79ce1b622",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1412,
+      "videos": 1,
+      "first_media_top": 223,
+      "page_errors": []
+    },
+    {
+      "name": "muse-panel",
+      "route": "/cameras",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1073,
+      "videos": 0,
+      "first_media_top": 261,
+      "page_errors": []
+    },
+    {
+      "name": "palette",
+      "route": "/cameras",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1073,
+      "videos": 0,
+      "first_media_top": 261,
+      "page_errors": []
+    },
+    {
+      "name": "home",
+      "route": "/",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1539,
+      "videos": 1,
+      "first_media_top": 283,
+      "page_errors": []
+    },
+    {
+      "name": "explore",
+      "route": "/explore",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 768,
+      "videos": 1,
+      "first_media_top": 401,
+      "page_errors": []
+    },
+    {
+      "name": "cameras",
+      "route": "/cameras",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1014,
+      "videos": 0,
+      "first_media_top": 254,
+      "page_errors": []
+    },
+    {
+      "name": "live",
+      "route": "/live",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 829,
+      "videos": 4,
+      "first_media_top": 208,
+      "page_errors": []
+    },
+    {
+      "name": "recordings",
+      "route": "/recordings",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1487,
+      "videos": 1,
+      "first_media_top": 216,
+      "page_errors": []
+    },
+    {
+      "name": "events",
+      "route": "/events",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 3603,
+      "videos": 0,
+      "first_media_top": 306,
+      "page_errors": []
+    },
+    {
+      "name": "layouts",
+      "route": "/layouts",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 857,
+      "videos": 0,
+      "first_media_top": 167,
+      "page_errors": []
+    },
+    {
+      "name": "settings",
+      "route": "/settings",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1796,
+      "videos": 0,
+      "first_media_top": null,
+      "page_errors": []
+    },
+    {
+      "name": "layout-detail",
+      "route": "/layouts/dee12ecc-548f-42d2-a4d1-5c275e389d63",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 788,
+      "videos": 1,
+      "first_media_top": 208,
+      "page_errors": []
+    },
+    {
+      "name": "recording-detail",
+      "route": "/recordings/2aefe1d9-6331-541b-b921-fed79ce1b622",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1283,
+      "videos": 1,
+      "first_media_top": 216,
+      "page_errors": []
+    },
+    {
+      "name": "muse-panel",
+      "route": "/cameras",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1014,
+      "videos": 0,
+      "first_media_top": 254,
+      "page_errors": []
+    },
+    {
+      "name": "palette",
+      "route": "/cameras",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1014,
+      "videos": 0,
+      "first_media_top": 254,
+      "page_errors": []
+    },
+    {
+      "name": "home",
+      "route": "/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 2119,
+      "videos": 1,
+      "first_media_top": 372,
+      "page_errors": []
+    },
+    {
+      "name": "explore",
+      "route": "/explore",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 2323,
+      "videos": 1,
+      "first_media_top": 710,
+      "page_errors": []
+    },
+    {
+      "name": "cameras",
+      "route": "/cameras",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1279,
+      "videos": 0,
+      "first_media_top": 371,
+      "page_errors": []
+    },
+    {
+      "name": "live",
+      "route": "/live",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1344,
+      "videos": 4,
+      "first_media_top": 267,
+      "page_errors": []
+    },
+    {
+      "name": "recordings",
+      "route": "/recordings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1717,
+      "videos": 1,
+      "first_media_top": 1544,
+      "page_errors": []
+    },
+    {
+      "name": "events",
+      "route": "/events",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 7658,
+      "videos": 0,
+      "first_media_top": 407,
+      "page_errors": []
+    },
+    {
+      "name": "layouts",
+      "route": "/layouts",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1550,
+      "videos": 0,
+      "first_media_top": 211,
+      "page_errors": []
+    },
+    {
+      "name": "settings",
+      "route": "/settings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1953,
+      "videos": 0,
+      "first_media_top": null,
+      "page_errors": []
+    },
+    {
+      "name": "layout-detail",
+      "route": "/layouts/dee12ecc-548f-42d2-a4d1-5c275e389d63",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 844,
+      "videos": 1,
+      "first_media_top": 248,
+      "page_errors": []
+    },
+    {
+      "name": "recording-detail",
+      "route": "/recordings/2aefe1d9-6331-541b-b921-fed79ce1b622",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1430,
+      "videos": 1,
+      "first_media_top": 1256,
+      "page_errors": []
+    },
+    {
+      "name": "muse-panel",
+      "route": "/cameras",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1279,
+      "videos": 0,
+      "first_media_top": 371,
+      "page_errors": []
+    },
+    {
+      "name": "palette",
+      "route": "/cameras",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1279,
+      "videos": 0,
+      "first_media_top": 371,
+      "page_errors": []
+    }
+  ]
+}

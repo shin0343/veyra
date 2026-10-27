@@ -10,22 +10,23 @@ import type { ReactNode } from "react";
 import type { Camera } from "@/lib/types";
 import { Button } from "./button";
 
+/** A screen title with a line of live facts (never a slogan) and the screen's actions. */
 export function PageHeading({
   title,
   description,
   children,
 }: {
   title: string;
-  description: string;
+  description?: ReactNode;
   children?: ReactNode;
 }) {
   return (
     <header className="page-heading">
       <div>
         <h1>{title}</h1>
-        <p>{description}</p>
+        {description && <p className="page-facts">{description}</p>}
       </div>
-      <div className="heading-actions">{children}</div>
+      {children && <div className="heading-actions">{children}</div>}
     </header>
   );
 }

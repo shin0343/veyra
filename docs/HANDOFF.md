@@ -1,9 +1,13 @@
 # Veyra handoff
 
-**Current: REDESIGN-01 (branch `redesign-01`).** Home and Explore are rebuilt as an editorial
-video workspace; tokens, type, shell and Muse hand-over rules changed. The new production build
-is served at http://127.0.0.1:3600 (`VEYRA_DIST_DIR=.next-qa`); **:3200 still serves the VIDEO-02
-build** until promoted. See [REDESIGN-01 handoff](#redesign-01-handoff--home-and-explore-workspace).
+**Current: REDESIGN-02 (branch `redesign-02`).** The REDESIGN-01 art direction now covers every
+route: Cameras library + panel, Live wall, Recordings workspace, Activity log, Saved views gallery
+with an editor, plain Settings, page-aware Muse and a palette that finds cameras and views for free.
+Production build `8Ljcda0FKDR9A1APIKC-3` is served at http://127.0.0.1:3600 (`VEYRA_DIST_DIR=.next-qa`);
+**:3200 still serves the VIDEO-02 build** until promoted. See
+[REDESIGN-02 handoff](#redesign-02-handoff--product-wide-art-direction).
+
+**Previous: REDESIGN-01** — Home and Explore workspace ([handoff](#redesign-01-handoff--home-and-explore-workspace)).
 
 **Previous: VIDEO-02 is complete. Veyra has an original design contract ([DESIGN.md](../DESIGN.md)),
 an evidence-first Explore workspace with real video frames, data-backed camera lanes and an
@@ -996,3 +1000,25 @@ commit `d8bbf20` holds the pre-redesign tree. No push, deployment or external me
   cameras; a read-only usage endpoint; multi-camera activity (details in the direction doc §6).
 - **Next frontend phase:** move Recordings and Saved views onto the workspace grammar; replace the
   remaining hard-coded colours in `screens.css` with tokens.
+
+
+---
+
+## REDESIGN-02 handoff — product-wide art direction
+
+October 27, 2026. Claude (frontend owner). Only `apps/web/**`, `DESIGN.md` and `docs/**` changed.
+REDESIGN-01 was committed as `4cd5c11` on `redesign-01`; this phase is on `redesign-02` (uncommitted
+at handoff). No push, deployment, external message, model request or data mutation.
+
+- **Report:** [design/REDESIGN_02_REPORT.md](design/REDESIGN_02_REPORT.md) — per-screen changes, 27
+  side-by-side comparisons in `design/redesign-02/screenshots/compare/`, measurements, checks.
+- **Demo data:** synthetic test cameras, their recordings and views containing them are hidden on
+  default surfaces (data-driven rule in `apps/web/src/lib/demo.ts`, DESIGN §19); "Show test sources"
+  per screen or in Settings. Nothing was deleted or renamed.
+- **Checks (production, real stack):** `redesign02-flows` 39/39, `redesign01-flows` 49/49,
+  `video02-flows` 23/23; `verify-ui` (preview) 24 routes / 31 interactions / 29 axe / 0 violations;
+  lint, typecheck, prettier, build pass. `make check` not run (no backend change).
+- **Not exercised:** the view editor's real `PUT /layouts/{id}` save; `live-flows` and
+  `demo-walkthrough` (they save views / spend Muse) were ported but not run.
+- **Codex:** mixed-provenance Trail recording, usage ceiling, `/events` order, multi-camera
+  activity, frame size — reproduction steps in the report §6.

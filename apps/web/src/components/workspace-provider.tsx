@@ -50,6 +50,9 @@ interface WorkspaceContext {
   /** Muse registers its sender so a handed-over query is sent from the user's own action. */
   registerMuse: (sender: ((query: string) => void) | null) => void;
   closeMuse: () => void;
+  /** Development test sources (synthetic patterns) are hidden on demo surfaces unless shown. */
+  showTestSources: boolean;
+  setShowTestSources: (show: boolean) => void;
 }
 const Context = createContext<WorkspaceContext | null>(null);
 export function useWorkspace() {
@@ -93,6 +96,20 @@ export function WorkspaceProvider({
   const [museQuery, setMuseQuery] = useState("");
   const [museRequest, setMuseRequest] = useState(0);
   const museSender = useRef<((query: string) => void) | null>(null);
+  const [showTestSources, setShowTests] = useState(false);
+  useEffect(() => {
+    // A per-viewer convenience; storage can be unavailable, so it only ever opts in.
+    try {
+      if (localStorage.getItem("veyra.show-test-sources") === "1")
+        setShowTests(true);
+    } catch {}
+  }, []);
+  const setShowTestSources = useCallback((show: boolean) => {
+    setShowTests(show);
+    try {
+      localStorage.setItem("veyra.show-test-sources", show ? "1" : "0");
+    } catch {}
+  }, []);
   const openMuse = useCallback(
     (query = "", options: { send?: boolean } = {}) => {
       setMuseQuery(options.send ? "" : query);
@@ -213,6 +230,8 @@ export function WorkspaceProvider({
         museRequest,
         registerMuse,
         closeMuse: () => setMuseOpen(false),
+        showTestSources,
+        setShowTestSources,
       }}
     >
       {children}

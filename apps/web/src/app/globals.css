@@ -4,6 +4,7 @@
 @import "../styles/integration.css";
 @import "../styles/explore.css";
 @import "../styles/redesign.css";
+@import "../styles/product.css";
 * {
   box-sizing: border-box;
 }

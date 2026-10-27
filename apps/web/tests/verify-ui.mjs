@@ -152,13 +152,13 @@ try {
   await go("/cameras");
   await page.getByRole("button", { name: "Home", exact: true }).click();
   check(
-    (await page.locator(".camera-card").count()) === 2,
+    (await page.locator(".cam-item").count()) === 2,
     "Camera space filter updates visible cards",
   );
-  await page.getByRole("button", { name: "All spaces", exact: true }).click();
-  await page
-    .getByRole("button", { name: "Settings for Garden studio", exact: true })
-    .click();
+  await page.getByRole("button", { name: "All", exact: true }).click();
+  // REDESIGN-02: open the camera, then its settings from the camera panel.
+  await page.locator(".cam-item", { hasText: "Garden studio" }).click();
+  await page.getByRole("button", { name: "Camera settings" }).click();
   await page
     .getByRole("switch", { name: "Allow cloud video analysis" })
     .check();
@@ -182,20 +182,16 @@ try {
   );
   await page.getByRole("button", { name: "Done", exact: true }).click();
   await go("/layouts");
-  await page
-    .getByRole("button", { name: "Create a view", exact: true })
-    .click();
+  await page.getByRole("button", { name: "New view", exact: true }).click();
   await page.getByLabel("View name").fill("Morning spaces");
   await page
-    .locator(".camera-picker label")
+    .locator(".view-picker button")
     .filter({ hasText: "Front entrance" })
-    .locator("input")
-    .check();
+    .click();
   await page
-    .locator(".camera-picker label")
+    .locator(".view-picker button")
     .filter({ hasText: "Garden studio" })
-    .locator("input")
-    .check();
+    .click();
   await page.getByRole("button", { name: "Review view", exact: true }).click();
   await page
     .getByRole("button", { name: "Create preview view", exact: true })
@@ -206,9 +202,7 @@ try {
       .isVisible(),
     "Layout creation is labeled as a local preview result",
   );
-  await page
-    .getByRole("link", { name: "Open saved view", exact: true })
-    .click();
+  await page.getByRole("link", { name: "Open view" }).click();
   await page.waitForURL(/\/layouts\/[0-9a-f-]+\?preview=1/);
   check(
     (await page.locator("#main-content h1").innerText()) === "Morning spaces",
@@ -218,9 +212,7 @@ try {
     .locator(".sidebar")
     .getByRole("link", { name: "Saved views", exact: true })
     .click();
-  await page
-    .getByRole("button", { name: "Create a view", exact: true })
-    .click();
+  await page.getByRole("button", { name: "New view", exact: true }).click();
   check(
     (await page.getByLabel("View name").inputValue()) === "",
     "A second layout starts with a fresh draft rather than a previous success state",
@@ -229,12 +221,12 @@ try {
   await go("/live");
   await page.getByRole("button", { name: "Single camera layout" }).click();
   check(
-    (await page.locator(".live-tile").count()) === 1,
+    (await page.locator(".wall-tile").count()) === 1,
     "Single camera selection changes the layout",
   );
   await page.getByRole("button", { name: "2 by 2 camera layout" }).click();
   check(
-    (await page.locator(".live-tile").count()) === 4,
+    (await page.locator(".wall-tile").count()) === 4,
     "2 by 2 camera selection displays four labeled preview tiles",
   );
   check(
@@ -283,8 +275,7 @@ try {
   await go("/", false);
   await page.getByRole("alert").first().waitFor();
   check(
-    (await page.locator(".camera-card, .activity-row, .hm-space").count()) ===
-      0,
+    (await page.locator(".cam-item, .log-row, .hm-space").count()) === 0,
     "Connected mode never falls back to fixture cameras or events",
   );
   await screenshot("desktop-service-unavailable");

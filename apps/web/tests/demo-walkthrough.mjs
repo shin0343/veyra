@@ -69,7 +69,7 @@ await page.goto(base + "/live", { waitUntil: "networkidle" });
 await playing();
 await page.waitForTimeout(2500);
 await shot("04-live");
-step("live", { tiles: await page.locator(".live-tile").count() });
+step("live", { tiles: await page.locator(".wall-tile").count() });
 
 // 4. Universal command → Muse proposes a real layout → human approval → verified.
 const layoutPrompt =
@@ -103,7 +103,7 @@ if (await approve.count()) {
   await shot("08-saved-view");
   step("saved_view_open", {
     url: page.url().replace(base, ""),
-    tiles: await page.locator(".live-tile").count(),
+    tiles: await page.locator(".wall-tile").count(),
   });
 } else
   step("muse_layout_no_proposal", {

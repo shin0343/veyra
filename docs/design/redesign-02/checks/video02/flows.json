@@ -1,0 +1,224 @@
+{
+  "base": "http://127.0.0.1:3600",
+  "started_at": "2026-10-27T21:33:23.458Z",
+  "paid": false,
+  "checks": [
+    {
+      "name": "explore_loads_real_index",
+      "ok": true,
+      "ms": 4455,
+      "coverage": "35 of 7,724 clips analyzed · 6 of 8 cameras",
+      "lanes": 6,
+      "cards": 16,
+      "frames": 16
+    },
+    {
+      "name": "topic_animals_plays_real_squirrels",
+      "ok": true,
+      "ms": 2297,
+      "camera": "Garden wildlife",
+      "url": "/explore?topic=animals",
+      "summary": "Two reddish-brown squirrels climb and jump on a small post-mounted feeder in a garden with dense green foliage"
+    },
+    {
+      "name": "camera_filter_and_lane_tick_selection",
+      "ok": true,
+      "ms": 1467,
+      "results": 3,
+      "cluster": "3",
+      "selected": [
+        "Outdoor daylight view of wide stairs with bicycle gutters where two people walk bicycles downward, with balloon columns, trees and buildings behind.",
+        "Indoor hallway with wall sign and arrow, a person pushing a bicycle walks through a glass doorway toward the camera.",
+        "First-person view from behind bicycle handlebars moving from outdoor pavement into a dark underpass and down a stair channel, passing a person walking upward."
+      ]
+    },
+    {
+      "name": "drag_time_range_and_reset",
+      "ok": true,
+      "ms": 1665,
+      "focused": "Oct 27, 7:43 AM – 8:27 AM · America/Los_Angeles"
+    },
+    {
+      "name": "keyboard_slash_and_arrow_results",
+      "ok": true,
+      "ms": 2820,
+      "focused": "explore-ask"
+    },
+    {
+      "name": "open_in_recording_seeks_evidence",
+      "ok": true,
+      "ms": 2073,
+      "href": "/recordings/25809f13-01dd-5369-9302-bd12587a9ad5?offset_ms=0&segment_id=5343522c-7fcd-593f-9ac7-d5f862a89bb2"
+    },
+    {
+      "name": "review_dialog_plan",
+      "ok": true,
+      "ms": 2991,
+      "plan": "A saved view with Bicycle parking, Entrance gate, Community space, Trail camera in 2 columns.",
+      "saved": null
+    },
+    {
+      "name": "simulated_budget_exhausted",
+      "ok": true,
+      "ms": 3526,
+      "simulated": true,
+      "shown": "Muse has reached today’s request limit"
+    },
+    {
+      "name": "budget_fallback_offers_index_filter",
+      "ok": true,
+      "ms": 2
+    },
+    {
+      "name": "simulated_no_match",
+      "ok": true,
+      "ms": 2941,
+      "simulated": true,
+      "shown": "No matching moments"
+    },
+    {
+      "name": "simulated_index_unavailable",
+      "ok": true,
+      "ms": 725,
+      "simulated": true,
+      "shown": "Stored analysis couldn’t be read"
+    },
+    {
+      "name": "simulated_searching",
+      "ok": true,
+      "ms": 675,
+      "simulated": true,
+      "shown": "Reading stored analysis…"
+    },
+    {
+      "name": "simulated_frame_unavailable",
+      "ok": true,
+      "ms": 5079,
+      "simulated": true,
+      "shown": "Preview frame unavailable"
+    },
+    {
+      "name": "overview_video_first",
+      "ok": true,
+      "ms": 2598,
+      "status": "6 of 6 cameras sending video\n2 test sources hidden\n35 clips analyzed by Muse\nLatest moment Oct 27, 8:09 AM",
+      "found": 6,
+      "look_for": [
+        "People\n83",
+        "Bicycles\n80",
+        "Vehicles\n60",
+        "Animals\n1",
+        "Walking\n6",
+        "Carrying something\n4"
+      ]
+    },
+    {
+      "name": "activity_anchored_with_frames",
+      "ok": true,
+      "ms": 3347,
+      "cards": 30,
+      "first": "8:09:27 AM"
+    },
+    {
+      "name": "axe_explore",
+      "ok": true,
+      "ms": 6402,
+      "violations": 0
+    },
+    {
+      "name": "axe_overview",
+      "ok": true,
+      "ms": 6267,
+      "violations": 0
+    },
+    {
+      "name": "axe_activity",
+      "ok": true,
+      "ms": 6385,
+      "violations": 0
+    },
+    {
+      "name": "responsive_1440",
+      "ok": true,
+      "ms": 28335,
+      "overflow": {
+        "/": 0,
+        "/explore": 0,
+        "/cameras": 0,
+        "/live": 0,
+        "/recordings": 0,
+        "/events": 0,
+        "/layouts": 0,
+        "/settings": 0
+      }
+    },
+    {
+      "name": "responsive_1280",
+      "ok": true,
+      "ms": 28314,
+      "overflow": {
+        "/": 0,
+        "/explore": 0,
+        "/cameras": 0,
+        "/live": 0,
+        "/recordings": 0,
+        "/events": 0,
+        "/layouts": 0,
+        "/settings": 0
+      }
+    },
+    {
+      "name": "responsive_1024",
+      "ok": true,
+      "ms": 28290,
+      "overflow": {
+        "/": 0,
+        "/explore": 0,
+        "/cameras": 0,
+        "/live": 0,
+        "/recordings": 0,
+        "/events": 0,
+        "/layouts": 0,
+        "/settings": 0
+      }
+    },
+    {
+      "name": "responsive_768",
+      "ok": true,
+      "ms": 28284,
+      "overflow": {
+        "/": 0,
+        "/explore": 0,
+        "/cameras": 0,
+        "/live": 0,
+        "/recordings": 0,
+        "/events": 0,
+        "/layouts": 0,
+        "/settings": 0
+      }
+    },
+    {
+      "name": "responsive_390",
+      "ok": true,
+      "ms": 28209,
+      "overflow": {
+        "/": 0,
+        "/explore": 0,
+        "/cameras": 0,
+        "/live": 0,
+        "/recordings": 0,
+        "/events": 0,
+        "/layouts": 0,
+        "/settings": 0
+      }
+    }
+  ],
+  "failures": [],
+  "page_errors": [],
+  "accessibility": {
+    "explore": [],
+    "overview": [],
+    "activity": []
+  },
+  "finished_at": "2026-10-27T21:36:40.714Z"
+}

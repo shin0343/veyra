@@ -5,17 +5,14 @@ import { useEffect, useState } from "react";
 import {
   ArrowUpRight,
   Camera,
-  Check,
-  CloudOff,
   Keyboard,
   Leaf,
   Monitor,
   ShieldCheck,
-  Sparkles,
 } from "lucide-react";
+import { isTestCamera } from "@/lib/demo";
 import { useWorkspace } from "../workspace-provider";
-import { Button } from "../ui/button";
-import { Badge, PageHeading } from "../ui/primitives";
+import { Badge, CameraStatus, PageHeading } from "../ui/primitives";
 import { isAbort, request } from "@/lib/client-api";
 import type { PreviewState, Schema } from "@/lib/types";
 import { ProblemMessage } from "../ui/primitives";
@@ -36,19 +33,20 @@ function UsageSummary() {
   if (error)
     return <ProblemMessage error={error} fallback="Usage couldn’t be read." />;
   return (
-    <>
+    <div className="settings-usage" aria-label="Usage today">
+      <h3>Usage today (UTC)</h3>
       <div className="setting-readonly">
-        <span>Muse, analysis & search requests today (UTC)</span>
+        <span>Muse, analysis and search requests</span>
         <strong>{usage ? usage.requests : "…"}</strong>
       </div>
       <div className="setting-readonly">
-        <span>Video uploaded for analysis today</span>
+        <span>Video uploaded for analysis</span>
         <strong>
           {usage ? `${(usage.bytes_uploaded / 1048576).toFixed(1)} MB` : "…"}
         </strong>
       </div>
       <div className="setting-readonly">
-        <span>Budget reserved today</span>
+        <span>Budget reserved</span>
         <strong>
           {usage
             ? `$${usage.reserved_usd.toFixed(2)}${usage.estimated_usd != null ? ` · est. $${usage.estimated_usd.toFixed(2)}` : ""}`
@@ -59,7 +57,7 @@ function UsageSummary() {
         Reservations are admission limits set by your operator, not Meta’s bill.
         Actual billing is unknown here.
       </p>
-    </>
+    </div>
   );
 }
 
@@ -71,7 +69,8 @@ export function SettingsScreen() {
     href,
     cameras,
     recordings,
-    openMuse,
+    showTestSources,
+    setShowTestSources,
   } = useWorkspace();
   const [motion, setMotion] = useState(
     () =>
@@ -84,47 +83,36 @@ export function SettingsScreen() {
       document.documentElement.dataset.density === "compact",
   );
   const cameraData = cameras.state === "ready" ? cameras.data : [];
+  const sections = [
+    { id: "display", label: "Display", icon: Monitor },
+    { id: "privacy", label: "Privacy and analysis", icon: ShieldCheck },
+    { id: "recording", label: "Recording", icon: Camera },
+    { id: "keyboard", label: "Keyboard", icon: Keyboard },
+    ...(preview
+      ? [{ id: "preview", label: "Preview states", icon: Leaf }]
+      : []),
+  ];
   return (
-    <>
-      <PageHeading
-        title="Settings"
-        description="A few thoughtful preferences. Always in your control."
-      />
+    <div className="prefs">
+      <PageHeading title="Settings" />
       <div className="settings-layout">
         <nav className="settings-nav" aria-label="Settings sections">
-          <a href="#appearance">
-            <Monitor size={17} />
-            Your experience
-          </a>
-          <a href="#recording">
-            <Camera size={17} />
-            Recording
-          </a>
-          <a href="#privacy">
-            <ShieldCheck size={17} />
-            Privacy & video
-          </a>
-          <a href="#keyboard">
-            <Keyboard size={17} />
-            Keyboard shortcuts
-          </a>
-          {preview && (
-            <a href="#preview">
-              <Leaf size={17} />
-              Preview controls
+          {sections.map(({ id, label, icon: Icon }) => (
+            <a key={id} href={`#${id}`}>
+              <Icon size={15} />
+              {label}
             </a>
-          )}
+          ))}
         </nav>
         <div className="settings-sections">
-          <section className="settings-section" id="appearance">
-            <h2>Your experience</h2>
-            <p>Comfortable by design. These preferences apply to this tab.</p>
+          <section className="settings-section" id="display">
+            <h2>Display</h2>
+            <p>Stored in this browser only.</p>
             <div className="setting-control">
               <span>
                 <strong>Reduce interface motion</strong>
                 <small>
-                  Keep transitions still and subtle. Your system setting is also
-                  respected.
+                  Turns off transitions. Your system setting is also respected.
                 </small>
               </span>
               <input
@@ -142,16 +130,15 @@ export function SettingsScreen() {
             </div>
             <div className="setting-control">
               <span>
-                <strong>Compact workspace</strong>
+                <strong>Compact spacing</strong>
                 <small>
-                  A little less space between items, with the same readable
-                  text.
+                  Less space between items; text stays the same size.
                 </small>
               </span>
               <input
                 type="checkbox"
                 role="switch"
-                aria-label="Compact workspace"
+                aria-label="Compact spacing"
                 checked={compact}
                 onChange={(event) => {
                   setCompact(event.target.checked);
@@ -162,12 +149,88 @@ export function SettingsScreen() {
                 }}
               />
             </div>
+            <div className="setting-control">
+              <span>
+                <strong>Show development test sources</strong>
+                <small>
+                  Synthetic test-pattern cameras, their recordings and views
+                  that include them. Hidden by default; never deleted.
+                </small>
+              </span>
+              <input
+                type="checkbox"
+                role="switch"
+                aria-label="Show development test sources"
+                checked={showTestSources}
+                onChange={(event) => setShowTestSources(event.target.checked)}
+              />
+            </div>
+          </section>
+          <section className="settings-section" id="privacy">
+            <h2>Privacy and analysis</h2>
+            <p>
+              Watching and recording stay on your workspace. Cloud analysis
+              sends short clips to Meta only when you ask to make a recording
+              searchable, and only for cameras that allow it.
+            </p>
+            <ul className="settings-facts">
+              <li>No face recognition or identity matching</li>
+              <li>No age, gender or other demographic inference</li>
+              <li>Cloud analysis is off for new cameras</li>
+            </ul>
+            {cameras.state === "ready" ? (
+              <table className="settings-table">
+                <caption className="sr-only">Cloud analysis per camera</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Camera</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Cloud analysis</th>
+                    <th scope="col">
+                      <span className="sr-only">Change</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cameraData
+                    .filter(
+                      (camera) => showTestSources || !isTestCamera(camera),
+                    )
+                    .map((camera) => (
+                      <tr key={camera.id}>
+                        <th scope="row">{camera.name}</th>
+                        <td>
+                          <CameraStatus status={camera.status} />
+                        </td>
+                        <td>
+                          {camera.cloud_analysis_allowed ? "Allowed" : "Off"}
+                        </td>
+                        <td>
+                          <Link
+                            className="text-button"
+                            href={href(`/cameras?camera=${camera.id}`)}
+                            aria-label={`Change ${camera.name}`}
+                          >
+                            Change
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            ) : (
+              <p className="muted">
+                {cameras.state === "loading"
+                  ? "Checking cameras…"
+                  : "Camera settings couldn’t be read."}
+              </p>
+            )}
+            {!preview && <UsageSummary />}
           </section>
           <section className="settings-section" id="recording">
             <h2>Recording</h2>
             <p>
-              Recording availability and retention are managed by your workspace
-              service.
+              Retention is set by your Veyra service and isn’t editable here.
             </p>
             <div className="setting-readonly">
               <span>Recordings available</span>
@@ -184,101 +247,42 @@ export function SettingsScreen() {
               )}
             </div>
             <div className="setting-readonly">
-              <span>How long video is kept</span>
-              <span>Set by your Veyra service; not editable here</span>
+              <span>Connect or pause cameras</span>
+              <Link className="text-button" href={href("/cameras")}>
+                Open cameras
+                <ArrowUpRight size={13} />
+              </Link>
             </div>
-            <div className="settings-callout">
-              <Camera size={21} />
-              <div>
-                <strong>Start with a camera</strong>
-                <p>
-                  Review each camera’s connection and video privacy settings.
-                </p>
-                <Button asChild variant="secondary" size="sm">
-                  <Link href={href("/cameras")}>
-                    Open cameras
-                    <ArrowUpRight size={14} />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </section>
-          <section className="settings-section" id="privacy">
-            <h2>Your video, your choice</h2>
-            <p>
-              Cloud analysis is separate from watching or recording video. Allow
-              it for each camera before requesting indexing.
-            </p>
-            <div className="privacy-principles">
-              <span>
-                <ShieldCheck size={18} />
-                No face recognition
-              </span>
-              <span>
-                <Check size={18} />
-                No demographic profiling
-              </span>
-              <span>
-                <CloudOff size={18} />
-                Cloud analysis off by default
-              </span>
-            </div>
-            <div className="setting-readonly">
-              <span>
-                {preview
-                  ? "Sample cameras allowing analysis"
-                  : "Cameras allowing analysis"}
-              </span>
-              <strong>
-                {cameras.state === "ready"
-                  ? `${cameraData.filter((camera) => camera.cloud_analysis_allowed).length} of ${cameraData.length}`
-                  : "Not verified"}
-              </strong>
-            </div>
-            {!preview && <UsageSummary />}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() =>
-                openMuse("Where do I review camera privacy settings?")
-              }
-            >
-              <Sparkles size={15} />
-              Find privacy controls
-            </Button>
           </section>
           <section className="settings-section" id="keyboard">
-            <h2>A few useful shortcuts</h2>
+            <h2>Keyboard</h2>
             <div className="shortcut-row">
-              <span>Search commands & destinations</span>
+              <span>Go to, find or ask</span>
               <span>
                 <kbd>⌘ / Ctrl</kbd> <kbd>K</kbd>
               </span>
             </div>
             <div className="shortcut-row">
-              <span>Close a dialog or Muse</span>
+              <span>Focus the Explore ask field</span>
+              <kbd>/</kbd>
+            </div>
+            <div className="shortcut-row">
+              <span>Move between moments or timeline ticks</span>
+              <span>
+                <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd>
+              </span>
+            </div>
+            <div className="shortcut-row">
+              <span>Close a dialog, Muse, or a focused period</span>
               <kbd>Esc</kbd>
-            </div>
-            <div className="shortcut-row">
-              <span>Move through the command palette</span>
-              <span>
-                <kbd>↑</kbd> <kbd>↓</kbd> <kbd>Enter</kbd>
-              </span>
-            </div>
-            <div className="shortcut-row">
-              <span>Move between controls</span>
-              <span>
-                <kbd>Tab</kbd> <kbd>Shift + Tab</kbd>
-              </span>
             </div>
           </section>
           {preview && (
             <section className="settings-section" id="preview">
-              <Badge tone="blue">Development fixtures</Badge>
-              <h2>Explore the in-between states</h2>
+              <h2>Preview states</h2>
               <p>
-                These controls change authored sample states only. No camera,
-                indexing job, or model behavior is simulated as real.
+                These change authored sample states only. No camera, indexing
+                job or model behavior is simulated as real.
               </p>
               <label className="form-field">
                 Workspace state
@@ -295,14 +299,10 @@ export function SettingsScreen() {
                   <option value="indexing">Indexing in progress</option>
                 </select>
               </label>
-              <p className="muted">
-                Your choice follows the preview URL. Exit preview to return to
-                real service responses.
-              </p>
             </section>
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

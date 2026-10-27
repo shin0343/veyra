@@ -24,6 +24,7 @@ import {
   hitKey,
   topics,
 } from "@/lib/explore";
+import { isTestLayout, testCameraIds } from "@/lib/demo";
 import { appRoutes, findDestinations } from "@/lib/navigation";
 import type { Camera, Resource, SearchHit, SearchResponse } from "@/lib/types";
 import { useCoverage } from "@/lib/use-coverage";
@@ -35,6 +36,7 @@ import { useWorkspace } from "../workspace-provider";
 import { Button } from "../ui/button";
 import { Badge, CameraStatus, Skeleton } from "../ui/primitives";
 import { ResourceState } from "../resource-state";
+import { ViewMosaic } from "./layouts-screen";
 
 const statusWord: Record<Camera["status"], string> = {
   online: "Sending video",
@@ -45,11 +47,16 @@ const statusWord: Record<Camera["status"], string> = {
 };
 
 export function HomeScreen() {
-  const { preview, cameras, layouts, href } = useWorkspace();
-  const cameraData = useMemo(
+  const { preview, cameras, layouts, href, showTestSources } = useWorkspace();
+  const allCameras = useMemo(
     () => (cameras.state === "ready" ? cameras.data : []),
     [cameras],
   );
+  const testIds = testCameraIds(allCameras);
+  const cameraData = showTestSources
+    ? allCameras
+    : allCameras.filter((camera) => !testIds.has(camera.id));
+  const hiddenTests = allCameras.length - cameraData.length;
   const coverage = useCoverage(!preview);
   const found = useFoundMoments(coverage);
   const shape = useFrameShapes(cameraData, preview);
@@ -114,6 +121,11 @@ export function HomeScreen() {
                 <span>
                   {cameraData.filter((c) => c.status === "disabled").length}{" "}
                   paused
+                </span>
+              )}
+              {!!hiddenTests && (
+                <span>
+                  {hiddenTests} test source{hiddenTests === 1 ? "" : "s"} hidden
                 </span>
               )}
               {cameraData.some(
@@ -311,31 +323,26 @@ export function HomeScreen() {
         >
           {(data) => (
             <ul className="hm-view-strip">
-              {data.slice(0, 4).map((layout) => (
-                <li key={layout.id}>
-                  <Link
-                    href={href(`/layouts/${layout.id}`)}
-                    className="hm-view"
-                  >
-                    <FrameMosaic
-                      cameras={layout.cells
-                        .slice(0, 4)
-                        .map((cell) =>
-                          cameraData.find(
-                            (camera) => camera.id === cell.camera_id,
-                          ),
-                        )}
-                      columns={layout.columns}
-                      preview={preview}
-                    />
-                    <strong>{layout.name}</strong>
-                    <span>
-                      {layout.cells.length}{" "}
-                      {layout.cells.length === 1 ? "camera" : "cameras"}
-                    </span>
-                  </Link>
-                </li>
-              ))}
+              {data
+                .filter(
+                  (layout) => showTestSources || !isTestLayout(layout, testIds),
+                )
+                .slice(0, 4)
+                .map((layout) => (
+                  <li key={layout.id}>
+                    <Link
+                      href={href(`/layouts/${layout.id}`)}
+                      className="hm-view"
+                    >
+                      <ViewMosaic layout={layout} cameras={allCameras} />
+                      <strong>{layout.name}</strong>
+                      <span>
+                        {layout.cells.length}{" "}
+                        {layout.cells.length === 1 ? "camera" : "cameras"}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
               <li>
                 <Link href={href("/layouts")} className="hm-view hm-view-new">
                   <span className="hm-view-plus">
@@ -654,36 +661,4 @@ function useFoundMoments(coverage: ReturnType<typeof useCoverage>) {
   if (coverage.state === "ready" && !window)
     return { state: "ready", data: [] as SearchHit[] } as const;
   return found;
-}
-
-function FrameMosaic({
-  cameras,
-  columns,
-  preview,
-}: {
-  cameras: (Camera | undefined)[];
-  columns: number;
-  preview: boolean;
-}) {
-  return (
-    <span
-      className={`hm-mosaic cols-${Math.min(columns, 2)}`}
-      aria-hidden="true"
-    >
-      {cameras.map((camera, index) =>
-        !preview && camera?.source_media?.kind === "prerecorded" ? (
-          <Image
-            key={`${camera.id}-${index}`}
-            src={`/api/v1/cameras/${camera.id}/thumbnail`}
-            alt=""
-            width={160}
-            height={90}
-            unoptimized
-          />
-        ) : (
-          <span key={`${camera?.id ?? "missing"}-${index}`} />
-        ),
-      )}
-    </span>
-  );
 }

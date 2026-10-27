@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowUp,
@@ -136,7 +137,7 @@ export function MusePanel() {
         if (!open) closeMuse();
       }}
       title="Muse"
-      description="Ask about your cameras, recordings and saved views. Changes wait for your approval."
+      description="Answers come from your workspace. Anything that changes it waits for your approval."
       className="muse-panel"
     >
       {museOpen &&
@@ -171,20 +172,60 @@ function listNames(names: string[]) {
 }
 
 /**
- * Starter requests built from the cameras that actually exist. Muse acts reliably when a
- * request names real cameras; a vague "my cameras" often ends after only reading the list.
+ * Starter questions for the page the person is on, built from real camera names. They only
+ * fill the composer; each says whether Muse would only read or would prepare a change.
  */
-export function suggestedPrompts(cameras: CameraType[]) {
+function contextualPrompts(pathname: string, cameras: CameraType[]) {
   const names = cameras.slice(0, 4).map((camera) => camera.name);
-  const searchable = cameras.find((camera) => camera.cloud_analysis_allowed);
-  return [
-    "Where can I change a camera’s settings?",
-    names.length >= 2
-      ? `Create a ${names.length === 4 ? "2×2" : "two-column"} saved view named “Everyday” with ${listNames(names)}`
-      : "How do I connect a camera?",
-    searchable
-      ? `Find footage with a person on ${searchable.name}`
+  const first = names[0];
+  const searchable = cameras.find(
+    (camera) => camera.cloud_analysis_allowed,
+  )?.name;
+  const view = {
+    text:
+      names.length >= 2
+        ? `Create a saved view named “Everyday” with ${listNames(names)}`
+        : "How do I connect a camera?",
+    changes: names.length >= 2,
+  };
+  const moment = {
+    text: searchable
+      ? `Find footage with a person on ${searchable}`
       : "Where can I find my recordings?",
+    changes: false,
+  };
+  if (pathname.startsWith("/cameras"))
+    return [
+      { text: "Which cameras allow cloud analysis?", changes: false },
+      {
+        text: first
+          ? `Is ${first} sending video right now?`
+          : "How do I connect a camera?",
+        changes: false,
+      },
+      view,
+    ];
+  if (pathname.startsWith("/layouts") || pathname.startsWith("/live"))
+    return [
+      view,
+      { text: "Which saved views do I have?", changes: false },
+      moment,
+    ];
+  if (pathname.startsWith("/recordings") || pathname.startsWith("/events"))
+    return [
+      moment,
+      {
+        text: searchable
+          ? `Find vehicles on ${searchable} this morning`
+          : "Which recordings are searchable?",
+        changes: false,
+      },
+      { text: "Where can I change a camera’s settings?", changes: false },
+    ];
+  return [
+    moment,
+    view,
+    { text: "Where can I change a camera’s settings?", changes: false },
   ];
 }
 
@@ -208,8 +249,14 @@ function MuseThread({
   // A handed-over request is written into the composer; the person decides to send it.
   const [query, setQuery] = useState(initialQuery);
   const { cameras, href, closeMuse } = useWorkspace();
-  const starterPrompts = suggestedPrompts(
-    cameras.state === "ready" ? cameras.data : [],
+  const pathname = usePathname();
+  const starterPrompts = contextualPrompts(
+    pathname,
+    cameras.state === "ready"
+      ? cameras.data.filter(
+          (camera) => camera.source_media?.kind !== "synthetic",
+        )
+      : [],
   );
   const scroller = useRef<HTMLDivElement>(null);
   const composer = useRef<HTMLTextAreaElement>(null);
@@ -250,24 +297,24 @@ function MuseThread({
       <div className="muse-scroll" ref={scroller} aria-live="polite">
         {!turns.length && (
           <div className="muse-welcome">
-            <h3>Ask about your cameras, recordings and views</h3>
-            <p>
-              Muse can find recorded moments and prepare saved views. Anything
-              that changes your workspace waits for your approval.
-            </p>
             <p className="palette-label">
-              Start from an example<span>Fills the box · sends nothing</span>
+              Suggested for this page<span>Fills the box · sends nothing</span>
             </p>
             <div className="muse-prompts">
-              {starterPrompts.map((prompt) => (
+              {starterPrompts.map(({ text, changes }) => (
                 <button
-                  key={prompt}
+                  key={text}
                   onClick={() => {
-                    setQuery(prompt);
+                    setQuery(text);
                     composer.current?.focus();
                   }}
                 >
-                  <span>{prompt}</span>
+                  <span>{text}</span>
+                  <small>
+                    {changes
+                      ? "Prepares a change for your approval"
+                      : "Reads your workspace"}
+                  </small>
                 </button>
               ))}
             </div>

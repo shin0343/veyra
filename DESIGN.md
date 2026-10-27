@@ -10,7 +10,9 @@ and [VIDEO_INTELLIGENCE_UX](docs/design/VIDEO_INTELLIGENCE_UX.md).
 **REDESIGN-01 (Oct 27, 2026)** replaced the tokens, type system, shell, Home and Explore. Rationale
 and references: [REDESIGN_01_DIRECTION](docs/design/REDESIGN_01_DIRECTION.md); evidence:
 [REDESIGN_01_BEFORE_AFTER](docs/design/REDESIGN_01_BEFORE_AFTER.md). Where this file and older
-design notes differ, this file wins.
+design notes differ, this file wins. **REDESIGN-02** carried the system to every other screen
+([REDESIGN_02_REPORT](docs/design/REDESIGN_02_REPORT.md)): §5 per-screen compositions, §8 palette,
+§11 page-aware Muse, §17 density and §19 demo data are its additions.
 
 ---
 
@@ -117,6 +119,21 @@ Floor: 11px. Never title-case raw model labels as headings; categories are quiet
   column is stage (flex) → transport (50px) → timeline (≤48%). Panes scroll independently.
 - **Home:** title + facts → find field (max 880px) → `wall minmax(0,1fr) | journal 340px` split by a
   hairline → saved-views strip. The wall is a 16:9 live stage over a tile grid of every camera.
+- **Cameras:** a library of real frames grouped by space (contact sheet, no card chrome) and, when a
+  camera is opened (`?camera=`), a 380px sticky panel: live player, status, actions, facts, views it
+  belongs to, footage credit, settings.
+- **Live view / saved view:** a dark wall. Tiles sit edge to edge (3px gaps) with one caption strip
+  each (dot · name · state · expand); 1 / 2×2 / 3×3 or the saved arrangement; a focus strip under
+  the wall carries the chosen camera's next steps. No header bar on tiles.
+- **Recordings:** library left (sticky), player with a dark transport row, the merged recorded/moment
+  strip directly under it, then `moments | about this recording` (credit, indexing, chart in a
+  disclosure). Opens on the recording holding the newest Muse observation.
+- **Activity:** a review log grouped by day: mono time · frame · serif sentence · meta; rows expand to
+  play their evidence clip in place. Chart is a disclosure; filters show counts.
+- **Saved views:** a gallery of real-frame mosaics drawn at saved positions; whole item opens; Edit
+  opens the editor with a frame picker and a live mosaic preview.
+- **Settings:** section nav + plain rows (switches, read-only facts, a per-camera privacy table,
+  today's usage). No cards, no slogans.
 - Density is per screen (§17).
 
 ## 6. Component geometry
@@ -146,7 +163,9 @@ Depth is carried by surface change (paper → white → stage) and hairlines, no
 ## 8. Navigation and information architecture
 
 Primary: **Home · Explore · Cameras · Live view · Recordings · Activity · Saved views**, Settings at
-the bottom. ⌘K ("Go to, find or ask…") opens the command bar; the "Muse" button opens the panel.
+the bottom. ⌘K ("Go to, find or ask…") opens the command bar: pages, **real cameras and saved views
+match locally for free** ("No request") and open directly; the two Muse options come last and state
+"1 request". The "Muse" button (accessible name "Ask Muse") opens the panel.
 There is no other always-visible Muse entry (no sidebar card). `/search` redirects to Explore.
 `/explore?moment=<segment_id>` opens Explore with that moment selected; `?q=` pre-fills a Muse
 search and reuses a cached reading; only `?run=1` (set by an action labelled "Ask Muse · 1
@@ -185,6 +204,10 @@ request") spends a request on arrival.
 - **Hand-over pre-fills, never sends.** `openMuse(text)` writes into the composer; only a control
   labelled "Ask Muse" sends. Starter prompts and context actions ("Find moments like this", "Write
   it for Muse instead") fill and focus. Every send control states "1 request".
+- Suggestions are **page-aware** (Cameras: analysis/status questions; Saved views/Live: create a
+  view; Recordings/Activity: find moments) and built from real camera names. Each says whether Muse
+  would only read ("Reads your workspace") or prepare a change ("Prepares a change for your
+  approval"). They fill the composer; nothing is sent.
 - Muse's understanding shows as chips under the query.
 - **One card per turn that changes state**, never two that contradict: *Awaiting your approval*
   (amber, exact items, expiry) → *Saving…* → *Saved and verified* / *Saved · not verified* /
@@ -254,16 +277,16 @@ Escape clears the time selection. Status never relies on colour. Video has acces
 
 ## 17. Screen density guidelines
 
-| Screen | Density | Protagonist |
-| --- | --- | --- |
-| Home | Medium | Live stage of one space + the wall of all spaces; journal beside |
-| Explore | **High** (workspace) | The stage, with results left, evidence right, timeline below |
-| Cameras | Medium | Video-derived preview tiles |
-| Live view | Low chrome | Video grid; controls collapse to one bar |
-| Recordings | Medium–high | Player + availability/motion/moment layers (next to move to workspace grammar) |
-| Activity | Medium | Moments with frames grouped by day |
-| Saved views | Medium | Arrangements as real-frame mosaics |
-| Settings | Low | Plain forms and honest statements |
+| Screen | Density | Protagonist | Composition |
+| --- | --- | --- | --- |
+| Home | Medium | Live stage + wall of spaces; journal | Wall + journal split by a hairline |
+| Explore | **High** | Stage with results left, evidence right, timeline below | Single-viewport workspace |
+| Cameras | Medium | Real frames grouped by space | Library + sticky camera panel |
+| Live view | Low chrome | The wall | Dark wall + focus strip |
+| Recordings | Medium–high | Player + strip + moments | Library + player workspace |
+| Activity | Medium–high | Moments as sentences with frames | Day-grouped review log |
+| Saved views | Medium | Real-frame mosaics | Gallery + editor dialog |
+| Settings | Low | Plain rows and a privacy table | Section nav + rows |
 
 ## 18. Visual QA checklist
 
@@ -280,3 +303,13 @@ Escape clears the time selection. Status never relies on colour. Video has acces
 - [ ] Keyboard path through ask → filter → result → play → action, with visible focus?
 - [ ] Loading, empty, no-match, partial, error and offline states all reachable and honest?
 - [ ] axe: zero violations on the screen.
+
+## 19. Demo data and development fixtures
+
+Development test sources are **hidden, never deleted**. The rule is data-driven
+(`apps/web/src/lib/demo.ts`): a camera whose `source_media.kind` is `synthetic` is a test source;
+its recordings and any saved view containing it are test data. Default surfaces (Home, Cameras,
+Live, Recordings, Activity, Saved views, palette, Muse suggestions) hide them and say how many are
+hidden; "Show test sources" (per screen and in Settings → Display) reveals them for this browser.
+A camera opened by URL is always shown. Names are never used to classify data: a QA-named view that
+uses real cameras stays visible until an operator renames or deletes it in the app.

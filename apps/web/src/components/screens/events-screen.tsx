@@ -2,19 +2,27 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowUpRight, Camera, Eye, ScanSearch, Waves } from "lucide-react";
+import {
+  ArrowUpRight,
+  Camera,
+  Eye,
+  Play,
+  ScanSearch,
+  Waves,
+} from "lucide-react";
 import { isAbort, request, resourceError } from "@/lib/client-api";
 import type { Event, Resource, Schema } from "@/lib/types";
 import { eventTitle } from "@/lib/events";
+import { plural, testCameraIds } from "@/lib/demo";
 import { anchoredWindow, frameUrl } from "@/lib/explore";
 import { useCoverage } from "@/lib/use-coverage";
 import { EvidenceFrame } from "../evidence-frame";
 import { useWorkspace } from "../workspace-provider";
 import { ResourceState } from "../resource-state";
 import { ActivityHistogram } from "../activity-histogram";
-import { Badge, PageHeading } from "../ui/primitives";
+import { PageHeading } from "../ui/primitives";
 import { Button } from "../ui/button";
-import { formatOffset } from "../media-player";
+import { MediaPlayer, formatOffset } from "../media-player";
 import { recordingHref } from "./recordings-screen";
 
 const PAGE = 30;
@@ -86,35 +94,60 @@ function useEvents(
 }
 
 export function EventsScreen() {
-  const { cameras, preview, href } = useWorkspace();
+  const { cameras, preview, href, showTestSources } = useWorkspace();
   // Muse observations first; frequent motion samples are one click away.
   const [kind, setKind] = useState("observation");
   const [camera, setCamera] = useState("all");
+  const [open, setOpen] = useState<string | null>(null);
   const coverage = useCoverage(!preview);
   // The 24 hours ending at the latest recorded video, not "now".
   const period =
     coverage.state === "ready" ? anchoredWindow(coverage.data.items) : null;
   const { events, shown, showMore, truncated } = useEvents(camera, period);
   const cameraData = cameras.state === "ready" ? cameras.data : [];
-  // With no camera chosen, chart the camera with the most recent activity, not an arbitrary first.
-  const latestCamera =
+  const testIds = testCameraIds(cameraData);
+  const all =
     events.state === "ready"
-      ? [...events.data].sort(
-          (a, b) => Date.parse(b.started_at) - Date.parse(a.started_at),
-        )[0]?.camera_id
-      : undefined;
-  const histogramCamera =
-    camera !== "all"
-      ? camera
-      : (cameraData.find((item) => item.id === latestCamera) ?? cameraData[0])
-          ?.id;
+      ? events.data.filter(
+          (event) =>
+            (showTestSources || !testIds.has(event.camera_id)) &&
+            (camera === "all" || camera === event.camera_id),
+        )
+      : [];
+  const count = (value: string) =>
+    all.filter((event) => value === "all" || event.kind === value).length;
+  const cameraName = (id: string) =>
+    cameraData.find((item) => item.id === id)?.name ?? "Camera";
+  // With no camera chosen, chart the camera with the most recent activity, not an arbitrary first.
+  const latestCamera = [...all].sort(
+    (a, b) => Date.parse(b.started_at) - Date.parse(a.started_at),
+  )[0]?.camera_id;
+  const chartCamera = camera !== "all" ? camera : latestCamera;
   return (
-    <>
+    <div className="log">
       <PageHeading
         title="Activity"
-        description="What Muse observed and what moved, newest first, with the footage one click away."
+        description={
+          events.state === "ready" ? (
+            <>
+              <span>{plural(count("observation"), "Muse observation")}</span>
+              <span>{plural(count("motion"), "movement sample")}</span>
+              {period && (
+                <span>
+                  latest recorded day, ending{" "}
+                  {new Date(period.end).toLocaleString(undefined, {
+                    month: "short",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                  })}
+                </span>
+              )}
+            </>
+          ) : undefined
+        }
       />
-      <div className="filter-toolbar">
+      <div className="log-filters">
         <div className="segmented-control" aria-label="Activity type">
           {[
             { value: "observation", label: "Muse observations" },
@@ -127,50 +160,58 @@ export function EventsScreen() {
               onClick={() => setKind(item.value)}
             >
               {item.label}
+              {events.state === "ready" && (
+                <span className="tc"> {count(item.value)}</span>
+              )}
             </button>
           ))}
         </div>
         <label className="select-field">
-          <Camera size={16} />
+          <Camera size={15} />
           <select
             aria-label="Filter activity by camera"
             value={camera}
             onChange={(event) => setCamera(event.target.value)}
           >
             <option value="all">All cameras</option>
-            {cameras.state === "ready" &&
-              cameras.data.map((camera) => (
-                <option key={camera.id} value={camera.id}>
-                  {camera.name}
+            {cameraData
+              .filter((item) => showTestSources || !testIds.has(item.id))
+              .map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.name}
                 </option>
               ))}
           </select>
         </label>
+        <span className="log-zone">
+          {preview
+            ? "Sample history"
+            : `Times in ${Intl.DateTimeFormat().resolvedOptions().timeZone}`}
+        </span>
       </div>
-      {!preview && histogramCamera && period && (
-        <ActivityHistogram
-          key={histogramCamera}
-          cameraId={histogramCamera}
-          start={new Date(period.start).toISOString()}
-          end={new Date(period.end).toISOString()}
-          title={`Latest recorded period · ${
-            cameraData.find((item) => item.id === histogramCamera)?.name ??
-            "Camera"
-          }${camera === "all" ? " · most recent activity" : ""}`}
-        />
+      {!preview && chartCamera && period && (
+        <details className="log-chart">
+          <summary>
+            Motion and analysis chart · {cameraName(chartCamera)}
+            {camera === "all" ? " (most recent activity)" : ""}
+          </summary>
+          <ActivityHistogram
+            key={chartCamera}
+            cameraId={chartCamera}
+            start={new Date(period.start).toISOString()}
+            end={new Date(period.end).toISOString()}
+            title={`Latest recorded period · ${cameraName(chartCamera)}`}
+          />
+        </details>
       )}
       <ResourceState
         resource={events}
-        emptyTitle="Your activity history has room to grow"
-        emptyDescription="When activity is detected or video is indexed, grounded observations will appear here. No available data is not the same as no activity."
+        emptyTitle="No activity recorded yet"
+        emptyDescription="When movement is measured or video is analyzed, it appears here. No data is not the same as no activity."
       >
-        {(data) => {
-          const filtered = [...data]
-            .filter(
-              (event) =>
-                (kind === "all" || event.kind === kind) &&
-                (camera === "all" || camera === event.camera_id),
-            )
+        {() => {
+          const filtered = all
+            .filter((event) => kind === "all" || event.kind === kind)
             .sort(
               (a, b) => Date.parse(b.started_at) - Date.parse(a.started_at),
             );
@@ -178,113 +219,127 @@ export function EventsScreen() {
           filtered.slice(0, shown).forEach((event) => {
             const day = new Date(event.started_at).toLocaleDateString(
               undefined,
-              {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              },
+              { weekday: "long", month: "long", day: "numeric" },
             );
             groups.set(day, [...(groups.get(day) ?? []), event]);
           });
           return (
-            <div className="event-history">
+            <div className="log-days">
               {Array.from(groups, ([date, items]) => (
-                <section key={date}>
-                  <div className="event-date">
-                    <h2>{date}</h2>
-                    <span>
-                      {preview
-                        ? "Sample history"
-                        : Intl.DateTimeFormat().resolvedOptions().timeZone}
-                    </span>
-                  </div>
-                  {items.map((event) => (
-                    <article
-                      className={`event-card ${!preview && event.kind === "observation" ? "event-card-framed" : ""}`}
-                      key={event.id}
-                    >
-                      {!preview && event.kind === "observation" ? (
-                        <EvidenceFrame
-                          className="event-frame"
-                          src={frameUrl(
-                            event.recording_id,
-                            event.evidence_offset_ms,
-                            event.segment_id,
-                          )}
-                          alt={`Frame from the recording at this moment`}
-                        />
-                      ) : (
-                        <span className={`event-icon event-${event.kind}`}>
-                          {event.kind === "observation" ? (
-                            <ScanSearch size={21} />
-                          ) : (
-                            <Waves size={21} />
-                          )}
-                        </span>
-                      )}
-                      <div className="event-card-main">
-                        <div className="button-row">
-                          <h3>{eventTitle(event, preview)}</h3>
-                          <Badge
-                            tone={event.kind === "motion" ? "neutral" : "blue"}
+                <section key={date} aria-label={date}>
+                  <h2 className="log-day">
+                    {date}
+                    <span>{plural(items.length, "entry", "entries")}</span>
+                  </h2>
+                  <ol className="log-list">
+                    {items.map((event) => {
+                      const expanded = open === event.id;
+                      const target = recordingHref(
+                        event.recording_id,
+                        event.evidence_offset_ms,
+                        event.segment_id,
+                      );
+                      return (
+                        <li
+                          key={event.id}
+                          className={`log-row is-${event.kind} ${expanded ? "is-open" : ""}`}
+                        >
+                          <time
+                            className="log-time tc"
+                            dateTime={event.started_at}
                           >
-                            {event.kind === "motion"
-                              ? "Movement"
-                              : "Observation"}
-                          </Badge>
-                        </div>
-                        <p>
-                          {cameras.state === "ready"
-                            ? (cameras.data.find(
-                                (camera) => camera.id === event.camera_id,
-                              )?.name ?? "Camera")
-                            : "Camera"}
-                          <span>
-                            At {formatOffset(event.evidence_offset_ms)} in
-                            recording
-                          </span>
-                        </p>
-                        <small>
-                          {preview
-                            ? "Authored example · not a detected event"
-                            : event.provenance === "muse"
-                              ? `Indexed with ${event.model_id}`
-                              : `${event.summary} Review the video for context.`}
-                        </small>
-                      </div>
-                      <div className="event-card-action">
-                        <time dateTime={event.started_at}>
-                          {new Date(event.started_at).toLocaleTimeString(
-                            undefined,
-                            {
-                              hour: "numeric",
-                              minute: "2-digit",
-                              second: "2-digit",
-                            },
-                          )}
-                        </time>
-                        <Button asChild variant="secondary" size="sm">
-                          <Link
-                            href={href(
-                              recordingHref(
+                            {new Date(event.started_at).toLocaleTimeString(
+                              undefined,
+                              {
+                                hour: "numeric",
+                                minute: "2-digit",
+                                second: "2-digit",
+                              },
+                            )}
+                          </time>
+                          {!preview && event.kind === "observation" ? (
+                            <EvidenceFrame
+                              className="log-frame"
+                              src={frameUrl(
                                 event.recording_id,
                                 event.evidence_offset_ms,
                                 event.segment_id,
-                              ),
-                            )}
-                          >
-                            Review moment
-                            <ArrowUpRight size={14} />
-                          </Link>
-                        </Button>
-                      </div>
-                    </article>
-                  ))}
+                              )}
+                              alt="Frame from the recording at this moment"
+                            />
+                          ) : (
+                            <span className="log-frame log-frame-none">
+                              {event.kind === "observation" ? (
+                                <ScanSearch size={16} aria-hidden="true" />
+                              ) : (
+                                <Waves size={16} aria-hidden="true" />
+                              )}
+                            </span>
+                          )}
+                          <div className="log-text">
+                            <p className="log-summary">
+                              {eventTitle(event, preview)}
+                            </p>
+                            <p className="log-meta">
+                              <strong>{cameraName(event.camera_id)}</strong>
+                              <span>
+                                {event.kind === "motion"
+                                  ? "Movement · pixel change"
+                                  : "Muse observation"}
+                              </span>
+                              <span className="tc">
+                                {formatOffset(event.evidence_offset_ms)} in
+                                recording
+                              </span>
+                              {preview && (
+                                <span>
+                                  Authored example · not a detected event
+                                </span>
+                              )}
+                            </p>
+                          </div>
+                          <div className="log-actions">
+                            <button
+                              className="log-play"
+                              aria-expanded={expanded}
+                              onClick={() =>
+                                setOpen(expanded ? null : event.id)
+                              }
+                            >
+                              <Play size={13} />
+                              {expanded ? "Close" : "Watch"}
+                            </button>
+                            <Link className="text-button" href={href(target)}>
+                              Open recording
+                              <ArrowUpRight size={13} />
+                            </Link>
+                          </div>
+                          {expanded && (
+                            <div className="log-player">
+                              <MediaPlayer
+                                recordingId={event.recording_id}
+                                segmentId={event.segment_id}
+                                offsetMs={event.evidence_offset_ms}
+                                durationMs={10000}
+                              />
+                              {event.provenance === "muse" && (
+                                <p className="muted">
+                                  A model description, not verified fact. Muse
+                                  describes what is visible and does not
+                                  identify people.
+                                </p>
+                              )}
+                            </div>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ol>
                 </section>
               ))}
               {filtered.length > shown && (
                 <div className="load-more">
-                  <Button variant="secondary" onClick={showMore}>
+                  <Button variant="secondary" size="sm" onClick={showMore}>
                     Show older activity
                   </Button>
                   <span className="muted">
@@ -300,11 +355,15 @@ export function EventsScreen() {
               )}
               {!filtered.length && (
                 <div className="filter-empty">
-                  <Eye size={24} />
-                  <h3>No activity matches these filters</h3>
-                  <p>Try another camera or activity type.</p>
+                  <Eye size={22} />
+                  <h3>Nothing matches these filters</h3>
+                  <p>
+                    Try another camera or type. An empty list isn’t proof that
+                    nothing happened.
+                  </p>
                   <Button
                     variant="secondary"
+                    size="sm"
                     onClick={() => {
                       setKind("all");
                       setCamera("all");
@@ -319,10 +378,10 @@ export function EventsScreen() {
         }}
       </ResourceState>
       <p className="quiet-note">
-        <Eye size={18} />
+        <Eye size={16} />
         Observations describe visible activity. They do not identify people or
-        infer intent.
+        infer intent. Movement is measured pixel change, not recognition.
       </p>
-    </>
+    </div>
   );
 }

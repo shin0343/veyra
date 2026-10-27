@@ -401,42 +401,7 @@
   }
 }
 
-/* Overview (VIDEO-02): orientation, not a hero. */
-.view-mosaic {
-  display: grid;
-  gap: 2px;
-  width: 104px;
-  flex-shrink: 0;
-  border-radius: 6px;
-  overflow: hidden;
-  background: var(--stage);
-}
-.view-mosaic.cols-2 {
-  grid-template-columns: 1fr 1fr;
-}
-.view-mosaic img,
-.view-mosaic span {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  display: block;
-  background: #2a332f;
-}
-
 /* Activity: observation rows lead with a frame from their recording. */
-.event-card-framed {
-  padding: 10px 18px 10px 10px;
-}
-.event-frame {
-  flex: 0 0 152px;
-  border-radius: 7px;
-}
-@media (max-width: 540px) {
-  .event-frame {
-    flex-basis: 96px;
-  }
-}
 
 /* Recording moments: Muse observations carry a frame from the same clip. */
 .moment-frame {

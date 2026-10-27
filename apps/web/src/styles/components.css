@@ -526,11 +526,6 @@ kbd {
 .select-field select {
   padding-right: 5px;
 }
-.filter-timezone {
-  font-size: 11px;
-  color: var(--text-secondary);
-  margin-left: auto;
-}
 .form-field {
   display: flex;
   flex-direction: column;

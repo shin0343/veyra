@@ -161,19 +161,19 @@ await run(
 await run("3", "Create, open and persist a layout", async (o) => {
   const name = `Everyday four ${Date.now().toString(36)}`;
   await page.goto(`${base}/layouts`, { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Create a view" }).first().click();
+  await page.getByRole("button", { name: "New view" }).first().click();
   const dialog = page.getByRole("dialog");
   await dialog.getByLabel("View name").fill(name);
-  const boxes = dialog.locator(".camera-picker input[type=checkbox]");
-  for (let i = 0; i < 4; i++) await boxes.nth(i).check();
+  const boxes = dialog.locator(".view-picker button");
+  for (let i = 0; i < 4; i++) await boxes.nth(i).click();
   await dialog.getByRole("button", { name: "Review view" }).click();
   await dialog.getByRole("button", { name: "Save view" }).click();
-  await dialog.getByText("Your view is ready").waitFor({ timeout: 15000 });
-  await dialog.getByRole("link", { name: /Open saved view/ }).click();
+  await dialog.getByText("View saved").waitFor({ timeout: 15000 });
+  await dialog.getByRole("link", { name: /Open view/ }).click();
   await page.waitForURL(/\/layouts\/[0-9a-f-]{36}$/);
   o.layout_id = page.url().split("/").pop();
   await page.getByRole("heading", { level: 1, name }).waitFor();
-  o.tiles = await page.locator(".live-tile").count();
+  o.tiles = await page.locator(".wall-tile").count();
   o.first_frames_ms = await playing();
   await page.reload({ waitUntil: "networkidle" });
   await page.getByRole("heading", { level: 1, name }).waitFor();
@@ -248,7 +248,7 @@ await run(
     await page.waitForURL(/\/layouts\/[0-9a-f-]{36}$/);
     o.layout_id = page.url().split("/").pop();
     await page.getByRole("heading", { level: 1, name }).waitFor();
-    o.tiles = await page.locator(".live-tile").count();
+    o.tiles = await page.locator(".wall-tile").count();
     const stored = await api(`/layouts/${o.layout_id}`);
     o.api_columns = stored.body.columns;
     o.api_cells = stored.body.cells.length;

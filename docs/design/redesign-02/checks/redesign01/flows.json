@@ -1,0 +1,255 @@
+{
+  "base": "http://127.0.0.1:3600",
+  "ran_at": "2026-10-27T21:33:23.266Z",
+  "passed": 49,
+  "total": 49,
+  "fixture_search_fulfilled_locally": 1,
+  "aborted_paid_requests": [],
+  "results": [
+    {
+      "name": "Home: live stage above the fold at 1440×900",
+      "pass": true,
+      "detail": "video top 293px"
+    },
+    {
+      "name": "Home: stage video is playing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Home: choosing a space puts it on the stage",
+      "pass": true,
+      "detail": "Community space → Trail camera"
+    },
+    {
+      "name": "Home: credits shown for prerecorded footage",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Home: journal lists real moments with frames",
+      "pass": true,
+      "detail": "6 entries"
+    },
+    {
+      "name": "Home: a page name offers free navigation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Home: Enter on a page name navigates without Muse",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Home → Explore: the chosen moment is selected",
+      "pass": true,
+      "detail": "Community space / Community space"
+    },
+    {
+      "name": "Home: axe WCAG 2.2 AA",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Home: no page errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Explore: player above the fold at 1440×900",
+      "pass": true,
+      "detail": "stage 111–607px, 708px wide"
+    },
+    {
+      "name": "Explore: first result fully above the fold",
+      "pass": true,
+      "detail": "bottom 424px"
+    },
+    {
+      "name": "Explore: timeline directly under the player",
+      "pass": true,
+      "detail": "gap 57px"
+    },
+    {
+      "name": "Explore: selected clip plays",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Explore: playhead drawn on the timeline while playing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Explore: selecting a result updates the transport",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Explore: stepper moves to the next moment",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Explore: timeline tick selects a moment visible in the list",
+      "pass": true,
+      "detail": "39 moments on Trail camera from 12:49:12 AM. Select to step "
+    },
+    {
+      "name": "Explore: tick hit area ≥ 24px",
+      "pass": true,
+      "detail": "24×24"
+    },
+    {
+      "name": "Explore: topic filter reads the free index",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Explore: drag across the timeline focuses a period",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Explore: Escape restores the full range",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Explore: “Find moments like this” fills the field, sends nothing",
+      "pass": true,
+      "detail": "Moments like “Two reddish-brown squirrels climb and jump on "
+    },
+    {
+      "name": "Explore: / focuses the ask field",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Explore: axe WCAG 2.2 AA",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Explore: no page errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Muse search: one deliberate Ask → one /search",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Muse search: camera refinement uses the index, not /search",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Muse search: reload reuses Muse’s reading (0 new /search)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Muse search: Back from a recording costs nothing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Muse search: no page errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Muse: starter prompt fills the composer, sends nothing",
+      "pass": true,
+      "detail": "Find footage with a person on Trail camera"
+    },
+    {
+      "name": "Muse: send button states its cost",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Muse: known pages offered for free while typing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Muse: Muse-flavoured buttons across screens send 0 requests",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Palette: Muse options state their cost",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Muse/palette: no page errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Responsive 1280: / has no horizontal overflow",
+      "pass": true,
+      "detail": "0px"
+    },
+    {
+      "name": "Responsive 1280: /explore has no horizontal overflow",
+      "pass": true,
+      "detail": "0px"
+    },
+    {
+      "name": "Responsive 1024: / has no horizontal overflow",
+      "pass": true,
+      "detail": "0px"
+    },
+    {
+      "name": "Responsive 1024: /explore has no horizontal overflow",
+      "pass": true,
+      "detail": "0px"
+    },
+    {
+      "name": "Responsive 768: / has no horizontal overflow",
+      "pass": true,
+      "detail": "0px"
+    },
+    {
+      "name": "Responsive 768: /explore has no horizontal overflow",
+      "pass": true,
+      "detail": "0px"
+    },
+    {
+      "name": "Responsive 390: / has no horizontal overflow",
+      "pass": true,
+      "detail": "0px"
+    },
+    {
+      "name": "Responsive 390: /explore has no horizontal overflow",
+      "pass": true,
+      "detail": "0px"
+    },
+    {
+      "name": "Phone: first result frame above y=900 after a topic",
+      "pass": true,
+      "detail": "702px"
+    },
+    {
+      "name": "Phone: Details shows the inspector",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Phone: Timeline shows the lanes",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No paid request left the browser",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

@@ -298,35 +298,6 @@ html[data-motion="reduced"] .muse-pending-dots span {
 }
 
 /* Live view */
-.live-columns-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-.live-tile-empty {
-  border-style: dashed;
-  background: #fbfcf9;
-}
-.live-tile-empty .media-player {
-  background: transparent;
-  color: var(--text-secondary);
-}
-.live-tile-empty .live-tile-heading {
-  min-height: 46px;
-}
-.live-pager {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  margin-top: 14px;
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-@media (max-width: 760px) {
-  .live-columns-2,
-  .live-columns-3 {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* Activity histogram: recorded = context fill, motion and events = validated series colors */
 .histogram {
@@ -633,9 +604,6 @@ html[data-motion="reduced"] .muse-pending-dots span {
   margin-top: 20px;
 }
 /* Real-camera placeholder text sits on #e9eee6; keep it at WCAG AA contrast. */
-.visual-placeholder {
-  color: #4a6455;
-}
 
 .proposal-warning {
   display: flex;
