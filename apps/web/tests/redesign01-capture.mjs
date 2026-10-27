@@ -6,19 +6,29 @@ import { chromium } from "playwright";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-const out = path.resolve(process.argv[2] ?? "../../docs/design/redesign-01/screenshots/before");
+const out = path.resolve(
+  process.argv[2] ?? "../../docs/design/redesign-01/screenshots/before",
+);
 const base = process.argv[3] ?? "http://127.0.0.1:3200";
 const viewports = [
   { width: 1440, height: 900 },
   { width: 1024, height: 768 },
   { width: 390, height: 844 },
 ];
-const routes = (process.env.ROUTES ?? "/,/explore,/explore?topic=animals").split(",");
-const PAID = /\/api\/v1\/(agent\/messages|search|confirmations|index-jobs|recordings\/[^/]+\/index)/;
+const routes = (
+  process.env.ROUTES ?? "/,/explore,/explore?topic=animals"
+).split(",");
+const PAID =
+  /\/api\/v1\/(agent\/messages|search|confirmations|index-jobs|recordings\/[^/]+\/index)/;
 
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch();
-const report = { base, captured_at: new Date().toISOString(), blocked: [], pages: [] };
+const report = {
+  base,
+  captured_at: new Date().toISOString(),
+  blocked: [],
+  pages: [],
+};
 for (const viewport of viewports) {
   const context = await browser.newContext({
     viewport,
@@ -33,12 +43,16 @@ for (const viewport of viewports) {
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   for (const route of routes) {
-    const response = await page.goto(base + route, { waitUntil: "domcontentloaded" });
+    const response = await page.goto(base + route, {
+      waitUntil: "domcontentloaded",
+    });
     await page.waitForTimeout(Number(process.env.SETTLE ?? 5000));
     const metrics = await page.evaluate(() => {
       const top = (selector) => {
         const node = document.querySelector(selector);
-        return node ? Math.round(node.getBoundingClientRect().top + window.scrollY) : null;
+        return node
+          ? Math.round(node.getBoundingClientRect().top + window.scrollY)
+          : null;
       };
       return {
         overflow: document.documentElement.scrollWidth - window.innerWidth,
@@ -50,7 +64,10 @@ for (const viewport of viewports) {
     const name = `${route === "/" ? "home" : route.slice(1).replace(/[/?=&]/g, "_")}-${viewport.width}`;
     await page.screenshot({ path: path.join(out, name + ".png") });
     if (process.env.FULL !== "0")
-      await page.screenshot({ path: path.join(out, name + "-full.png"), fullPage: true });
+      await page.screenshot({
+        path: path.join(out, name + "-full.png"),
+        fullPage: true,
+      });
     report.pages.push({
       route,
       viewport,

@@ -621,50 +621,6 @@ html[data-motion="reduced"] .muse-pending-dots span {
 }
 
 /* Search */
-.search-progress {
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin: 6px 0 14px;
-}
-.search-skeleton .result-visual {
-  min-height: 160px;
-}
-.search-skeleton .skeleton + .skeleton {
-  margin-top: 10px;
-}
-.search-context {
-  margin: -6px 0 18px;
-  font-size: 12px;
-  color: var(--text-secondary);
-  display: grid;
-  gap: 8px;
-}
-.search-context small {
-  font-size: 11px;
-  font-variant-numeric: tabular-nums;
-}
-.search-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 10px;
-}
-.search-chips span {
-  padding: 3px 9px;
-  border-radius: 999px;
-  background: var(--sage-light);
-  border: 1px solid #d5e4d8;
-  color: #2f5a4b;
-  font-size: 11px;
-}
-.search-context .search-chips {
-  margin-top: 0;
-}
-.result-uncertainty {
-  font-size: 11px !important;
-  color: var(--text-secondary);
-  margin-top: 8px !important;
-}
 .state-panel .inline-error {
   margin: 0 auto 12px;
   max-width: 52ch;
@@ -675,31 +631,6 @@ html[data-motion="reduced"] .muse-pending-dots span {
   justify-items: center;
   gap: 10px;
   margin-top: 20px;
-}
-.search-result-real {
-  grid-template-columns: 128px 1fr;
-}
-.search-result-real .result-visual {
-  min-height: 0;
-  background: var(--sage-light);
-}
-.search-result-real .result-visual > span:first-child {
-  flex-direction: column;
-  gap: 4px;
-  color: #355b46;
-}
-.search-result-real .result-visual strong {
-  font-size: 17px;
-  font-variant-numeric: tabular-nums;
-}
-.search-result-real .result-visual small {
-  font-size: 10px;
-  color: var(--text-secondary);
-}
-@media (max-width: 640px) {
-  .search-result-real {
-    grid-template-columns: 1fr;
-  }
 }
 /* Real-camera placeholder text sits on #e9eee6; keep it at WCAG AA contrast. */
 .visual-placeholder {
@@ -742,16 +673,6 @@ html[data-motion="reduced"] .muse-pending-dots span {
   pointer-events: none;
   max-width: calc(100% - 20px);
 }
-.demo-media-notice {
-  display: flex;
-  gap: 8px 20px;
-  flex-wrap: wrap;
-  padding: 12px 36px;
-  background: var(--surface-subtle, #edf5f2);
-  color: var(--text-primary, #263b36);
-  font-size: 12px;
-  border-bottom: 1px solid var(--border, #dbe5e1);
-}
 .source-media-credit {
   font-size: 12px;
   line-height: 1.7;
@@ -761,9 +682,4 @@ html[data-motion="reduced"] .muse-pending-dots span {
 .source-media-credit a {
   text-decoration: underline;
   text-underline-offset: 2px;
-}
-@media (max-width: 600px) {
-  .demo-media-notice {
-    padding: 12px 20px;
-  }
 }

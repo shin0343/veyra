@@ -39,8 +39,11 @@ interface WorkspaceContext {
   reload: () => void;
   addPreviewLayout: (layout: Layout) => void;
   setPreviewState: (state: PreviewState) => void;
-  /** Opens Muse; a non-empty query is sent as the user's own request. */
-  openMuse: (query?: string) => void;
+  /**
+   * Opens Muse with the query written into its composer. Nothing is sent (and nothing is
+   * billed) unless `send` is set by a control whose own label says "Ask Muse".
+   */
+  openMuse: (query?: string, options?: { send?: boolean }) => void;
   museOpen: boolean;
   museQuery: string;
   museRequest: number;
@@ -90,12 +93,15 @@ export function WorkspaceProvider({
   const [museQuery, setMuseQuery] = useState("");
   const [museRequest, setMuseRequest] = useState(0);
   const museSender = useRef<((query: string) => void) | null>(null);
-  const openMuse = useCallback((query = "") => {
-    setMuseQuery(query);
-    setMuseRequest((value) => value + 1);
-    setMuseOpen(true);
-    if (query.trim()) museSender.current?.(query);
-  }, []);
+  const openMuse = useCallback(
+    (query = "", options: { send?: boolean } = {}) => {
+      setMuseQuery(options.send ? "" : query);
+      setMuseRequest((value) => value + 1);
+      setMuseOpen(true);
+      if (options.send && query.trim()) museSender.current?.(query);
+    },
+    [],
+  );
   const registerMuse = useCallback(
     (sender: ((query: string) => void) | null) => {
       museSender.current = sender;

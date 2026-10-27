@@ -1,0 +1,124 @@
+{
+  "base": "http://127.0.0.1:3600",
+  "captured_at": "2026-10-27T20:45:23.042Z",
+  "blocked": [],
+  "pages": [
+    {
+      "route": "/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1429,
+      "first_video_top": 293,
+      "first_result_top": null,
+      "page_errors": []
+    },
+    {
+      "route": "/explore",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 900,
+      "first_video_top": 111,
+      "first_result_top": 327,
+      "page_errors": []
+    },
+    {
+      "route": "/explore?topic=animals",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 900,
+      "first_video_top": 111,
+      "first_result_top": 327,
+      "page_errors": []
+    },
+    {
+      "route": "/",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 1731,
+      "first_video_top": 283,
+      "first_result_top": null,
+      "page_errors": []
+    },
+    {
+      "route": "/explore",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 768,
+      "first_video_top": 111,
+      "first_result_top": 393,
+      "page_errors": []
+    },
+    {
+      "route": "/explore?topic=animals",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 768,
+      "first_video_top": 111,
+      "first_result_top": 393,
+      "page_errors": []
+    },
+    {
+      "route": "/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 2122,
+      "first_video_top": 372,
+      "first_result_top": null,
+      "page_errors": []
+    },
+    {
+      "route": "/explore",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 2323,
+      "first_video_top": 153,
+      "first_result_top": 702,
+      "page_errors": []
+    },
+    {
+      "route": "/explore?topic=animals",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": 200,
+      "overflow": 0,
+      "height": 844,
+      "first_video_top": 153,
+      "first_result_top": 702,
+      "page_errors": []
+    }
+  ]
+}

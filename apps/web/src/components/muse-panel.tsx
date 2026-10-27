@@ -135,8 +135,8 @@ export function MusePanel() {
       onOpenChange={(open) => {
         if (!open) closeMuse();
       }}
-      title="A little help from Muse"
-      description="Find a feature, look for a moment, or plan your next action."
+      title="Muse"
+      description="Ask about your cameras, recordings and saved views. Changes wait for your approval."
       className="muse-panel"
     >
       {museOpen &&
@@ -144,6 +144,8 @@ export function MusePanel() {
           <PreviewGuide key={museRequest} initialQuery={museQuery} />
         ) : (
           <MuseThread
+            key={museRequest}
+            initialQuery={museQuery}
             turns={turns}
             onSend={(message) => void send(message)}
             onRetry={(turn) => void send(turn.message, turn)}
@@ -187,6 +189,7 @@ export function suggestedPrompts(cameras: CameraType[]) {
 }
 
 function MuseThread({
+  initialQuery,
   turns,
   onSend,
   onRetry,
@@ -194,6 +197,7 @@ function MuseThread({
   onDecision,
   onReset,
 }: {
+  initialQuery: string;
   turns: Turn[];
   onSend: (message: string) => void;
   onRetry: (turn: Turn) => void;
@@ -201,12 +205,23 @@ function MuseThread({
   onDecision: (turnId: string, response: AgentResponse) => void;
   onReset: () => void;
 }) {
-  const [query, setQuery] = useState("");
-  const { cameras } = useWorkspace();
+  // A handed-over request is written into the composer; the person decides to send it.
+  const [query, setQuery] = useState(initialQuery);
+  const { cameras, href, closeMuse } = useWorkspace();
   const starterPrompts = suggestedPrompts(
     cameras.state === "ready" ? cameras.data : [],
   );
   const scroller = useRef<HTMLDivElement>(null);
+  const composer = useRef<HTMLTextAreaElement>(null);
+  useEffect(() => {
+    composer.current?.focus();
+    composer.current?.setSelectionRange(
+      composer.current.value.length,
+      composer.current.value.length,
+    );
+  }, []);
+  // Known places answer for free; Muse is only needed for what a link can't do.
+  const shortcuts = query.trim() ? findDestinations(query).slice(0, 2) : [];
   const pending = turns.some((turn) => turn.state === "pending");
   useEffect(() => {
     scroller.current?.scrollTo({
@@ -223,37 +238,36 @@ function MuseThread({
     <div className="muse-content">
       <div className="muse-context">
         <span>
-          <Sparkles size={15} />
-          Workspace assistant · Muse
+          <Sparkles size={14} />
+          Muse · 1 request per question
         </span>
-        {turns.length ? (
+        {!!turns.length && (
           <button className="muse-reset" onClick={onReset} disabled={pending}>
             New conversation
           </button>
-        ) : (
-          <Badge tone="teal">You’re in control</Badge>
         )}
       </div>
       <div className="muse-scroll" ref={scroller} aria-live="polite">
         {!turns.length && (
           <div className="muse-welcome">
-            <span className="muse-welcome-icon">
-              <Sparkles size={25} />
-            </span>
-            <h3>
-              What would make
-              <br />
-              your day a little easier?
-            </h3>
+            <h3>Ask about your cameras, recordings and views</h3>
             <p>
-              Muse can open features, find recorded moments and prepare saved
-              views. Changes always wait for your approval.
+              Muse can find recorded moments and prepare saved views. Anything
+              that changes your workspace waits for your approval.
+            </p>
+            <p className="palette-label">
+              Start from an example<span>Fills the box · sends nothing</span>
             </p>
             <div className="muse-prompts">
               {starterPrompts.map((prompt) => (
-                <button key={prompt} onClick={() => submit(prompt)}>
+                <button
+                  key={prompt}
+                  onClick={() => {
+                    setQuery(prompt);
+                    composer.current?.focus();
+                  }}
+                >
                   <span>{prompt}</span>
-                  <ArrowUpRight size={16} />
                 </button>
               ))}
             </div>
@@ -285,6 +299,25 @@ function MuseThread({
           </div>
         ))}
       </div>
+      {!!shortcuts.length && (
+        <div className="muse-local" aria-label="Pages matching your words">
+          {shortcuts.map((item) => (
+            <Link
+              key={item.id}
+              href={href(appRoutes[item.id])}
+              onClick={closeMuse}
+              className="muse-local-row"
+            >
+              <Layers2 size={14} />
+              <span>
+                Go to {item.title}
+                <small>No request</small>
+              </span>
+              <ArrowUpRight size={13} />
+            </Link>
+          ))}
+        </div>
+      )}
       <form
         className="muse-composer"
         onSubmit={(event) => {
@@ -297,6 +330,7 @@ function MuseThread({
         </label>
         <textarea
           id="muse-query"
+          ref={composer}
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Ask in your own words…"
@@ -315,15 +349,16 @@ function MuseThread({
         />
         <Button
           type="submit"
-          size="icon"
+          size="sm"
           disabled={!query.trim() || pending}
-          aria-label="Send message"
+          aria-label="Send message: Ask Muse, uses 1 request"
         >
-          <ArrowUp size={18} />
+          <ArrowUp size={15} />
+          Ask Muse · 1 request
         </Button>
       </form>
       <p className="composer-note">
-        Actions come from Veyra’s own receipts, not from Muse’s wording.
+        Outcomes come from Veyra’s own receipts, not from Muse’s wording.
       </p>
     </div>
   );
@@ -506,13 +541,28 @@ function ResponseView({
     !pendingActions.length &&
     !response.camera_candidates?.length &&
     !errors.length;
+  if (decision)
+    return (
+      <div className="assistant-answer">
+        <DecisionStatus response={decision} />
+        <DecisionResult response={decision} />
+        <details className="muse-history">
+          <summary>What Muse proposed</summary>
+          <p>{readableReceipt(response.message)}</p>
+          {proposal && (
+            <LayoutProposalCard
+              proposal={proposal}
+              decision={decision}
+              onDecision={onDecision}
+            />
+          )}
+        </details>
+        <ActionTrace actions={response.actions} />
+      </div>
+    );
   return (
     <div className="assistant-answer">
-      {decision ? (
-        <DecisionStatus response={decision} />
-      ) : (
-        <ResponseStatus status={response.status} readOnly={readOnly} />
-      )}
+      <ResponseStatus status={response.status} readOnly={readOnly} />
       <p>{readableReceipt(response.message)}</p>
       {!!features.length && (
         <div className="muse-section">
@@ -594,7 +644,6 @@ function ResponseView({
           </div>
         </div>
       )}
-      {decision && <DecisionResult response={decision} />}
       <ActionTrace actions={response.actions} />
     </div>
   );
@@ -637,6 +686,20 @@ function ResponseStatus({
   );
 }
 
+/** Past-tense wording for a proposal once the person has decided. */
+function decisionLabel(response: AgentResponse) {
+  if (response.verified_results?.length) return "You approved this · saved";
+  if (response.executed_operations?.length)
+    return "You approved this · not verified";
+  if (response.status === "failed" && !isDeclined(response))
+    return "You approved this · it failed";
+  return "You declined · nothing changed";
+}
+function isDeclined(response: AgentResponse) {
+  const errors = errorsOf(response);
+  return errors.length > 0 && errors.every((e) => e.code === "USER_DECLINED");
+}
+
 /** After approval or decline, the turn's badge reflects the outcome, not the earlier wait. */
 function DecisionStatus({ response }: { response: AgentResponse }) {
   if (response.verified_results?.length)
@@ -653,11 +716,14 @@ function DecisionStatus({ response }: { response: AgentResponse }) {
         Saved · not verified
       </Badge>
     );
-  if (
-    response.status === "completed" ||
-    (errorsOf(response).length > 0 &&
-      errorsOf(response).every((error) => error.code === "USER_DECLINED"))
-  )
+  if (response.status === "failed" && !isDeclined(response))
+    return (
+      <Badge tone="amber">
+        <CircleAlert size={12} />
+        Failed · nothing confirmed
+      </Badge>
+    );
+  if (response.status === "completed" || isDeclined(response))
     return (
       <Badge>
         <Ban size={12} />
@@ -912,11 +978,27 @@ function LayoutProposalCard({
       className="confirmation-card proposal-card"
       aria-labelledby={titleId}
     >
-      <Badge tone="amber">
-        <ShieldCheck size={13} />
-        Proposed change · nothing saved yet
-      </Badge>
-      <h4 id={titleId}>Save the view “{layout.name}”?</h4>
+      {decision ? (
+        <Badge>
+          <Check size={13} />
+          {decisionLabel(decision)}
+        </Badge>
+      ) : expired ? (
+        <Badge>
+          <Ban size={13} />
+          Expired · nothing changed
+        </Badge>
+      ) : (
+        <Badge tone="amber">
+          <ShieldCheck size={13} />
+          Awaiting your approval · nothing saved yet
+        </Badge>
+      )}
+      <h4 id={titleId}>
+        {decision
+          ? `The view “${layout.name}”`
+          : `Save the view “${layout.name}”?`}
+      </h4>
       <p>{proposal.confirmation.summary}</p>
       <div
         className="proposal-grid"
@@ -960,12 +1042,7 @@ function LayoutProposalCard({
           another one; decline if this isn’t what you asked for.
         </p>
       )}
-      {decision ? (
-        <p className="proposal-resolved">
-          <Check size={14} />
-          Your decision was sent.
-        </p>
-      ) : (
+      {decision ? null : (
         <>
           <p className="muted" aria-live="off">
             {expired

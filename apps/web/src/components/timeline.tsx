@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Maximize2 } from "lucide-react";
+import { ChevronDown, Maximize2, ScanLine } from "lucide-react";
 import { isAbort, request } from "@/lib/client-api";
 import {
   clockTime,
@@ -12,7 +12,6 @@ import {
 } from "@/lib/explore";
 import { formatDuration } from "@/lib/receipts";
 import type { Resource, Schema, SearchHit } from "@/lib/types";
-import { Button } from "./ui/button";
 import { ErrorMessage, Skeleton } from "./ui/primitives";
 
 type Histogram = Schema["ActivityHistogram"];
@@ -27,16 +26,18 @@ function bucketSeconds(spanMs: number) {
 }
 
 /**
- * One lane per camera over a shared time axis. Layers come only from the activity API
- * (recorded, analyzed, motion, observation starts); clickable ticks are the current results.
- * Dragging across the tracks narrows the window; the parent re-queries with it.
+ * The recording timeline under the player. One lane per camera over a shared axis; layers
+ * come only from the activity API (recorded, analyzed, motion), result ticks are the current
+ * moments, the band is the selected moment's interval and the playhead follows the player.
+ * Dragging across the tracks narrows the window; the parent re-queries the index with it.
  */
-export function CameraLanes({
+export function Timeline({
   cameras,
   start,
   end,
   hits,
   selected,
+  playhead,
   onSelect,
   onWindow,
   zoomed,
@@ -46,7 +47,9 @@ export function CameraLanes({
   start: number;
   end: number;
   hits: SearchHit[];
-  selected: string | null;
+  selected: SearchHit | null;
+  /** Wall-clock time of the playing frame, when the selected clip is playing. */
+  playhead: number | null;
   onSelect: (hit: SearchHit) => void;
   onWindow: (start: number, end: number) => void;
   zoomed: boolean;
@@ -54,8 +57,15 @@ export function CameraLanes({
 }) {
   const span = end - start;
   const step = bucketSeconds(span);
+  const [showIdle, setShowIdle] = useState(false);
+  // Cameras with no Muse observations at all fold into one line until asked for.
+  const idle = cameras.filter((camera) => !camera.observations);
+  const lanes = showIdle
+    ? cameras
+    : cameras.filter((camera) => camera.observations);
   // Responses are tagged with their request so a new window never shows stale lanes.
-  const requestKey = `${start}-${end}-${step}-${cameras.map((c) => c.camera_id).join()}`;
+  const laneIds = lanes.map((c) => c.camera_id).join();
+  const requestKey = `${start}|${end}|${step}|${laneIds}`;
   const [loaded, setLoaded] = useState<{
     key: string;
     lanes: Record<string, Resource<Histogram>>;
@@ -76,16 +86,14 @@ export function CameraLanes({
       end: new Date(end).toISOString(),
       bucket_seconds: String(step),
     });
-    for (const camera of cameras)
-      request<Histogram>(`/cameras/${camera.camera_id}/activity?${query}`, {
+    for (const id of laneIds.split(",").filter(Boolean))
+      request<Histogram>(`/cameras/${id}/activity?${query}`, {
         signal: controller.signal,
       })
-        .then((value) =>
-          store(camera.camera_id, { state: "ready", data: value }),
-        )
+        .then((value) => store(id, { state: "ready", data: value }))
         .catch((error) => {
           if (controller.signal.aborted || isAbort(error)) return;
-          store(camera.camera_id, {
+          store(id, {
             state: "error",
             message:
               error instanceof Error
@@ -94,11 +102,11 @@ export function CameraLanes({
           });
         });
     return () => controller.abort();
-  }, [cameras, start, end, step, requestKey]);
+  }, [start, end, step, laneIds, requestKey]);
 
   const ticks = useMemo(() => {
     const every =
-      TICK_STEPS.find((value) => span / value <= 7) ??
+      TICK_STEPS.find((value) => span / value <= 6) ??
       TICK_STEPS[TICK_STEPS.length - 1];
     const values: number[] = [];
     for (let t = Math.ceil(start / every) * every; t < end; t += every)
@@ -114,8 +122,22 @@ export function CameraLanes({
     return start + ratio * span;
   };
   const percent = (t: number) => `${((t - start) / span) * 100}%`;
+  const inside = (t: number) => t >= start && t <= end;
 
-  const totals = cameras.map((camera) => {
+  // "Fit to moments" is offered only when the moments occupy a sliver of the axis.
+  const fit = useMemo(() => {
+    if (!hits.length) return null;
+    const first = Math.min(...hits.map((hit) => Date.parse(hit.start)));
+    const last = Math.max(...hits.map((hit) => Date.parse(hit.end)));
+    const pad = Math.max(60000, (last - first) * 0.08);
+    const a = Math.max(start, first - pad);
+    const b = Math.min(end, last + pad);
+    return b - a < span * 0.6 && b - a >= MIN_SELECTION_MS
+      ? { start: a, end: b }
+      : null;
+  }, [hits, start, end, span]);
+
+  const totals = lanes.map((camera) => {
     const value = data[camera.camera_id];
     const buckets = value?.state === "ready" ? value.data.buckets : [];
     return {
@@ -126,27 +148,25 @@ export function CameraLanes({
       observations: buckets.reduce((sum, b) => sum + b.event_count, 0),
     };
   });
+  const selectedStart = selected ? Date.parse(selected.start) : null;
+  const selectedEnd = selected ? Date.parse(selected.end) : null;
 
   return (
-    <section className="lanes" aria-labelledby="lanes-title">
-      <header className="lanes-header">
-        <div>
-          <h2 id="lanes-title">Activity across cameras</h2>
-          <p>
-            {windowLabel(start, end)} · {timeZoneName()} ·{" "}
-            {zoomed
-              ? "Focused period"
-              : "Drag across the lanes to focus on a period"}
-          </p>
-        </div>
-        <ul className="lanes-legend" aria-label="Timeline legend">
+    <section className="tl" aria-labelledby="tl-title">
+      <header className="tl-head">
+        <h2 id="tl-title">Timeline</h2>
+        <span className="tl-window">
+          {windowLabel(start, end)}
+          <span className="tl-zone"> · {timeZoneName()}</span>
+        </span>
+        <ul className="tl-legend" aria-label="Timeline legend">
           <li>
             <span className="legend-recorded" aria-hidden="true" />
             Recorded
           </li>
           <li>
             <span className="legend-analyzed" aria-hidden="true" />
-            Analyzed by Muse
+            Analyzed
           </li>
           <li>
             <span className="legend-motion" aria-hidden="true" />
@@ -157,40 +177,61 @@ export function CameraLanes({
             Moment
           </li>
         </ul>
-        {zoomed && (
-          <Button variant="secondary" size="sm" onClick={onReset}>
-            <Maximize2 size={14} />
-            Full range
-          </Button>
-        )}
+        <span className="tl-tools">
+          {fit && !zoomed && (
+            <button
+              className="tl-tool"
+              onClick={() => onWindow(fit.start, fit.end)}
+              aria-label="Fit to moments"
+              title="Zoom the timeline to where these moments are"
+            >
+              <ScanLine size={13} />
+              Fit
+            </button>
+          )}
+          {zoomed && (
+            <button className="tl-tool" onClick={onReset}>
+              <Maximize2 size={13} />
+              Full range
+            </button>
+          )}
+        </span>
       </header>
-      <div className="lanes-grid">
-        <div className="lanes-axis" aria-hidden="true">
+      <div className="tl-grid">
+        <div className="tl-axis" aria-hidden="true">
           {ticks.map((t) => (
             <span key={t} style={{ left: percent(t) }}>
               {clockTime(t)}
             </span>
           ))}
+          {playhead !== null && inside(playhead) && (
+            <span
+              className="tl-playhead-cap"
+              style={{ left: percent(playhead) }}
+            />
+          )}
         </div>
-        <ol className="lanes-names">
+        <ol className="tl-names">
           {totals.map(({ camera, observations }) => (
-            <li key={camera.camera_id}>
+            <li
+              key={camera.camera_id}
+              className={
+                selected?.camera_id === camera.camera_id ? "is-current" : ""
+              }
+            >
               <strong>{camera.camera_name}</strong>
               <span>
                 {data[camera.camera_id]?.state === "ready"
-                  ? observations
-                    ? `${observations} observed`
-                    : camera.observations
-                      ? "None in period"
-                      : "Not analyzed"
-                  : " "}
+                  ? observations || (camera.observations ? "–" : "Not analyzed")
+                  : ""}
               </span>
             </li>
           ))}
         </ol>
         <div
-          className={`lanes-tracks ${drag ? "is-dragging" : ""}`}
+          className={`tl-tracks ${drag ? "is-dragging" : ""}`}
           ref={tracks}
+          title="Drag across the lanes to focus on a period"
           onPointerDown={(event) => {
             if ((event.target as HTMLElement).closest("button")) return;
             if (event.button !== 0) return;
@@ -213,25 +254,24 @@ export function CameraLanes({
           {ticks.map((t) => (
             <span
               key={t}
-              className="lanes-gridline"
+              className="tl-gridline"
               style={{ left: percent(t) }}
               aria-hidden="true"
             />
           ))}
-          {cameras.map((camera) => {
+          {lanes.map((camera) => {
             const value = data[camera.camera_id];
             const laneHits = hits.filter(
               (hit) =>
                 hit.camera_id === camera.camera_id &&
-                Date.parse(hit.start) >= start &&
-                Date.parse(hit.start) < end,
+                inside(Date.parse(hit.start)),
             );
             return (
-              <div className="lane" key={camera.camera_id}>
+              <div className="tl-lane" key={camera.camera_id}>
                 {!value ? (
-                  <Skeleton className="lane-skeleton" />
+                  <Skeleton className="tl-lane-skeleton" />
                 ) : value.state === "error" ? (
-                  <span className="lane-error">{value.message}</span>
+                  <span className="tl-lane-error">{value.message}</span>
                 ) : value.state === "ready" ? (
                   <LaneBars
                     buckets={value.data.buckets}
@@ -239,9 +279,22 @@ export function CameraLanes({
                     span={span}
                   />
                 ) : null}
+                {selected?.camera_id === camera.camera_id &&
+                  selectedStart !== null &&
+                  selectedEnd !== null &&
+                  inside(selectedStart) && (
+                    <span
+                      className="tl-band"
+                      aria-hidden="true"
+                      style={{
+                        left: percent(selectedStart),
+                        width: `max(3px, ${((selectedEnd - selectedStart) / span) * 100}%)`,
+                      }}
+                    />
+                  )}
                 {clusters(laneHits, start, span).map((group) => {
                   const keys = group.map(hitKey);
-                  const index = keys.indexOf(selected ?? "");
+                  const index = keys.indexOf(selected ? hitKey(selected) : "");
                   const first = group[0];
                   const label =
                     group.length === 1
@@ -250,7 +303,7 @@ export function CameraLanes({
                   return (
                     <button
                       key={keys[0]}
-                      className={`lane-moment ${index >= 0 ? "is-selected" : ""} ${group.length > 1 ? "is-cluster" : ""}`}
+                      className={`tl-moment ${index >= 0 ? "is-selected" : ""} ${group.length > 1 ? "is-cluster" : ""}`}
                       style={{ left: percent(Date.parse(first.start)) }}
                       aria-label={label}
                       aria-pressed={index >= 0}
@@ -259,9 +312,30 @@ export function CameraLanes({
                       onClick={() =>
                         onSelect(group[(index + 1) % group.length])
                       }
+                      onKeyDown={(event) => {
+                        if (
+                          event.key !== "ArrowLeft" &&
+                          event.key !== "ArrowRight"
+                        )
+                          return;
+                        event.preventDefault();
+                        const all = [
+                          ...(tracks.current?.querySelectorAll<HTMLButtonElement>(
+                            "button.tl-moment",
+                          ) ?? []),
+                        ].sort(
+                          (a, b) =>
+                            a.getBoundingClientRect().left -
+                            b.getBoundingClientRect().left,
+                        );
+                        const at = all.indexOf(event.currentTarget);
+                        all[
+                          at + (event.key === "ArrowRight" ? 1 : -1)
+                        ]?.focus();
+                      }}
                     >
                       {group.length > 1 && (
-                        <span className="lane-count" aria-hidden="true">
+                        <span className="tl-count" aria-hidden="true">
                           {group.length}
                         </span>
                       )}
@@ -271,9 +345,16 @@ export function CameraLanes({
               </div>
             );
           })}
+          {playhead !== null && inside(playhead) && (
+            <span
+              className="tl-playhead"
+              style={{ left: percent(playhead) }}
+              aria-hidden="true"
+            />
+          )}
           {drag && (
             <span
-              className="lanes-selection"
+              className="tl-selection"
               style={{
                 left: percent(Math.min(drag.from, drag.to)),
                 width: `${(Math.abs(drag.to - drag.from) / span) * 100}%`,
@@ -283,47 +364,61 @@ export function CameraLanes({
           )}
         </div>
       </div>
-      {Object.values(data).some((value) => value.state === "error") && (
-        <ErrorMessage message="Some lanes couldn’t load. Results below are unaffected." />
-      )}
-      <details className="lanes-table">
-        <summary>Show as table</summary>
-        <table>
-          <caption className="sr-only">
-            Activity per camera, {windowLabel(start, end)}
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">Camera</th>
-              <th scope="col">Recorded</th>
-              <th scope="col">Analyzed by Muse</th>
-              <th scope="col">Motion</th>
-              <th scope="col">Muse observations</th>
-            </tr>
-          </thead>
-          <tbody>
-            {totals.map((row) => (
-              <tr key={row.camera.camera_id}>
-                <th scope="row">{row.camera.camera_name}</th>
-                <td>{formatDuration(row.recorded)}</td>
-                <td>{formatDuration(row.analyzed)}</td>
-                <td>{formatDuration(row.motion)}</td>
-                <td>{row.observations}</td>
+      <div className="tl-foot">
+        {!!idle.length && (
+          <button
+            className="tl-idle"
+            aria-expanded={showIdle}
+            onClick={() => setShowIdle((value) => !value)}
+          >
+            <ChevronDown size={13} />
+            {showIdle
+              ? "Hide cameras Muse hasn’t analyzed"
+              : `${idle.length} more camera${idle.length === 1 ? "" : "s"} recorded here, not analyzed`}
+          </button>
+        )}
+        <details className="tl-table">
+          <summary>Show as table</summary>
+          <table>
+            <caption className="sr-only">
+              Activity per camera, {windowLabel(start, end)}
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Camera</th>
+                <th scope="col">Recorded</th>
+                <th scope="col">Analyzed by Muse</th>
+                <th scope="col">Motion</th>
+                <th scope="col">Muse observations</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        <p>
-          Motion is low-resolution pixel change, not object recognition. An
-          empty bin means no recorded or analyzed data, not proof that nothing
-          happened.
-        </p>
-      </details>
+            </thead>
+            <tbody>
+              {totals.map((row) => (
+                <tr key={row.camera.camera_id}>
+                  <th scope="row">{row.camera.camera_name}</th>
+                  <td>{formatDuration(row.recorded)}</td>
+                  <td>{formatDuration(row.analyzed)}</td>
+                  <td>{formatDuration(row.motion)}</td>
+                  <td>{row.observations}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p>
+            Motion is low-resolution pixel change, not object recognition. An
+            empty bin means no recorded or analyzed data, not proof that nothing
+            happened.
+          </p>
+        </details>
+      </div>
+      {Object.values(data).some((value) => value.state === "error") && (
+        <ErrorMessage message="Some lanes couldn’t load. Results are unaffected." />
+      )}
     </section>
   );
 }
 
-/** Moments closer than ~0.6% of the axis share one tick so each stays reachable. */
+/** Moments closer than ~0.8% of the axis share one tick so each stays reachable. */
 function clusters(hits: SearchHit[], start: number, span: number) {
   const sorted = [...hits].sort(
     (a, b) => Date.parse(a.start) - Date.parse(b.start),
@@ -332,7 +427,7 @@ function clusters(hits: SearchHit[], start: number, span: number) {
   for (const hit of sorted) {
     const last = groups[groups.length - 1];
     const x = (Date.parse(hit.start) - start) / span;
-    if (last && x - (Date.parse(last[0].start) - start) / span < 0.006)
+    if (last && x - (Date.parse(last[0].start) - start) / span < 0.008)
       last.push(hit);
     else groups.push([hit]);
   }
@@ -348,10 +443,10 @@ function LaneBars({
   start: number;
   span: number;
 }) {
-  const H = 28;
+  const H = 22;
   return (
     <svg
-      className="lane-bars"
+      className="tl-bars"
       viewBox={`0 0 1000 ${H}`}
       preserveAspectRatio="none"
       aria-hidden="true"
@@ -373,18 +468,18 @@ function LaneBars({
                 <rect
                   className="bar-recorded"
                   x={x}
-                  y={0}
+                  y={2}
                   width={w}
-                  height={H}
+                  height={H - 2}
                 />
                 <rect
                   className={
                     bucket.analyzed_ms > 0 ? "bar-analyzed" : "bar-baseline"
                   }
                   x={x}
-                  y={bucket.analyzed_ms > 0 ? H - 3 : H - 2}
+                  y={bucket.analyzed_ms > 0 ? H - 3 : H - 1.5}
                   width={w}
-                  height={bucket.analyzed_ms > 0 ? 3 : 2}
+                  height={bucket.analyzed_ms > 0 ? 3 : 1.5}
                 />
               </>
             )}
@@ -392,18 +487,9 @@ function LaneBars({
               <rect
                 className="bar-motion"
                 x={x + w * 0.15}
-                y={H - 3 - motion * (H - 10)}
+                y={H - 3 - motion * (H - 9)}
                 width={w * 0.7}
-                height={motion * (H - 10)}
-              />
-            )}
-            {bucket.event_count > 0 && (
-              <rect
-                className="bar-observed"
-                x={x + w / 2 - 0.6}
-                y={1}
-                width={1.2}
-                height={6}
+                height={motion * (H - 9)}
               />
             )}
           </g>

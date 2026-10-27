@@ -1,35 +1,53 @@
+/*
+ * REDESIGN-01 tokens. Warm paper surrounds a dark video stage; teal is the only accent.
+ * Contrast (measured): text-secondary 5.66:1 on canvas, 6.28:1 on surface; teal 5.69:1 on
+ * canvas, 5.35:1 on teal-wash; ink 13:1 on teal-wash; stage-muted 8.1:1 on stage.
+ * border-strong 3.99:1 on surface (graphic/control boundaries only, never body text).
+ */
 :root {
   color-scheme: light;
-  --canvas: #f7f9f6;
+  --canvas: #f5f3ee;
   --surface: #ffffff;
-  --sage: #dcece5;
-  --sage-light: #ecf3ee;
-  --teal: #207a70;
-  --teal-hover: #17675e;
-  --teal-wash: #e3f0ec;
-  --ink: #253b36;
-  --text-secondary: #5d6d64;
-  --blue: #e8f1f7;
+  /* Workspace panes sit one step off the paper so regions read without cards. */
+  --panel: #faf9f6;
+  --sage: #dce9e1;
+  --sage-light: #eaf1ec;
+  --teal: #1c6b62;
+  --teal-hover: #155850;
+  --teal-wash: #e4efe9;
+  --ink: #1d2724;
+  --text-secondary: #5b625c;
+  --blue: #eaf1f6;
   --blue-ink: #3d647c;
   --amber: #e6b56e;
-  --amber-light: #fcf2e3;
-  --amber-ink: #78501d;
-  --border: #e0e7e0;
-  --border-strong: #7a8d84;
+  --amber-light: #fbf3e4;
+  --amber-ink: #8a5a1f;
+  --border: #e4e1d8;
+  --border-soft: #edebe4;
+  --border-strong: #7c8178;
   --error: #9b4c35;
   --error-bg: #fcf0ea;
-  /* Video stage behind letter/pillarboxed footage; labels on it use --stage-text. */
-  --stage: #101513;
-  --stage-text: #e9f0ec;
+  /* Video stage and the transport strip drawn on it. */
+  --stage: #121513;
+  --stage-raised: #1b201d;
+  --stage-line: #2c322f;
+  --stage-text: #e9ede9;
+  --stage-muted: #a9aea6;
   --font-sans: "Manrope Variable", "Avenir Next", "Segoe UI", sans-serif;
-  --radius-control: 8px;
-  --radius-media: 10px;
-  --radius-surface: 14px;
-  --radius-dialog: 20px;
-  --shadow-popover: 0 24px 80px #253b361c, 0 4px 16px #253b360a;
-  --space-page: 38px;
-  --sidebar-width: 224px;
+  /* Serif speaks for the footage: Muse descriptions and screen titles. Sans runs the tool. */
+  --font-serif:
+    "Newsreader Variable", "Iowan Old Style", Charter, Georgia, serif;
+  --font-mono:
+    ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --radius-control: 6px;
+  --radius-media: 6px;
+  --radius-surface: 10px;
+  --radius-dialog: 14px;
+  --shadow-popover: 0 24px 64px #1d272420, 0 2px 8px #1d27240d;
+  --space-page: 32px;
+  --sidebar-width: 216px;
+  --topbar-height: 56px;
 }
 html[data-density="compact"] {
-  --space-page: 28px;
+  --space-page: 24px;
 }

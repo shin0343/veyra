@@ -84,10 +84,10 @@ const framesLoaded = () =>
       ).length,
   );
 const exploreReady = async () => {
-  await page.waitForSelector(".result-card:not(.is-skeleton)", {
+  await page.waitForSelector("button.ws-result", {
     timeout: 30000,
   });
-  await page.waitForSelector(".lane-bars", { timeout: 30000 });
+  await page.waitForSelector(".tl-bars", { timeout: 30000 });
 };
 
 await check("explore_loads_real_index", async () => {
@@ -98,10 +98,10 @@ await check("explore_loads_real_index", async () => {
     null,
     { timeout: 30000 },
   );
-  const coverage = await page.locator(".explore-coverage").innerText();
-  const lanes = await page.locator(".lane").count();
-  const cards = await page.locator(".result-card").count();
-  await playing(".explore-inspector");
+  const coverage = await page.locator(".ws-facts").innerText();
+  const lanes = await page.locator(".tl-lane").count();
+  const cards = await page.locator("button.ws-result").count();
+  await playing(".ws-stage");
   await page.waitForTimeout(1500);
   await shot("explore-1440");
   if (lanes < 6 || cards < 4) throw new Error(`lanes ${lanes}, cards ${cards}`);
@@ -112,8 +112,7 @@ await check("topic_animals_plays_real_squirrels", async () => {
   await page.getByRole("radio", { name: /^Animals/ }).click();
   await page.waitForFunction(
     () =>
-      document.querySelectorAll(".result-card:not(.is-skeleton)").length ===
-        1 &&
+      document.querySelectorAll("button.ws-result").length === 1 &&
       document
         .querySelector("#results-title")
         ?.textContent?.startsWith("1 moment"),
@@ -121,57 +120,57 @@ await check("topic_animals_plays_real_squirrels", async () => {
     { timeout: 20000 },
   );
   const camera = await page
-    .locator(".result-card-meta strong")
+    .locator(".ws-result-meta strong")
     .first()
     .innerText();
   if (camera !== "Garden wildlife") throw new Error(camera);
-  await playing(".explore-inspector");
+  await playing(".ws-stage");
   await page.waitForTimeout(1200);
   await shot("explore-animals");
   return {
     camera,
     url: page.url().replace(base, ""),
-    summary: await page.locator(".inspector-title").innerText(),
+    summary: await page.locator(".ws-detail-title").innerText(),
   };
 });
 
 await check("camera_filter_and_lane_tick_selection", async () => {
-  await page.getByRole("radio", { name: /^All moments/ }).click();
+  await page.getByRole("radio", { name: /^All/ }).click();
   await page.waitForURL((url) => !url.search.includes("topic="));
   await exploreReady();
-  const bike = page.locator(".explore-camera select");
+  const bike = page.locator(".ws-select select");
   const value = await bike
     .locator("option", { hasText: "Bicycle parking" })
     .getAttribute("value");
   await bike.selectOption(value);
   await page.waitForFunction(
     () =>
-      [...document.querySelectorAll(".result-card-meta strong")].length > 0 &&
-      [...document.querySelectorAll(".result-card-meta strong")].every(
+      [...document.querySelectorAll(".ws-result-meta strong")].length > 0 &&
+      [...document.querySelectorAll(".ws-result-meta strong")].every(
         (el) => el.textContent === "Bicycle parking",
       ),
     null,
     { timeout: 20000 },
   );
   // Three moments within seconds share one clustered tick; each press advances.
-  const tick = page.locator(".lane-moment").first();
+  const tick = page.locator(".tl-moment").first();
   const seen = new Set();
   for (let i = 0; i < 3; i++) {
     await tick.click();
     seen.add(
       await page
-        .locator(".result-card.is-selected .result-card-summary")
+        .locator(".ws-result.is-selected .ws-result-summary")
         .innerText(),
     );
   }
   const pressed = await tick.getAttribute("aria-pressed");
-  const count = await page.locator(".lane-count").first().innerText();
+  const count = await page.locator(".tl-count").first().innerText();
   const selected = [...seen];
   if (pressed !== "true" || seen.size < 2)
     throw new Error("cluster did not step");
   await bike.selectOption("all");
   return {
-    results: await page.locator(".result-card").count(),
+    results: await page.locator("button.ws-result").count(),
     cluster: count,
     selected,
   };
@@ -179,7 +178,7 @@ await check("camera_filter_and_lane_tick_selection", async () => {
 
 await check("drag_time_range_and_reset", async () => {
   await exploreReady();
-  const box = await page.locator(".lanes-tracks").boundingBox();
+  const box = await page.locator(".tl-tracks").boundingBox();
   const y = box.y + 20;
   await page.mouse.move(box.x + box.width * 0.9, y);
   await page.mouse.down();
@@ -190,7 +189,7 @@ await check("drag_time_range_and_reset", async () => {
     .getByRole("button", { name: "Full range" })
     .waitFor({ timeout: 5000 });
   await exploreReady();
-  const focused = await page.locator(".lanes-header p").innerText();
+  const focused = await page.locator(".tl-window").innerText();
   await page.waitForTimeout(1200);
   await shot("explore-focused-range");
   await page.getByRole("button", { name: "Full range" }).click();
@@ -206,8 +205,8 @@ await check("keyboard_slash_and_arrow_results", async () => {
   await page.keyboard.press("/");
   const focused = await page.evaluate(() => document.activeElement?.id);
   if (focused !== "explore-ask") throw new Error(`focus ${focused}`);
-  await page.locator(".result-card").first().focus();
-  await page.keyboard.press("ArrowRight");
+  await page.locator("button.ws-result").first().focus();
+  await page.keyboard.press("ArrowDown");
   const current = await page.evaluate(() =>
     document.activeElement?.getAttribute("aria-current"),
   );
@@ -217,7 +216,7 @@ await check("keyboard_slash_and_arrow_results", async () => {
 
 await check("open_in_recording_seeks_evidence", async () => {
   await exploreReady();
-  const link = page.getByRole("link", { name: /Open in recording at/ });
+  const link = page.getByRole("link", { name: /Open in recording/ });
   const href = await link.getAttribute("href");
   await link.click();
   await page.waitForURL(/\/recordings\/.+offset_ms=\d+.*segment_id=/);
@@ -232,9 +231,7 @@ await check("review_dialog_plan", async () => {
     waitUntil: "domcontentloaded",
   });
   await exploreReady();
-  await page
-    .getByRole("button", { name: "Review these cameras together" })
-    .click();
+  await page.getByRole("button", { name: "Watch together" }).click();
   const dialog = page.getByRole("dialog");
   await dialog.waitFor();
   const plan = await dialog.locator(".review-plan p").innerText();
@@ -276,13 +273,13 @@ async function simulated(name, route, response, expectText, fresh = false) {
     try {
       await p.goto(base + "/explore", { waitUntil: "domcontentloaded" });
       if (name === "budget_exhausted") {
-        await p.waitForSelector(".result-card:not(.is-skeleton)", {
+        await p.waitForSelector("button.ws-result", {
           timeout: 30000,
         });
         await p
           .locator("#explore-ask")
           .fill("find the squirrels at the feeder");
-        await p.locator(".ask-bar button[type=submit]").click();
+        await p.locator(".ws-ask button[type=submit]").click();
       }
       await p.getByText(expectText).first().waitFor({ timeout: 20000 });
       await p.waitForTimeout(600);
@@ -371,16 +368,16 @@ await simulated(
 
 await check("overview_video_first", async () => {
   await page.goto(base + "/", { waitUntil: "domcontentloaded" });
-  await page.waitForSelector(".found-row .evidence-frame.is-ready", {
+  await page.waitForSelector(".hm-entry .evidence-frame.is-ready", {
     timeout: 30000,
   });
-  await playing(".spotlight-card");
+  await playing(".hm-stage");
   await page.waitForTimeout(1200);
   await shot("overview-1440");
   return {
-    status: await page.locator(".home-status").innerText(),
-    found: await page.locator(".found-row").count(),
-    look_for: await page.locator(".look-for a").allInnerTexts(),
+    status: await page.locator(".hm-status").innerText(),
+    found: await page.locator(".hm-entry").count(),
+    look_for: await page.locator(".hm-lookfor a").allInnerTexts(),
   };
 });
 
@@ -459,9 +456,9 @@ if (process.env.PAID === "1") {
     const query = process.env.QUERY ?? "squirrels at the feeder";
     await page.locator("#explore-ask").fill(query);
     const started = Date.now();
-    await page.locator(".ask-bar button[type=submit]").click();
+    await page.locator(".ws-ask button[type=submit]").click();
     await page
-      .locator(".muse-understanding, .state-panel")
+      .locator(".ws-understood, .ws-state")
       .first()
       .waitFor({ timeout: 70000 });
     const ms = Date.now() - started;
@@ -471,22 +468,22 @@ if (process.env.PAID === "1") {
       query,
       ms,
       title: await page.locator("#results-title").innerText(),
-      understood: await page.locator(".muse-understanding li").allInnerTexts(),
-      cameras: await page.locator(".result-card-meta strong").allInnerTexts(),
-      state: await page.locator(".state-panel h3").allInnerTexts(),
+      understood: await page.locator(".ws-understood li").allInnerTexts(),
+      cameras: await page.locator(".ws-result-meta strong").allInnerTexts(),
+      state: await page.locator(".ws-state h3").allInnerTexts(),
     };
   });
   await check("genuine_muse_review_view", async () => {
-    await page
-      .getByRole("button", { name: "Review these cameras together" })
-      .click();
+    await page.getByRole("button", { name: "Watch together" }).click();
     const dialog = page.getByRole("dialog");
     await dialog
       .getByLabel("View name")
       .fill(process.env.VIEW ?? "Garden review");
+    // REDESIGN-01: this writes the request into Muse; sending it is a separate, labelled step.
     await dialog
-      .getByRole("button", { name: /Ask Muse to propose it instead/ })
+      .getByRole("button", { name: /Write it for Muse instead/ })
       .click();
+    await page.getByRole("button", { name: /Send message/ }).click();
     await page.waitForFunction(
       () =>
         document.querySelectorAll(".muse-turn .assistant-answer").length >= 1,

@@ -3,6 +3,7 @@
 @import "../styles/screens.css";
 @import "../styles/integration.css";
 @import "../styles/explore.css";
+@import "../styles/redesign.css";
 * {
   box-sizing: border-box;
 }

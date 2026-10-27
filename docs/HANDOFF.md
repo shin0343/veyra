@@ -1,6 +1,11 @@
 # Veyra handoff
 
-**Current: VIDEO-02 is complete. Veyra has an original design contract ([DESIGN.md](../DESIGN.md)),
+**Current: REDESIGN-01 (branch `redesign-01`).** Home and Explore are rebuilt as an editorial
+video workspace; tokens, type, shell and Muse hand-over rules changed. The new production build
+is served at http://127.0.0.1:3600 (`VEYRA_DIST_DIR=.next-qa`); **:3200 still serves the VIDEO-02
+build** until promoted. See [REDESIGN-01 handoff](#redesign-01-handoff--home-and-explore-workspace).
+
+**Previous: VIDEO-02 is complete. Veyra has an original design contract ([DESIGN.md](../DESIGN.md)),
 an evidence-first Explore workspace with real video frames, data-backed camera lanes and an
 inspector, and three additive model-free API routes. Production build `Xt58zp9KoNy6Yf99tkmGh`
 runs at http://127.0.0.1:3200 on the preserved `runtime/demo` stack.**
@@ -960,3 +965,34 @@ phase brief. No push, deployment, external message, reset, re-import or re-index
   expose daily limits so the UI can show remaining Muse requests.
 - **Tests to run:** `node apps/web/tests/video02-flows.mjs http://127.0.0.1:3200 docs/qa/video02`
   (free); add `SAVE=1` to save one view, `PAID=1` for genuine Muse (≈3 requests).
+
+
+---
+
+## REDESIGN-01 handoff — Home and Explore workspace
+
+October 27, 2026. Claude (frontend owner). Only `apps/web/**`, `DESIGN.md` and `docs/design/**`
+changed; no backend, contract, migration, media or data change. Branch `redesign-01`; checkpoint
+commit `d8bbf20` holds the pre-redesign tree. No push, deployment or external message.
+
+- **What:** Explore is a single-viewport workspace (results browser · dark stage with transport ·
+  timeline with playhead and selected band · inspector); Home is a spaces wall with a live stage, a
+  journal of moments and a local-first find field. New tokens (warm paper, one teal), Newsreader for
+  Muse's words, mono timecodes, slim shell, rail on Explore. 309 orphaned selectors removed.
+- **Muse:** hand-overs pre-fill only; every send says "1 request"; decided proposals show one
+  past-tense state; Muse's search reading is reused for free refinements, reload and Back.
+- **Evidence:** [direction](design/REDESIGN_01_DIRECTION.md) · [before/after](design/REDESIGN_01_BEFORE_AFTER.md)
+  · screenshots `docs/design/redesign-01/screenshots/{before,after,compare}`.
+- **Checks (production build, real stack):** `tests/redesign01-flows.mjs` 49/49; ported
+  `tests/video02-flows.mjs` 23/23; `tests/verify-ui.mjs` (preview) 24 routes / 31 interactions /
+  29 axe scans / 0 violations; lint, typecheck, prettier, build pass. `make check` was not run
+  (no backend change).
+- **Spend:** 0 model requests; a network guard aborted and counted paid endpoints (0 attempted).
+  The genuine Muse approval flow was not re-run; `PAID=1 node tests/video02-flows.mjs` (≈3
+  requests) would verify the new receipt rendering against a real response.
+- **Promote to :3200:** stop the demo's Next process, `npm run build` in `apps/web`, start it as
+  `scripts/demo_videos.py` does. Or keep serving `.next-qa` on :3600.
+- **Codex follow-ups:** `IndexQuery` objects/attributes; a reusable parse id; source frame size on
+  cameras; a read-only usage endpoint; multi-camera activity (details in the direction doc §6).
+- **Next frontend phase:** move Recordings and Saved views onto the workspace grammar; replace the
+  remaining hard-coded colours in `screens.css` with tokens.

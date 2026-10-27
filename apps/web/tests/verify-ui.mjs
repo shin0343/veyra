@@ -45,7 +45,7 @@ async function go(route, preview = true) {
     `${base}${route}${route.includes("?") ? "&" : "?"}${preview ? "preview=1" : ""}`,
     { waitUntil: "networkidle" },
   );
-  await page.locator("#main-content h1").waitFor();
+  await page.locator("#main-content h1").waitFor({ state: "attached" });
   await page.evaluate(() => document.fonts.ready);
 }
 function check(value, message) {
@@ -90,7 +90,7 @@ try {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await go("/");
   await page
-    .getByRole("button", { name: "Search or ask Muse", exact: true })
+    .getByRole("button", { name: "Go to, find or ask Muse", exact: true })
     .click();
   await page
     .getByRole("combobox", { name: "Search commands" })
@@ -113,7 +113,7 @@ try {
   );
   check(
     await page
-      .getByRole("button", { name: "Search or ask Muse", exact: true })
+      .getByRole("button", { name: "Go to, find or ask Muse", exact: true })
       .evaluate((e) => e === document.activeElement),
     "Command palette restores trigger focus",
   );
@@ -125,14 +125,16 @@ try {
   await page.waitForURL(/\/settings\?preview=1/);
   check(true, "Ctrl+K, filtering and Enter navigate to typed settings route");
   await go("/");
+  // REDESIGN-01: Home's find field navigates or searches; Muse is opened deliberately.
   await page
-    .getByLabel("Ask Muse about your workspace")
-    .fill("Where can I adjust recording settings?");
-  await page
-    .locator(".home-command")
+    .locator(".topbar")
     .getByRole("button", { name: "Ask Muse", exact: true })
     .click();
   await page.getByRole("dialog").waitFor();
+  await page
+    .getByRole("textbox", { name: "Ask Muse", exact: true })
+    .fill("Where can I adjust recording settings?");
+  await page.getByRole("button", { name: "Send message" }).click();
   await screenshot("desktop-muse-settings");
   await audit("Muse side panel");
   check(
@@ -240,7 +242,7 @@ try {
     "Preview mode never fabricates a playing video element",
   );
   await go("/explore");
-  await page.locator(".result-card").first().waitFor();
+  await page.locator("button.ws-result").first().waitFor();
   await screenshot("desktop-explore-preview");
   await audit("Explore preview with authored results");
   check(
@@ -281,9 +283,8 @@ try {
   await go("/", false);
   await page.getByRole("alert").first().waitFor();
   check(
-    (await page
-      .locator(".camera-card, .activity-row, .spotlight-card")
-      .count()) === 0,
+    (await page.locator(".camera-card, .activity-row, .hm-space").count()) ===
+      0,
     "Connected mode never falls back to fixture cameras or events",
   );
   await screenshot("desktop-service-unavailable");

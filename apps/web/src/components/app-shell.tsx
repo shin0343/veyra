@@ -34,7 +34,7 @@ import { WorkspaceProvider, useWorkspace } from "./workspace-provider";
 import { MusePanel } from "./muse-panel";
 
 const navigation = [
-  { id: "home", label: "Overview", icon: Home },
+  { id: "home", label: "Home", icon: Home },
   { id: "search", label: "Explore", icon: ScanSearch },
   { id: "cameras", label: "Cameras", icon: Camera },
   { id: "live", label: "Live view", icon: Video },
@@ -46,8 +46,8 @@ const navigation = [
 export function Brand({ compact = false }: { compact?: boolean }) {
   return (
     <span className="brand-lockup">
-      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
-        <rect width="34" height="34" rx="11" fill="#207A70" />
+      <svg width="28" height="28" viewBox="0 0 34 34" aria-hidden="true">
+        <rect width="34" height="34" rx="9" fill="#1C6B62" />
         <path
           d="m9 11 8 14 8-14M17 25V9"
           stroke="white"
@@ -97,7 +97,7 @@ function Navigation({ onNavigate }: { onNavigate?: () => void }) {
           title={label}
           onClick={onNavigate}
         >
-          <Icon size={20} strokeWidth={1.7} />
+          <Icon size={18} strokeWidth={1.7} />
           <span>{label}</span>
         </Link>
       ))}
@@ -112,10 +112,13 @@ function ShellContent({ children }: { children: ReactNode }) {
   const workspace = useWorkspace();
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  // Explore is a full-viewport workspace: the navigation folds to a rail and panes scroll
+  // independently, the way a media editor gives the canvas the room.
+  const workspaceMode = pathname.startsWith(appRoutes.search);
   const current =
     navigation.find(
       (item) => item.id !== "home" && pathname.startsWith(appRoutes[item.id]),
-    )?.label ?? (pathname.startsWith("/settings") ? "Settings" : "Overview");
+    )?.label ?? (pathname.startsWith("/settings") ? "Settings" : "Home");
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
@@ -128,14 +131,19 @@ function ShellContent({ children }: { children: ReactNode }) {
   }, []);
   function togglePreview() {
     const next = new URLSearchParams(params);
-    if (workspace.preview) {
-      next.delete("preview");
-      next.delete("state");
-    } else next.set("preview", "1");
-    router.push(`${pathname}?${next}`);
+    next.delete("preview");
+    next.delete("state");
+    const query = next.toString();
+    router.push(query ? `${pathname}?${query}` : pathname);
   }
+  const demo =
+    !workspace.preview &&
+    workspace.cameras.state === "ready" &&
+    workspace.cameras.data.some(
+      (camera) => camera.source_media?.kind === "prerecorded",
+    );
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${workspaceMode ? "is-workspace" : ""}`}>
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
@@ -147,46 +155,23 @@ function ShellContent({ children }: { children: ReactNode }) {
         >
           <Brand />
         </Link>
-        <div className="workspace-name">
-          <span className="workspace-glyph">
-            <Home size={15} />
-          </span>
-          <div>
-            <strong>Personal workspace</strong>
-            <span>Your everyday spaces</span>
-          </div>
-        </div>
         <Navigation />
         <div className="sidebar-bottom">
-          <div className="sidebar-muse">
-            <span className="muse-symbol">
-              <Sparkles size={19} />
-            </span>
-            <h3>A little help, right here.</h3>
-            <p>
-              Find a feature or a moment.
-              <br />
-              Just ask in your own words.
-            </p>
-            <button onClick={() => workspace.openMuse()}>
-              Meet Muse <ArrowUpRight size={15} />
-            </button>
-          </div>
           <Link
             href={workspace.href("/settings")}
             className={`nav-item ${pathname === "/settings" ? "active" : ""}`}
+            aria-current={pathname === "/settings" ? "page" : undefined}
             title="Settings"
           >
-            <Settings2 size={20} strokeWidth={1.7} />
+            <Settings2 size={18} strokeWidth={1.7} />
             <span>Settings</span>
           </Link>
-          <div className="workspace-footer">
-            <span className="avatar">W</span>
-            <div>
-              <strong>Your workspace</strong>
-              <span>Local environment</span>
-            </div>
-          </div>
+          <p className="sidebar-workspace">
+            <span className="avatar" aria-hidden="true">
+              W
+            </span>
+            <span>Local workspace</span>
+          </p>
         </div>
       </aside>
       <div className="app-main">
@@ -199,31 +184,39 @@ function ShellContent({ children }: { children: ReactNode }) {
               onClick={() => setMenuOpen(true)}
               aria-label="Open navigation"
             >
-              <Menu size={21} />
+              <Menu size={20} />
             </Button>
-            <span className="breadcrumb-root">Workspace</span>
-            <ChevronRight size={14} className="breadcrumb-root" />
-            <span>{current}</span>
+            <span className="topbar-title">{current}</span>
+            {demo && (
+              <span className="demo-flag" role="note">
+                <span className="demo-flag-label">Demo footage</span>
+                <span className="demo-flag-detail">
+                  Licensed films replayed as cameras · times show replay, not
+                  filming
+                </span>
+              </span>
+            )}
           </div>
           <button
             className="topbar-command"
             onClick={() => setPaletteOpen(true)}
-            aria-label="Search or ask Muse"
+            aria-label="Go to, find or ask Muse"
           >
-            <Search size={16} />
-            <span>Search or ask Muse</span>
+            <Search size={15} />
+            <span>Go to, find or ask…</span>
             <kbd>
-              <Command size={11} /> K
+              <Command size={11} />K
             </kbd>
           </button>
           <Button
             size="sm"
             variant="secondary"
             className="ask-muse"
+            aria-label="Ask Muse"
             onClick={() => workspace.openMuse()}
           >
-            <Sparkles size={16} />
-            Ask Muse
+            <Sparkles size={15} />
+            <span>Muse</span>
           </Button>
         </header>
         {workspace.preview && (
@@ -239,40 +232,15 @@ function ShellContent({ children }: { children: ReactNode }) {
             </button>
           </div>
         )}
-        {!workspace.preview &&
-          workspace.cameras.state === "ready" &&
-          workspace.cameras.data.some(
-            (camera) => camera.source_media?.kind === "prerecorded",
-          ) && (
-            <div className="demo-media-notice" role="note">
-              <strong>Demo workspace · Prerecorded footage</strong>
-              <span>
-                Timeline dates show local replay and ingest time, not the
-                original filming date. Connected means the demo publisher is
-                sending video.
-              </span>
-            </div>
-          )}
         <main id="main-content" tabIndex={-1} className="page-content">
           {children}
         </main>
-        <footer className="app-footer">
-          <span>
-            <span className="footer-mark" />A little clarity for your everyday.
-          </span>
-          <button onClick={togglePreview}>
-            {workspace.preview
-              ? "Return to workspace"
-              : "Explore a preview workspace"}
-            <ArrowUpRight size={13} />
-          </button>
-        </footer>
       </div>
       <Dialog
         open={menuOpen}
         onOpenChange={setMenuOpen}
-        title="Your workspace"
-        description="Find your way around Veyra."
+        title="Navigate"
+        description="Go to a part of your workspace."
         className="mobile-nav-dialog"
       >
         <Navigation onNavigate={() => setMenuOpen(false)} />
@@ -281,7 +249,7 @@ function ShellContent({ children }: { children: ReactNode }) {
           onClick={() => setMenuOpen(false)}
           className="nav-item"
         >
-          <Settings2 size={20} />
+          <Settings2 size={18} />
           Settings
         </Link>
       </Dialog>
@@ -322,10 +290,11 @@ function CommandPalette({
   const [selected, setSelected] = useState(0);
   function choose(option: PaletteOption) {
     onOpenChange(false);
-    if (option.kind === "muse") openMuse(query);
+    // Both options name their cost; choosing one is the person's deliberate request.
+    if (option.kind === "muse") openMuse(query, { send: true });
     else if (option.kind === "search")
       router.push(
-        href(`/explore?q=${encodeURIComponent(text.slice(0, 2000))}`),
+        href(`/explore?q=${encodeURIComponent(text.slice(0, 2000))}&run=1`),
       );
     else router.push(href(appRoutes[option.item.id]));
     setQuery("");
@@ -380,7 +349,7 @@ function CommandPalette({
       <div className="palette-label">
         {text ? "Choose what happens next" : "Go somewhere"}
         <span>
-          {text ? "Muse acts only after you choose" : "Feature guide"}
+          {text ? "Places are free · Muse uses a request" : "Feature guide"}
         </span>
       </div>
       <div
@@ -413,15 +382,15 @@ function CommandPalette({
                 {option.kind === "muse"
                   ? `Ask Muse: “${text}”`
                   : option.kind === "search"
-                    ? `Search your video for “${text}”`
+                    ? `Find “${text}” in your video`
                     : option.item.title}
               </strong>
               <small>
                 {option.kind === "muse"
-                  ? "Muse can open pages, find moments and prepare views for your approval."
+                  ? "Ask Muse · 1 request · it can prepare views for your approval"
                   : option.kind === "search"
-                    ? "Find recorded moments Muse has already analyzed."
-                    : option.item.description}
+                    ? "Ask Muse · 1 request · reads stored analysis, then opens Explore"
+                    : `${option.item.description} No request.`}
               </small>
             </span>
             {option.kind === "destination" ? (
@@ -441,7 +410,7 @@ function CommandPalette({
           }}
         >
           <MessageSquare size={17} />
-          {text ? "Ask Muse about this" : "Open Muse"}
+          {text ? "Write this in Muse" : "Open Muse"}
         </Button>
         <span>
           <kbd>↑</kbd>
