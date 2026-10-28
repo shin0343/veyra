@@ -58,7 +58,8 @@ class Pipeline:
                 "held"
             ]:
                 return
-            cameras = db.execute("SELECT * FROM cameras ORDER BY created_at").fetchall()
+            # Row-lock order shared with store.share_cameras; keep both in sync.
+            cameras = db.execute("SELECT * FROM cameras ORDER BY created_at,id").fetchall()
             active_paths = {
                 c["media_path"] for c in cameras if c["enabled"] and not c["deleted_at"]
             }

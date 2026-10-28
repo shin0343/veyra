@@ -1,0 +1,50 @@
+PASS Home: live stage above the fold at 1440×900 — video top 293px
+PASS Home: stage video is playing
+PASS Home: choosing a space puts it on the stage — Community space → Bicycle parking
+PASS Home: credits shown for prerecorded footage
+PASS Home: journal lists real moments with frames — 5 entries
+PASS Home: a page name offers free navigation
+PASS Home: Enter on a page name navigates without Muse
+PASS Home → Explore: the chosen moment is selected — Community space / Community space
+PASS Home: axe WCAG 2.2 AA
+PASS Home: no page errors
+PASS Explore: player above the fold at 1440×900 — stage 111–625px, 708px wide
+PASS Explore: first result fully above the fold — bottom 424px
+PASS Explore: timeline directly under the player — gap 57px
+PASS Explore: selected clip plays
+PASS Explore: playhead drawn on the timeline while playing
+PASS Explore: selecting a result updates the transport
+PASS Explore: stepper moves to the next moment
+PASS Explore: timeline tick selects a moment visible in the list — 2 moments on Community space from 8:09:19 AM. Select to step
+PASS Explore: tick hit area ≥ 24px — 24×24
+PASS Explore: topic filter reads the free index
+PASS Explore: drag across the timeline focuses a period
+PASS Explore: Escape restores the full range
+PASS Explore: “Find moments like this” fills the field, sends nothing — Moments like “Two reddish-brown squirrels climb and jump on 
+PASS Explore: / focuses the ask field
+PASS Explore: axe WCAG 2.2 AA
+PASS Explore: no page errors
+PASS Muse search: one deliberate Ask → one /search
+PASS Muse search: camera refinement uses the index, not /search
+PASS Muse search: reload reuses Muse’s reading (0 new /search)
+PASS Muse search: Back from a recording costs nothing
+PASS Muse search: no page errors
+PASS Muse: starter prompt fills the composer, sends nothing — Find footage with a person on Trail camera
+PASS Muse: send button states its cost
+PASS Muse: known pages offered for free while typing
+PASS Muse: Muse-flavoured buttons across screens send 0 requests
+PASS Palette: Muse options state their cost — Ask Muse · paid AI · may use several model requests · changes need approval | Ask Muse · 1 request · reads stored analysis, then opens Explore | Search, filter and review what your cameras saw. No request.
+PASS Muse/palette: no page errors
+PASS Responsive 1280: / has no horizontal overflow — 0px
+PASS Responsive 1280: /explore has no horizontal overflow — 0px
+PASS Responsive 1024: / has no horizontal overflow — 0px
+PASS Responsive 1024: /explore has no horizontal overflow — 0px
+PASS Responsive 768: / has no horizontal overflow — 0px
+PASS Responsive 768: /explore has no horizontal overflow — 0px
+PASS Responsive 390: / has no horizontal overflow — 0px
+PASS Responsive 390: /explore has no horizontal overflow — 0px
+PASS Phone: first result frame above y=900 after a topic — 702px
+PASS Phone: Details shows the inspector
+PASS Phone: Timeline shows the lanes
+PASS No paid request left the browser
+49/49 passed

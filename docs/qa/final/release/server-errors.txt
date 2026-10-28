@@ -1,0 +1,8 @@
+RC runtime: /tmp/veyra-rc-20261028T013839 (fresh snapshot, keyless)
+== api.log
+== api-scripted.log
+   1 PUT /api/v1/layouts/{id} 409
+   1 POST /api/v1/playback-sessions 503
+   1 POST /api/v1/cameras/{id}/live-session 503
+== postgres deadlocks
+0

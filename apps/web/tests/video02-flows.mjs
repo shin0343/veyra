@@ -104,7 +104,15 @@ await check("explore_loads_real_index", async () => {
   await playing(".ws-stage");
   await page.waitForTimeout(1500);
   await shot("explore-1440");
-  if (lanes < 6 || cards < 4) throw new Error(`lanes ${lanes}, cards ${cards}`);
+  // REDESIGN-01 shows one lane per camera with analyzed moments (idle cameras are behind
+  // "Show idle cameras"); the count must equal what the coverage API reports.
+  const analyzed = await page.evaluate(async () => {
+    const response = await fetch("/api/v1/index-coverage?curated_only=true");
+    const body = await response.json();
+    return body.items.filter((item) => item.observations > 0).length;
+  });
+  if (lanes !== analyzed || cards < 4)
+    throw new Error(`lanes ${lanes} vs analyzed ${analyzed}, cards ${cards}`);
   return { coverage, lanes, cards, frames: await framesLoaded() };
 });
 
@@ -178,12 +186,18 @@ await check("camera_filter_and_lane_tick_selection", async () => {
 
 await check("drag_time_range_and_reset", async () => {
   await exploreReady();
+  // Drag across the span around the first analyzed moment, so the focused period has
+  // evidence in any dataset (a fixed screen fraction can land on unanalyzed footage).
   const box = await page.locator(".tl-tracks").boundingBox();
-  const y = box.y + 20;
-  await page.mouse.move(box.x + box.width * 0.9, y);
+  const tick = await page.locator(".tl-moment").first().boundingBox();
+  const centre = tick.x + tick.width / 2;
+  const from = Math.max(box.x + 2, centre - box.width * 0.06);
+  const to = Math.min(box.x + box.width - 2, centre + box.width * 0.06);
+  const y = box.y + 4;
+  await page.mouse.move(from, y);
   await page.mouse.down();
-  await page.mouse.move(box.x + box.width * 0.97, y, { steps: 6 });
-  await page.mouse.move(box.x + box.width * 0.995, y, { steps: 4 });
+  await page.mouse.move((from + to) / 2, y, { steps: 6 });
+  await page.mouse.move(to, y, { steps: 4 });
   await page.mouse.up();
   await page
     .getByRole("button", { name: "Full range" })

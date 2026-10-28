@@ -1,0 +1,204 @@
+{
+  "base": "http://127.0.0.1:3700",
+  "ran_at": "2026-10-28T01:39:01.697Z",
+  "passed": 39,
+  "total": 39,
+  "blocked": [],
+  "results": [
+    {
+      "name": "Cameras: test sources hidden by default",
+      "pass": true,
+      "detail": "6 cameras shown"
+    },
+    {
+      "name": "axe WCAG 2.2 AA: Cameras",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Cameras: opening a camera shows its panel",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Cameras: the opened camera plays live",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Cameras: panel names the footage credit",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "axe WCAG 2.2 AA: Cameras with a camera open",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Cameras → Live: single camera plays",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Live: one tile in single mode",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Live: 2×2 wall shows four tiles",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Live: wall video plays",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Live: 3×3 shows all six cameras",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "axe WCAG 2.2 AA: Live view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Saved views: views with test sources hidden by default",
+      "pass": true,
+      "detail": "4 shown"
+    },
+    {
+      "name": "Saved views: previews use real camera frames",
+      "pass": true,
+      "detail": "13 frames"
+    },
+    {
+      "name": "axe WCAG 2.2 AA: Saved views",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Saved view: opens and plays",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Saved view: editor opens with its cameras chosen",
+      "pass": true,
+      "detail": "1 chosen"
+    },
+    {
+      "name": "axe WCAG 2.2 AA: Saved view editor",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Recordings: opens on a recording with moments",
+      "pass": true,
+      "detail": "3 moments"
+    },
+    {
+      "name": "Recordings: recording plays",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Recordings: time strip sits under the player",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Recordings: choosing a moment seeks",
+      "pass": true,
+      "detail": "offset_ms=8900&segment_id=b54d775b-3f13-50c0-91b0-2d39524353da"
+    },
+    {
+      "name": "axe WCAG 2.2 AA: Recordings",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Explore result → recording plays at the evidence",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Activity: Watch plays the evidence clip in place",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Activity: Movement filter shows movement rows",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "axe WCAG 2.2 AA: Activity",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Settings: privacy table lists cameras",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Settings: usage today is read",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "axe WCAG 2.2 AA: Settings",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Settings → Cameras: showing test sources reveals them",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Muse: suggestions fit the page",
+      "pass": true,
+      "detail": "Which cameras allow cloud analysis? | Is Trail camera sending video right now? | Create a saved view named “Everyday” with Trail camera, Entrance gate, Street approach and Garden wildlife"
+    },
+    {
+      "name": "Muse: each suggestion says whether it changes anything",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Muse: suggestion fills the composer only",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "axe WCAG 2.2 AA: Muse panel",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Palette: real cameras and views match for free",
+      "pass": true,
+      "detail": "2 free matches"
+    },
+    {
+      "name": "Palette: first match opens that camera",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No paid or mutating request left the browser",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No page errors",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

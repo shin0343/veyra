@@ -1,0 +1,1772 @@
+{
+  "base": "http://127.0.0.1:3701",
+  "started_at": "2026-10-28T01:44:41.269Z",
+  "provider": "scripted HTTP and scripted interpretation; NOT live Muse",
+  "database": "real isolated snapshot",
+  "media": "real licensed replay and finalized recordings",
+  "tests": [
+    {
+      "name": "Camera registration persists and its licensed stream plays",
+      "status": "PASS",
+      "elapsed_ms": 5917,
+      "evidence": {
+        "camera_id": "4ed28dce-d22a-4340-b9c2-3438a516503d",
+        "source": "8 Street station entrance vc",
+        "frames_advanced": true
+      }
+    },
+    {
+      "name": "Real layout POST and UI PUT persist exact assignments and version after reload",
+      "status": "PASS",
+      "elapsed_ms": 1284,
+      "evidence": {
+        "layout_id": "8df1b8bb-e16f-4e30-a3ee-6e935e33662b",
+        "version": 2,
+        "stale_status": 409,
+        "persisted_cells": [
+          {
+            "position": 0,
+            "camera_id": "82f995cb-8bee-469d-9063-a2da3439fbdb"
+          },
+          {
+            "position": 1,
+            "camera_id": "55163235-01fa-427f-99ce-27c24b7f30f1"
+          },
+          {
+            "position": 2,
+            "camera_id": "d9102168-f60d-4feb-b47d-5b5012d2e1a4"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Muse clarification and camera choice fill the composer without another request",
+      "status": "PASS",
+      "elapsed_ms": 1101,
+      "evidence": {
+        "choices": 7,
+        "additional_requests_on_choice": 0
+      }
+    },
+    {
+      "name": "Muse proposal → approval → real tool write → independent verification → one final receipt",
+      "status": "PASS",
+      "elapsed_ms": 2024,
+      "evidence": {
+        "layout_id": "13bf6641-52be-4fff-aa61-a07f6537c871",
+        "independent_get_matches": true,
+        "persisted_count": 1,
+        "provider": "scripted; current live provider NOT tested"
+      }
+    },
+    {
+      "name": "Muse decline and missing camera are honest, nonmutating terminal outcomes",
+      "status": "PASS",
+      "elapsed_ms": 384,
+      "evidence": {
+        "declined_without_write": true,
+        "missing_camera": "CAMERA_NOT_FOUND"
+      }
+    },
+    {
+      "name": "Natural-language parse is submitted once; camera/time/Back/reload reuse exact stored criteria",
+      "status": "PASS",
+      "elapsed_ms": 5670,
+      "evidence": {
+        "submitted_parses": 1,
+        "additional_parses_after_refinements_back_reload": 0,
+        "playback_href": "/recordings/4d914a7e-6c91-52b4-8271-73bd038125bb?offset_ms=1000&segment_id=cb6715d7-d771-5046-9744-4d1d8e570418",
+        "scope": null
+      }
+    },
+    {
+      "name": "Unknown legacy footage stays accessible explicitly and outside curated search",
+      "status": "PASS",
+      "elapsed_ms": 41,
+      "evidence": {
+        "legacy_preserved": true,
+        "curated_results": 9,
+        "coverage": "partial",
+        "analyzed_ms": 50000,
+        "available_ms": 817055
+      }
+    },
+    {
+      "name": "Suggestion chips, contextual actions and local palette navigation spend no requests",
+      "status": "PASS",
+      "elapsed_ms": 3832,
+      "evidence": {
+        "checked_routes": 6,
+        "additional_paid_entry_requests": 0
+      }
+    },
+    {
+      "name": "No-match and timeline evidence are honest",
+      "status": "PASS",
+      "elapsed_ms": 1448,
+      "evidence": {
+        "no_match_without_fabrication": true,
+        "selected_event_video_advanced": true
+      }
+    },
+    {
+      "name": "Current essential dialog accessibility",
+      "status": "PASS",
+      "elapsed_ms": 323,
+      "evidence": {
+        "axe_violations": 0,
+        "keyboard_focus_contained": true
+      }
+    }
+  ],
+  "network": [
+    {
+      "method": "GET",
+      "path": "/api/v1/index-coverage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/82f995cb-8bee-469d-9063-a2da3439fbdb/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/55163235-01fa-427f-99ce-27c24b7f30f1/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/d9102168-f60d-4feb-b47d-5b5012d2e1a4/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/48a3fb91-d509-414f-9479-48cfc886b775/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/b345aac7-984e-43f9-a927-37c639642e27/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/736b2e6b-b93c-41ad-af97-be479405ac59/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/camera-sources"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/4ed28dce-d22a-4340-b9c2-3438a516503d/thumbnail"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/4ed28dce-d22a-4340-b9c2-3438a516503d/live-session"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/4ed28dce-d22a-4340-b9c2-3438a516503d/live-session"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/3df5c708-cefb-4a68-9464-27139b8f9037/index.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/3df5c708-cefb-4a68-9464-27139b8f9037/92e0217eb0a7470683fb606b58a534cc.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/3df5c708-cefb-4a68-9464-27139b8f9037/e2d5411ea9a045bcbd7f3caa7e51dd66.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/3df5c708-cefb-4a68-9464-27139b8f9037/c3d36590763c4496bb24d3a1eea93c3f.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/3df5c708-cefb-4a68-9464-27139b8f9037/12cf81fc3cb84a3e974b27408a93130e.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/3df5c708-cefb-4a68-9464-27139b8f9037/778df53da69b4b9d9b38fdbf16989ecc.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts/8df1b8bb-e16f-4e30-a3ee-6e935e33662b"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts/8df1b8bb-e16f-4e30-a3ee-6e935e33662b"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/82f995cb-8bee-469d-9063-a2da3439fbdb/live-session"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/55163235-01fa-427f-99ce-27c24b7f30f1/live-session"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/0eb9445a-0331-4e27-b094-8c42d132cbb8/index.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/6cf1c067-c911-4992-84d8-a7bd73c32b1c/index.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/82f995cb-8bee-469d-9063-a2da3439fbdb/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/55163235-01fa-427f-99ce-27c24b7f30f1/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/d9102168-f60d-4feb-b47d-5b5012d2e1a4/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/48a3fb91-d509-414f-9479-48cfc886b775/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/b345aac7-984e-43f9-a927-37c639642e27/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/736b2e6b-b93c-41ad-af97-be479405ac59/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/4ed28dce-d22a-4340-b9c2-3438a516503d/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/6cf1c067-c911-4992-84d8-a7bd73c32b1c/cb93c19476ae42279cd536994cd9f9c0.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/0eb9445a-0331-4e27-b094-8c42d132cbb8/5989847e8be04f35b0ac0a5f8a569f7e.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/6cf1c067-c911-4992-84d8-a7bd73c32b1c/b0cc0681a99146839041125c3635086c.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/6cf1c067-c911-4992-84d8-a7bd73c32b1c/f8f8a0ef08ef47b3b2034e578e46e193.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/0eb9445a-0331-4e27-b094-8c42d132cbb8/bada5a8ad8254ed3ac569475c3dad29b.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/0eb9445a-0331-4e27-b094-8c42d132cbb8/6d4a766d5a104fb6b0e508cde3f701fa.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/6cf1c067-c911-4992-84d8-a7bd73c32b1c/f8e619bd02b240b6873124506f8c4638.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/0eb9445a-0331-4e27-b094-8c42d132cbb8/ace75a27ded9425c8b464ab784a814b8.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/6cf1c067-c911-4992-84d8-a7bd73c32b1c/5af00dd82bea4c96a6bd2dfad71584f5.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/0eb9445a-0331-4e27-b094-8c42d132cbb8/26e615d8e6524c52ac66f7b930e0f8f9.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/6cf1c067-c911-4992-84d8-a7bd73c32b1c/036130b5316347979afe2ad8404353f6.mp4"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/layouts/8df1b8bb-e16f-4e30-a3ee-6e935e33662b"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/6cf1c067-c911-4992-84d8-a7bd73c32b1c/c587b54771a44f18b0ce398a907f0188.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/6cf1c067-c911-4992-84d8-a7bd73c32b1c/f745f9543c2241098d2584bc74e39c1b.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts/8df1b8bb-e16f-4e30-a3ee-6e935e33662b"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/d9102168-f60d-4feb-b47d-5b5012d2e1a4/live-session"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts/8df1b8bb-e16f-4e30-a3ee-6e935e33662b"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/82f995cb-8bee-469d-9063-a2da3439fbdb/live-session"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/55163235-01fa-427f-99ce-27c24b7f30f1/live-session"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/d9102168-f60d-4feb-b47d-5b5012d2e1a4/live-session"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts/8df1b8bb-e16f-4e30-a3ee-6e935e33662b"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/6899396f-8b74-44f6-878a-67967b64aae8/index.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/d2f0a793-9976-4282-8096-008fd0a779af/index.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/507b29f8-1b01-4c82-87a4-95beea217ed2/index.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/507b29f8-1b01-4c82-87a4-95beea217ed2/5ef390d3afe3441f90046e59010de7fd.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/6899396f-8b74-44f6-878a-67967b64aae8/0ebaea70abd2493692dba2f4b1b087df.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/d2f0a793-9976-4282-8096-008fd0a779af/09f955c7995d41ce83722c00b8b3a283.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/507b29f8-1b01-4c82-87a4-95beea217ed2/7bda8230bf7f4d0fb40e6a8301d1c7e9.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/507b29f8-1b01-4c82-87a4-95beea217ed2/095f13f8f2dd47bfa7a6586e94baa8d8.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/6899396f-8b74-44f6-878a-67967b64aae8/3bad93c768b04c5a80871cecd3fadc5a.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/6899396f-8b74-44f6-878a-67967b64aae8/4b588590da61440a8edec63495df0c07.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/d2f0a793-9976-4282-8096-008fd0a779af/fb958f1041544d14bc44a4d9c9ef3f37.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/d2f0a793-9976-4282-8096-008fd0a779af/65a67ed3aa034e7b8bf42de373422361.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/507b29f8-1b01-4c82-87a4-95beea217ed2/fdd5c23ea4f141f6978728034194b0ce.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/6899396f-8b74-44f6-878a-67967b64aae8/df58256efa0c4836bcb6785848ea1171.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/d2f0a793-9976-4282-8096-008fd0a779af/24410ef3da914e289d715c3f4da373af.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/6899396f-8b74-44f6-878a-67967b64aae8/57c54e957fdd4ea49dca7a416f851b90.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/507b29f8-1b01-4c82-87a4-95beea217ed2/53c506a909b44d1c8315e97a4f98782f.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/d2f0a793-9976-4282-8096-008fd0a779af/5f9f0737846e48999f58a3af27801a0f.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/507b29f8-1b01-4c82-87a4-95beea217ed2/242e26615d8449bfb15a54a226361fcc.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/507b29f8-1b01-4c82-87a4-95beea217ed2/b65bb4ad84a444b8b422e1e62eeafd19.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/507b29f8-1b01-4c82-87a4-95beea217ed2/dd63661cc4904e21a837ff7282a9beaf.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/82f995cb-8bee-469d-9063-a2da3439fbdb/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/55163235-01fa-427f-99ce-27c24b7f30f1/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/d9102168-f60d-4feb-b47d-5b5012d2e1a4/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/48a3fb91-d509-414f-9479-48cfc886b775/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/736b2e6b-b93c-41ad-af97-be479405ac59/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/b345aac7-984e-43f9-a927-37c639642e27/thumbnail"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/agent/messages"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/agent/messages"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/agent/confirmations/60403068-5656-4eaa-aeef-a8d3ecf00d5b"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts/13bf6641-52be-4fff-aa61-a07f6537c871"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/82f995cb-8bee-469d-9063-a2da3439fbdb/live-session"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/55163235-01fa-427f-99ce-27c24b7f30f1/live-session"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/d9102168-f60d-4feb-b47d-5b5012d2e1a4/live-session"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/48a3fb91-d509-414f-9479-48cfc886b775/live-session"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/ab7ffd13-8799-48e7-8ad5-56fbc256003f/index.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/8184062a-253e-4f50-a18b-713de0b4b8e7/index.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/b3dab2aa-6429-4092-9147-8e74aa5e056e/index.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/64bb91bf-6869-4e30-b0a3-e9c958b50bd3/index.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/8184062a-253e-4f50-a18b-713de0b4b8e7/6ea4e65d6b904906a1caf921004f8145.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/b3dab2aa-6429-4092-9147-8e74aa5e056e/5a82c67266404f899b8de9ba186d14cf.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/64bb91bf-6869-4e30-b0a3-e9c958b50bd3/c2ac7e0ea052405a8294a6d330dc188d.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/ab7ffd13-8799-48e7-8ad5-56fbc256003f/dd285c92e4cc4c7db29053dda3d69fe1.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/8184062a-253e-4f50-a18b-713de0b4b8e7/a80716d02f8d4bd9ac4c70d8221d91ed.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/8184062a-253e-4f50-a18b-713de0b4b8e7/c0fb291718ad4795ac7dbe5d897e4028.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/b3dab2aa-6429-4092-9147-8e74aa5e056e/762a28c286ef4f1dbfed6f96d2d5138a.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/b3dab2aa-6429-4092-9147-8e74aa5e056e/73897da81b8044ffb04b5563ad81754a.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/ab7ffd13-8799-48e7-8ad5-56fbc256003f/aa921104134f4ba18f24d17bde188997.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/ab7ffd13-8799-48e7-8ad5-56fbc256003f/3c71315f384d4f3eb6db1610880e3f04.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/64bb91bf-6869-4e30-b0a3-e9c958b50bd3/e10595a2feaf4d55aa23e640a867df6c.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/64bb91bf-6869-4e30-b0a3-e9c958b50bd3/87ea789d2fc244609ec8aa8e564cdb4d.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/b3dab2aa-6429-4092-9147-8e74aa5e056e/220dcedafef949619e134b790d61d0bd.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/8184062a-253e-4f50-a18b-713de0b4b8e7/387b30a9cef041d0a45d98e3b330a12d.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/ab7ffd13-8799-48e7-8ad5-56fbc256003f/c0ff1b94108a43c285679632e339d37f.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/64bb91bf-6869-4e30-b0a3-e9c958b50bd3/22cfb48ea0684ba784165fdc03af929d.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/8184062a-253e-4f50-a18b-713de0b4b8e7/b253cebd03ee4c00a601cca7fa80a27d.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/b3dab2aa-6429-4092-9147-8e74aa5e056e/329a8f7a586b45149162f2bca4662165.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/64bb91bf-6869-4e30-b0a3-e9c958b50bd3/ebfbf6d370a143ff8a14e60182acb48d.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/ab7ffd13-8799-48e7-8ad5-56fbc256003f/f8c8022eb9a04951b7402e8774464fe3.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/b3dab2aa-6429-4092-9147-8e74aa5e056e/a74c3f21776b4a62bff667331b182d17.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/64bb91bf-6869-4e30-b0a3-e9c958b50bd3/51c2fe84089c4b4ab89e04ca7b5a27ae.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/b3dab2aa-6429-4092-9147-8e74aa5e056e/adce33befdf143aa9643f7c6a2d766a9.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/64bb91bf-6869-4e30-b0a3-e9c958b50bd3/766b51a254414aaf9d7ea6ae6d28e734.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/b3dab2aa-6429-4092-9147-8e74aa5e056e/34ee0a9c88ae4e1e8adea6d458ee07d8.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/64bb91bf-6869-4e30-b0a3-e9c958b50bd3/b1339b44539b40f2af808818b83cee51.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/82f995cb-8bee-469d-9063-a2da3439fbdb/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/55163235-01fa-427f-99ce-27c24b7f30f1/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/d9102168-f60d-4feb-b47d-5b5012d2e1a4/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/48a3fb91-d509-414f-9479-48cfc886b775/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/736b2e6b-b93c-41ad-af97-be479405ac59/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/b345aac7-984e-43f9-a927-37c639642e27/thumbnail"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/agent/messages"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/agent/confirmations/91b13e05-ba42-4050-9315-b077175b1d85"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/agent/messages"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/index-coverage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/activity-query"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/index-query"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/search"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/playback-sessions"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/index-query"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/39d296d9-6336-57bf-af7b-b59bc803fdd8/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/4d914a7e-6c91-52b4-8271-73bd038125bb/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/4d914a7e-6c91-52b4-8271-73bd038125bb/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/d490bd76-ff4d-4c33-911b-e43f8be895c3/clip.mp4"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/activity-query"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/index-query"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/playback-sessions"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/index-query"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/3b38ee77-c726-4e64-a1f0-0e6bf622070e/clip.mp4"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/activity-query"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/index-query"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/playback-sessions"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/index-query"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/39d296d9-6336-57bf-af7b-b59bc803fdd8/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/98248c3a-e4de-4f00-a163-e4bf11e42c2d/clip.mp4"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/activity-query"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/index-query"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/playback-sessions"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/index-query"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/6cb3ebd6-b39d-4817-8953-f807e8dd0dd5/clip.mp4"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/playback-sessions"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/4d914a7e-6c91-52b4-8271-73bd038125bb/segments"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/4d914a7e-6c91-52b4-8271-73bd038125bb/index"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/b345aac7-984e-43f9-a927-37c639642e27/activity"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/index-coverage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/2aefe1d9-6331-541b-b921-fed79ce1b622/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/a8d53949-fd0f-5e62-b066-00856933050d/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/fe34f95c-18d5-5469-b0e7-b3cbd3434093/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/25809f13-01dd-5369-9302-bd12587a9ad5/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/39d296d9-6336-57bf-af7b-b59bc803fdd8/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/4d914a7e-6c91-52b4-8271-73bd038125bb/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/4d914a7e-6c91-52b4-8271-73bd038125bb/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/4d914a7e-6c91-52b4-8271-73bd038125bb/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/2861c6e4-c81f-4533-8faa-6762e250d768/clip.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/index-coverage"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/activity-query"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/index-query"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/index-query"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/playback-sessions"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/index-query"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/index-coverage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/activity-query"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/index-query"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/index-query"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/playback-sessions"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/index-query"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/39d296d9-6336-57bf-af7b-b59bc803fdd8/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/4d914a7e-6c91-52b4-8271-73bd038125bb/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/4d914a7e-6c91-52b4-8271-73bd038125bb/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/8847c82f-3b5a-47d2-bf85-599805f3faa7/clip.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/index-coverage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/82f995cb-8bee-469d-9063-a2da3439fbdb/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/55163235-01fa-427f-99ce-27c24b7f30f1/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/d9102168-f60d-4feb-b47d-5b5012d2e1a4/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/48a3fb91-d509-414f-9479-48cfc886b775/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/b345aac7-984e-43f9-a927-37c639642e27/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/736b2e6b-b93c-41ad-af97-be479405ac59/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/4ed28dce-d22a-4340-b9c2-3438a516503d/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/index-query"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/736b2e6b-b93c-41ad-af97-be479405ac59/live-session"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/0d37f6b3-6efc-412a-b57e-7d166f67d7dd/index.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/0d37f6b3-6efc-412a-b57e-7d166f67d7dd/be2f1c9b8da241f6b94792f231396896.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/0d37f6b3-6efc-412a-b57e-7d166f67d7dd/00815d150da64314a50f5ba8691b8c42.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/0d37f6b3-6efc-412a-b57e-7d166f67d7dd/029a8d85eb294f3fbbd906e748f26b52.mp4"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/b345aac7-984e-43f9-a927-37c639642e27/live-session"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/e6ed2728-6569-42c5-a31d-e65877bf97d0/index.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/4d914a7e-6c91-52b4-8271-73bd038125bb/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/fe34f95c-18d5-5469-b0e7-b3cbd3434093/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/25809f13-01dd-5369-9302-bd12587a9ad5/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/39d296d9-6336-57bf-af7b-b59bc803fdd8/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/e6ed2728-6569-42c5-a31d-e65877bf97d0/fc0cfc7b64c54fb9b33016f5c15f24df.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/e6ed2728-6569-42c5-a31d-e65877bf97d0/4e3b8af7e2984d9fad748a90bbde14ea.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/e6ed2728-6569-42c5-a31d-e65877bf97d0/0f118fdbb06b43e2b2e6925e04da5e04.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/e6ed2728-6569-42c5-a31d-e65877bf97d0/12a2aa9664f343cb9cb590d70328d535.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/e6ed2728-6569-42c5-a31d-e65877bf97d0/b0fddd241ae641da804f3ce089feb8b5.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/index-coverage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/82f995cb-8bee-469d-9063-a2da3439fbdb/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/55163235-01fa-427f-99ce-27c24b7f30f1/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/d9102168-f60d-4feb-b47d-5b5012d2e1a4/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/48a3fb91-d509-414f-9479-48cfc886b775/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/b345aac7-984e-43f9-a927-37c639642e27/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/736b2e6b-b93c-41ad-af97-be479405ac59/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/4ed28dce-d22a-4340-b9c2-3438a516503d/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/index-coverage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/playback-sessions"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/a9791ab6-b706-5c05-9b3b-1f311895851f/segments"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/a9791ab6-b706-5c05-9b3b-1f311895851f/index"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/4ed28dce-d22a-4340-b9c2-3438a516503d/activity"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/playback-sessions"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/segments"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/index"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/736b2e6b-b93c-41ad-af97-be479405ac59/activity"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/a9791ab6-b706-5c05-9b3b-1f311895851f/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/2aefe1d9-6331-541b-b921-fed79ce1b622/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/a8d53949-fd0f-5e62-b066-00856933050d/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/fe34f95c-18d5-5469-b0e7-b3cbd3434093/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/25809f13-01dd-5369-9302-bd12587a9ad5/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/39d296d9-6336-57bf-af7b-b59bc803fdd8/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/4d914a7e-6c91-52b4-8271-73bd038125bb/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/82f995cb-8bee-469d-9063-a2da3439fbdb/live-session"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/55163235-01fa-427f-99ce-27c24b7f30f1/live-session"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/d9102168-f60d-4feb-b47d-5b5012d2e1a4/live-session"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/48a3fb91-d509-414f-9479-48cfc886b775/live-session"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/2382c962-9b58-4c89-bbae-b9efbbb0c075/index.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/885df605-9081-44e3-a7c9-a50a2f583315/index.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/8e69bec3-315b-42cb-afd2-e18641db0b65/index.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/fe032796-d8ac-4596-bf69-b8cb1b7d0c3b/index.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/2382c962-9b58-4c89-bbae-b9efbbb0c075/6e150c1d374e4848a285e8a7a6734363.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/885df605-9081-44e3-a7c9-a50a2f583315/f832031b22fc496cb7aced0716a44620.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/8e69bec3-315b-42cb-afd2-e18641db0b65/ed304715e3434ab6ae9798769c03d36a.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/fe032796-d8ac-4596-bf69-b8cb1b7d0c3b/ab4b6e4cfb3e4da2b0debf28e0435070.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/2382c962-9b58-4c89-bbae-b9efbbb0c075/fc719ae03ca54c64911b27b706211612.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/2382c962-9b58-4c89-bbae-b9efbbb0c075/9a9c768241764457add41306146aefed.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/885df605-9081-44e3-a7c9-a50a2f583315/b6ff2b6c3cf1437b9498bd422e629bf5.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/885df605-9081-44e3-a7c9-a50a2f583315/1da8706efcae4c2ca045ca3b983dc867.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/8e69bec3-315b-42cb-afd2-e18641db0b65/641c35b467e44c8d8ab1562511943221.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/8e69bec3-315b-42cb-afd2-e18641db0b65/20a83715c693461a83ff59785b1ed9f7.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/fe032796-d8ac-4596-bf69-b8cb1b7d0c3b/d66d602fe8c54358a82d72dd2057fb64.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/fe032796-d8ac-4596-bf69-b8cb1b7d0c3b/3c4434f43b04466e85b83eb4f13c1df4.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/885df605-9081-44e3-a7c9-a50a2f583315/072020067f3a4a228a56e57e7aa6a58d.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/2382c962-9b58-4c89-bbae-b9efbbb0c075/f8a198f214d540ab9c2b89b981e1182a.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/8e69bec3-315b-42cb-afd2-e18641db0b65/d64a1e3589974eccb9ce4c9f28039a6e.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/885df605-9081-44e3-a7c9-a50a2f583315/bc271641fee345d2a6c7e85924762fb7.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/fe032796-d8ac-4596-bf69-b8cb1b7d0c3b/50d5287023b94b23a7c9f084529650e8.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/2382c962-9b58-4c89-bbae-b9efbbb0c075/d2580792ed024731a7a957b7c707c976.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/8e69bec3-315b-42cb-afd2-e18641db0b65/db16a9d1fd264f2e86d522cb9ee9c3ea.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/fe032796-d8ac-4596-bf69-b8cb1b7d0c3b/5ba9a9a2c3fe45299e70b6b5fedc3734.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/2382c962-9b58-4c89-bbae-b9efbbb0c075/8b55daf8274c4fb48ccee31993916a64.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/fe032796-d8ac-4596-bf69-b8cb1b7d0c3b/7c1d8118df544468a6804df8fe340786.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/2382c962-9b58-4c89-bbae-b9efbbb0c075/527be2de88804fcf80bfa457791d6e2c.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/fe032796-d8ac-4596-bf69-b8cb1b7d0c3b/9408864605d94839acf763c96024cbfb.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/2382c962-9b58-4c89-bbae-b9efbbb0c075/0e77adfa13a74aae839f5fe4b7cab865.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/fe032796-d8ac-4596-bf69-b8cb1b7d0c3b/e664aea5fa0541cd8644989e1817705b.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/82f995cb-8bee-469d-9063-a2da3439fbdb/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/55163235-01fa-427f-99ce-27c24b7f30f1/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/d9102168-f60d-4feb-b47d-5b5012d2e1a4/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/48a3fb91-d509-414f-9479-48cfc886b775/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/736b2e6b-b93c-41ad-af97-be479405ac59/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/b345aac7-984e-43f9-a927-37c639642e27/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/analysis-usage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/cameras/48a3fb91-d509-414f-9479-48cfc886b775/live-session"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/index-coverage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/82f995cb-8bee-469d-9063-a2da3439fbdb/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/55163235-01fa-427f-99ce-27c24b7f30f1/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/d9102168-f60d-4feb-b47d-5b5012d2e1a4/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/48a3fb91-d509-414f-9479-48cfc886b775/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/b345aac7-984e-43f9-a927-37c639642e27/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/736b2e6b-b93c-41ad-af97-be479405ac59/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/4ed28dce-d22a-4340-b9c2-3438a516503d/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/54f34848-042f-400d-a8ee-9772303af24f/index.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/54f34848-042f-400d-a8ee-9772303af24f/5395d2feb2eb4de2837c08c0d2b8f85c.m3u8"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/54f34848-042f-400d-a8ee-9772303af24f/eb9a1bcab219445b9d677697c4cab13a.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/54f34848-042f-400d-a8ee-9772303af24f/2c858cff63bc4af2b30cdf5339f02694.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/54f34848-042f-400d-a8ee-9772303af24f/02249061e39346d5bb88bc44601b3a31.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/54f34848-042f-400d-a8ee-9772303af24f/fb14e3abe0954a00864f462ccfcba409.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/54f34848-042f-400d-a8ee-9772303af24f/2fb73f9d80b84d918f1844cf9aacc9f0.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/54f34848-042f-400d-a8ee-9772303af24f/99160acc4d7e4c578462c245c38c043b.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/54f34848-042f-400d-a8ee-9772303af24f/5afe618788b94ff19b0400874fc59adb.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/index-coverage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/activity-query"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/index-query"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/search"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/index-coverage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/736b2e6b-b93c-41ad-af97-be479405ac59/activity"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/39d296d9-6336-57bf-af7b-b59bc803fdd8/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/4d914a7e-6c91-52b4-8271-73bd038125bb/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/4d914a7e-6c91-52b4-8271-73bd038125bb/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/fe34f95c-18d5-5469-b0e7-b3cbd3434093/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/25809f13-01dd-5369-9302-bd12587a9ad5/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/d14bd27d-594d-59fc-bd8f-3193e7a84542/frame"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings/39d296d9-6336-57bf-af7b-b59bc803fdd8/frame"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/playback-sessions"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/5e9203bf-2912-4bb8-834d-0136112dec7e/clip.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/media/sessions/5e9203bf-2912-4bb8-834d-0136112dec7e/clip.mp4"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/layouts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/recordings"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/events"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/82f995cb-8bee-469d-9063-a2da3439fbdb/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/55163235-01fa-427f-99ce-27c24b7f30f1/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/d9102168-f60d-4feb-b47d-5b5012d2e1a4/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/48a3fb91-d509-414f-9479-48cfc886b775/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/736b2e6b-b93c-41ad-af97-be479405ac59/thumbnail"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cameras/b345aac7-984e-43f9-a927-37c639642e27/thumbnail"
+    }
+  ],
+  "page_errors": [],
+  "paid_calls": 0,
+  "finished_at": "2026-10-28T01:45:03.463Z",
+  "status": "PASS"
+}

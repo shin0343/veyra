@@ -1,0 +1,140 @@
+{
+  "base": "http://127.0.0.1:3710",
+  "live": true,
+  "started_at": "2026-10-28T02:40:19.639Z",
+  "tests": [
+    {
+      "name": "B · live natural-language video search → evidence playback",
+      "status": "PASS",
+      "query": "squirrels at the feeder",
+      "http_latency_ms": 7823,
+      "server_latency_ms": 7771,
+      "constraints": {
+        "camera_names": [],
+        "start": "2026-10-27T15:00:00Z",
+        "end": "2026-10-27T15:30:00Z",
+        "objects": [],
+        "event_types": [
+          "animal_visible"
+        ],
+        "motion_only": false,
+        "keywords": [
+          "squirrels",
+          "feeder"
+        ],
+        "unsupported_reason": null,
+        "curated_only": true,
+        "camera_ids": [],
+        "limit": 24
+      },
+      "understood": "Muse understood\nAnimal visible\n“squirrels”\n“feeder”\nRead in 7.8s · 1 request · stored analysis only",
+      "results": 1,
+      "top_hit": {
+        "camera": "Garden wildlife",
+        "summary": "Two reddish-brown squirrels climb and jump on a small post-mounted feeder in a garden with dense green foliage",
+        "start": "2026-10-27T15:09:18.508057Z"
+      },
+      "opened": {
+        "href": "/recordings/fe34f95c-18d5-5469-b0e7-b3cbd3434093?offset_ms=0&segment_id=b5aaa3ec-9500-5516-8fb3-850a3e374596",
+        "camera": "Garden wildlife",
+        "segment_in_recording": true
+      },
+      "videos_advanced": 1
+    },
+    {
+      "name": "A1 · proposal",
+      "http_status": 200,
+      "http_latency_ms": 3454,
+      "interaction_state": "awaiting_confirmation",
+      "status": "awaiting_confirmation",
+      "message": "Review the camera names and arrangement, then approve to save. No layout has been created.",
+      "actions": [
+        {
+          "tool": "cameras.list",
+          "status": "succeeded"
+        },
+        {
+          "tool": "layouts.create",
+          "status": "confirmation_required"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "A · live agentic layout creation with approval",
+      "status": "PASS",
+      "planned_cameras": [
+        "Entrance gate",
+        "Street approach",
+        "Community space",
+        "Bicycle parking"
+      ],
+      "columns": 2,
+      "approval_latency_ms": 49,
+      "receipt_state": "completed_verified",
+      "receipt_message": "Found 8 cameras. Status reflects backend observations. Layout saved and verified from a new database read.",
+      "persisted": {
+        "id": "e0392b09-6908-4521-ae5e-f2e4851c21ca",
+        "version": 1,
+        "cells": 4
+      },
+      "independent_get_matches": true,
+      "contradictions": 0,
+      "videos_advanced": 4
+    }
+  ],
+  "usage_before": {
+    "requests": 0,
+    "input_tokens": null,
+    "output_tokens": null,
+    "bytes_uploaded": 0,
+    "reserved_usd": 0,
+    "estimated_usd": null,
+    "billing": "unknown",
+    "daily_request_limit": 4,
+    "daily_limit_usd": 0.2,
+    "admission_used_usd": 0,
+    "admission_remaining_usd": 0.2,
+    "remaining_requests": 4,
+    "admission_enabled": true,
+    "observed_at": "2026-10-28T02:40:19.649699Z",
+    "latest_usage_at": null,
+    "billing_updated_at": null
+  },
+  "browser_provider_requests": [
+    {
+      "method": "POST",
+      "path": "/api/v1/search",
+      "at": 1793155220059
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/agent/messages",
+      "at": 1793155231116
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/agent/confirmations/dd4e2b96-eff3-4614-a11b-551da9b214ad",
+      "at": 1793155236164
+    }
+  ],
+  "usage_after": {
+    "requests": 3,
+    "input_tokens": 9001,
+    "output_tokens": 1969,
+    "bytes_uploaded": 0,
+    "reserved_usd": 0.15,
+    "estimated_usd": null,
+    "billing": "unknown",
+    "daily_request_limit": 4,
+    "daily_limit_usd": 0.2,
+    "admission_used_usd": 0.15,
+    "admission_remaining_usd": 0.05000000000000002,
+    "remaining_requests": 1,
+    "admission_enabled": true,
+    "observed_at": "2026-10-28T02:40:39.595512Z",
+    "latest_usage_at": "2026-10-28T02:40:32.523122Z",
+    "billing_updated_at": null
+  },
+  "finished_at": "2026-10-28T02:40:39.596Z"
+}

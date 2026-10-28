@@ -167,14 +167,25 @@ def list_layouts(db):
     ]
 
 
+def share_cameras(db, ids):
+    """Share-lock cameras in the media reconciler's (created_at,id) order to avoid lock cycles."""
+    return db.execute(
+        """SELECT * FROM cameras WHERE id=ANY(%s) AND deleted_at IS NULL
+        ORDER BY created_at,id FOR SHARE""",
+        (list(ids),),
+    ).fetchall()
+
+
 def save_layout(db, body, layout_id=None):
     db.execute("SELECT pg_advisory_xact_lock(9102603)")
     if not body.name.strip():
         raise Problem(422, "VALIDATION_ERROR", "Choose a name for this layout.")
     ids = [cell.camera_id for cell in body.cells]
+    # KEY SHARE still blocks delete_camera (FOR UPDATE) but not the media reconciler's
+    # per-tick status UPDATEs, which hold camera rows until its transaction commits.
     valid = db.execute(
         """SELECT id FROM cameras WHERE id=ANY(%s) AND deleted_at IS NULL
-                       FOR SHARE""",
+        ORDER BY created_at,id FOR KEY SHARE""",
         (ids,),
     ).fetchall()
     if len(valid) != len(ids):

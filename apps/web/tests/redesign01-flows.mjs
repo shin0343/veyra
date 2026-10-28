@@ -403,7 +403,7 @@ const top = (page, selector) =>
   check(
     "Muse: send button states its cost",
     (await page
-      .getByRole("button", { name: /Ask Muse, uses 1 request/ })
+      .getByRole("button", { name: /Ask Muse, uses paid model requests/ })
       .count()) === 1,
   );
   await page.locator("#muse-query").fill("cameras");
@@ -446,7 +446,11 @@ const top = (page, selector) =>
   const options = await page.locator(".command-result small").allTextContents();
   check(
     "Palette: Muse options state their cost",
-    options.filter((t) => t.includes("1 request")).length === 2,
+    // The agent may chain several model calls; the Explore parse is exactly one.
+    options.filter((t) => t.includes("may use several model requests"))
+      .length === 1 &&
+      options.filter((t) => t.includes("1 request")).length === 1,
+    options.join(" | "),
   );
   check(
     "Muse/palette: no page errors",

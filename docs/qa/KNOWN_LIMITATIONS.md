@@ -1,4 +1,4 @@
-# Known limitations — updated through VIDEO-02
+# Known limitations — updated for the final release
 
 VIDEO-01 current evidence: [VIDEO_01_REPORT.md](VIDEO_01_REPORT.md). Earlier phase measurements
 remain history; six licensed prerecorded films are now the default presentation sources.
@@ -67,3 +67,15 @@ remain history; six licensed prerecorded films are now the default presentation 
     through Recordings or by focusing the timeline; a multi-day picker is not built.
 18. **Preview frames are illustrative.** `/recordings/{id}/frame` decodes one JPEG from the
     evidence segment (250 ms quantisation). It does not localise objects; no boxes are drawn.
+
+## Final release (October 28, 2026)
+
+19. **Live Muse was verified once, on an isolated copy.** Two workflows, 3 requests; this shows the
+    integration works, not that it is reliable at scale. The main demo video segment uses a
+    scripted provider and is captioned as such; only the appended segment is live.
+20. **Admission ledgers are per database.** The isolated live test had its own ledger; the canonical
+    demo DB's ledger (100 requests / $5 per UTC day) is separate. Actual Meta billing is unknown.
+21. **Cold start.** Right after the demo stack starts, live streams can take a few seconds to attach;
+    one Home check failed once in that window and passed on re-run.
+22. **Retryable 503s by design.** A live session for a camera registered seconds earlier, or a
+    clip requested while another is being prepared, returns a retryable 503 that the UI retries.

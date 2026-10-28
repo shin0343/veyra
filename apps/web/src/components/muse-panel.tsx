@@ -627,7 +627,6 @@ function ResponseView({
             <LayoutProposalCard
               proposal={proposal}
               decision={decision}
-              onDecision={onDecision}
               decisionAction={decisionAction}
             />
           )}
@@ -666,7 +665,6 @@ function ResponseView({
         <LayoutProposalCard
           proposal={proposal}
           decision={decision}
-          onDecision={onDecision}
           decisionAction={decisionAction}
         />
       )}
@@ -1041,12 +1039,10 @@ function useDecision(
 function LayoutProposalCard({
   proposal,
   decision,
-  onDecision,
   decisionAction,
 }: {
   proposal: Schema["LayoutProposal"];
   decision?: AgentResponse;
-  onDecision: (response: AgentResponse) => void;
   decisionAction: ReturnType<typeof useDecision>;
 }) {
   const remaining = useExpiry(proposal.confirmation.expires_at);

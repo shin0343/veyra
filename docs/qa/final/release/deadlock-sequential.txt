@@ -1,0 +1,1 @@
+sequential (0.5s apart):   40 201

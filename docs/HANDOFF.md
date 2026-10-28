@@ -1,10 +1,28 @@
 # Veyra handoff
 
-**Current: REDESIGN-02 (branch `redesign-02`).** The REDESIGN-01 art direction now covers every
+**Current: FINAL RELEASE (branch `release-recovery-20261027`, tag `veyra-rc1`).** Canonical demo
+http://127.0.0.1:3200 (build `h45YdTzeygibz8PyPrxR6`, preserved `runtime/demo` DB). Layout-save
+deadlock, frame-cache race, `/events` 422 and test drift fixed; `make check` 192 passed; final
+E2E 10/10, REDESIGN 39/39 + 49/49, VIDEO-02 23/23 (RC and canonical). Live Meta Muse verified
+once on an isolated copy (search → evidence, layout proposal → approval → verified; 3 requests).
+Demo video `runtime/demo-video/veyra-final-demo.mp4` (110 s; scripted segment captioned, live
+segment unedited). Gates: [FINAL_RELEASE_GATES](qa/FINAL_RELEASE_GATES.md) · results:
+[FINAL_E2E_RESULTS](qa/FINAL_E2E_RESULTS.md) · fixes: [FINAL_INTEGRATION_REPORT](qa/FINAL_INTEGRATION_REPORT.md)
+· demo: [FINAL_DEMO_GUIDE](demo/FINAL_DEMO_GUIDE.md) · submit: [SUBMISSION_CHECKLIST](demo/SUBMISSION_CHECKLIST.md).
+
+Open items for the team: confirm the Official Rules/form when published, choose the track,
+upload the video with footage credits, decide repository visibility (nothing pushed). Not
+tested: Docker/Compose, physical cameras, Safari/iOS, `pip-audit`.
+
+Operating notes: rebuild `.next` only while the demo is stopped; stop it with Ctrl-C or SIGINT
+to the controller PID in `runtime/demo/video01-state.json` (never SIGKILL — an orphaned
+PostgreSQL blocks the next start). Isolated stacks (`scripts/final_rc.py`) live in `/tmp/veyra-rc-*`
+and never touch `runtime/demo`.
+
+**Previous: REDESIGN-02 (branch `redesign-02`).** The REDESIGN-01 art direction now covers every
 route: Cameras library + panel, Live wall, Recordings workspace, Activity log, Saved views gallery
 with an editor, plain Settings, page-aware Muse and a palette that finds cameras and views for free.
-Production build `8Ljcda0FKDR9A1APIKC-3` is served at http://127.0.0.1:3600 (`VEYRA_DIST_DIR=.next-qa`);
-**:3200 still serves the VIDEO-02 build** until promoted. See
+See
 [REDESIGN-02 handoff](#redesign-02-handoff--product-wide-art-direction).
 
 **Previous: REDESIGN-01** — Home and Explore workspace ([handoff](#redesign-01-handoff--home-and-explore-workspace)).

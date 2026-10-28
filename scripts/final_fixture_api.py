@@ -63,7 +63,15 @@ def scripted(request):
         if not tool_results:
             return completion("cameras.list", identifier="fixture_list")
         cameras = json.loads(tool_results[0]["content"]).get("items", [])
-        selected = [c for c in cameras if c["name"].casefold() in lower]
+        # Longest names claim their words first, so "Garden wildlife" is not also read as the
+        # separate (disabled) "Garden" camera; names must match whole words.
+        remaining, selected = lower, []
+        for camera in sorted(cameras, key=lambda c: -len(c["name"])):
+            pattern = r"(?<!\w)" + re.escape(camera["name"].casefold()) + r"(?!\w)"
+            if re.search(pattern, remaining):
+                selected.append(camera)
+                remaining = re.sub(pattern, " ", remaining)
+        selected.sort(key=lambda c: lower.find(c["name"].casefold()))
         if selected:
             match = re.search(r'named\s+[“"\']([^”"\']+)[”"\']', user, re.I)
             return completion(

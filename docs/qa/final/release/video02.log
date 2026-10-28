@@ -1,0 +1,25 @@
+ok   explore_loads_real_index {"coverage":"5 of 88 clips analyzed · 5 of 8 cameras","lanes":5,"cards":9,"frames":9}
+ok   topic_animals_plays_real_squirrels {"camera":"Garden wildlife","url":"/explore?topic=animals","summary":"Two reddish-brown squirrels climb and jump on a small post-mounted feeder in a garden with
+ok   camera_filter_and_lane_tick_selection {"results":3,"cluster":"3","selected":["Outdoor daylight view of wide stairs with bicycle gutters where two people walk bicycles downward, with balloon columns,
+ok   drag_time_range_and_reset {"focused":"Oct 27, 8:07 AM – 8:11 AM · America/Los_Angeles"}
+ok   keyboard_slash_and_arrow_results {"focused":"explore-ask"}
+ok   open_in_recording_seeks_evidence {"href":"/recordings/25809f13-01dd-5369-9302-bd12587a9ad5?offset_ms=0&segment_id=5343522c-7fcd-593f-9ac7-d5f862a89bb2"}
+ok   review_dialog_plan {"plan":"A saved view with Bicycle parking, Entrance gate, Community space in 2 columns.","saved":null}
+ok   simulated_budget_exhausted {"simulated":true,"shown":"Muse has reached today’s request limit"}
+ok   budget_fallback_offers_index_filter {}
+ok   simulated_no_match {"simulated":true,"shown":"No matching moments"}
+ok   simulated_index_unavailable {"simulated":true,"shown":"Stored analysis couldn’t be read"}
+ok   simulated_searching {"simulated":true,"shown":"Reading stored analysis…"}
+ok   simulated_frame_unavailable {"simulated":true,"shown":"Preview frame unavailable"}
+ok   overview_video_first {"status":"6 of 6 cameras sending video\n2 test sources hidden\n5 clips analyzed by Muse\nLatest moment Oct 27, 8:09 AM","found":5,"look_for":["People\n6","Bicy
+ok   activity_anchored_with_frames {"cards":9,"first":"8:09:27 AM"}
+ok   axe_explore {"violations":0}
+ok   axe_overview {"violations":0}
+ok   axe_activity {"violations":0}
+ok   responsive_1440 {"overflow":{"/":0,"/explore":0,"/cameras":0,"/live":0,"/recordings":0,"/events":0,"/layouts":0,"/settings":0}}
+ok   responsive_1280 {"overflow":{"/":0,"/explore":0,"/cameras":0,"/live":0,"/recordings":0,"/events":0,"/layouts":0,"/settings":0}}
+ok   responsive_1024 {"overflow":{"/":0,"/explore":0,"/cameras":0,"/live":0,"/recordings":0,"/events":0,"/layouts":0,"/settings":0}}
+ok   responsive_768 {"overflow":{"/":0,"/explore":0,"/cameras":0,"/live":0,"/recordings":0,"/events":0,"/layouts":0,"/settings":0}}
+ok   responsive_390 {"overflow":{"/":0,"/explore":0,"/cameras":0,"/live":0,"/recordings":0,"/events":0,"/layouts":0,"/settings":0}}
+
+23 passed, 0 failed, 0 page errors

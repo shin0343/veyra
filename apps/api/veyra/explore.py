@@ -218,11 +218,18 @@ _frame_slots = threading.BoundedSemaphore(2)
 
 
 def _evict(directory, limit):
-    files = sorted(
-        (entry.stat().st_mtime_ns, entry.stat().st_size, entry.path)
-        for entry in os.scandir(directory)
-        if entry.is_file() and entry.name.endswith(".jpg")
-    )
+    # Concurrent requests write ".<uuid>.jpg" partials and rename or evict files while this
+    # scans; skip partials and tolerate entries that vanish instead of failing the request.
+    files = []
+    for entry in os.scandir(directory):
+        if entry.name.startswith(".") or not entry.name.endswith(".jpg"):
+            continue
+        try:
+            stat = entry.stat()
+        except FileNotFoundError:
+            continue
+        files.append((stat.st_mtime_ns, stat.st_size, entry.path))
+    files.sort()
     total = sum(size for _, size, _ in files)
     for _, size, path in files:
         if total <= limit:

@@ -54,11 +54,20 @@ def main():
     parser.add_argument("--port", type=int, default=3700)
     parser.add_argument("--qa-provider", action="store_true")
     parser.add_argument(
+        "--live-muse-requests",
+        type=int,
+        default=0,
+        help="Enable the real provider key on this disposable copy with a hard cap of N "
+        "admitted model requests (0.05 USD reservation each). Never combined with --qa-provider.",
+    )
+    parser.add_argument(
         "--snapshot",
         type=Path,
         default=ROOT / "runtime/backups/final-redesign02-checkpoint/demo.dump",
     )
     args = parser.parse_args()
+    if args.live_muse_requests and (args.qa_provider or not 1 <= args.live_muse_requests <= 4):
+        raise SystemExit("Live Muse needs 1-4 requests and cannot share a run with --qa-provider")
     if not args.snapshot.is_file():
         raise SystemExit("First create the read-only snapshot with final_runtime_inspect.py")
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
@@ -89,6 +98,25 @@ def main():
         DEMO_CURATED_ONLY="true",
         VEYRA_DIST_DIR=".next-rc",
     )
+    if args.live_muse_requests:
+        # The key is read from the private .env and never printed. The ledger of this fresh
+        # database copy starts empty for the current UTC day, so the cap is absolute here.
+        key = next(
+            (
+                line.split("=", 1)[1].strip()
+                for line in (ROOT / ".env").read_text().splitlines()
+                if line.startswith("MODEL_API_KEY=")
+            ),
+            "",
+        )
+        if not key:
+            raise SystemExit("MODEL_API_KEY is not configured in .env")
+        stack.env.update(
+            MODEL_API_KEY=key,
+            MODEL_DAILY_REQUESTS=str(args.live_muse_requests),
+            MODEL_REQUEST_RESERVE_USD="0.05",
+            MODEL_DAILY_BUDGET_USD=f"{0.05 * args.live_muse_requests:.2f}",
+        )
     stopped = False
 
     def stop(*_):
@@ -143,7 +171,8 @@ def main():
         descriptor = {
             "runtime": str(runtime),
             "web_url": env["WEB_ORIGIN"],
-            "paid_calls_enabled": False,
+            "paid_calls_enabled": bool(args.live_muse_requests),
+            "live_request_cap": args.live_muse_requests,
             "api_url": stack.api_url,
             "revision_at_start": subprocess.check_output(
                 ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True

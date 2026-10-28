@@ -1,0 +1,11 @@
+PASS Camera registration persists and its licensed stream plays
+PASS Real layout POST and UI PUT persist exact assignments and version after reload
+PASS Muse clarification and camera choice fill the composer without another request
+PASS Muse proposal → approval → real tool write → independent verification → one final receipt
+PASS Muse decline and missing camera are honest, nonmutating terminal outcomes
+PASS Natural-language parse is submitted once; camera/time/Back/reload reuse exact stored criteria
+PASS Unknown legacy footage stays accessible explicitly and outside curated search
+PASS Suggestion chips, contextual actions and local palette navigation spend no requests
+PASS No-match and timeline evidence are honest
+PASS Current essential dialog accessibility
+{"out":"/Users/sjh/Hackaton & Contest/meta-ai-hackaton/docs/qa/final/release/final-e2e","status":"PASS","passed":10,"failed":0,"page_errors":[]}

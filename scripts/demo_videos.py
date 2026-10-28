@@ -83,8 +83,11 @@ def run(args):
         record_paths=(),
         preserve_recordings=True,
     )
+    # Curated-only keeps Muse's search tool on attributed footage, as in the release tests.
     stack.env.update(
-        DEMO_LIBRARY_PATH=str(library), DEMO_ASSETS_ROOT=str(args.assets_root.resolve())
+        DEMO_LIBRARY_PATH=str(library),
+        DEMO_ASSETS_ROOT=str(args.assets_root.resolve()),
+        DEMO_CURATED_ONLY="true",
     )
     stopped = False
 

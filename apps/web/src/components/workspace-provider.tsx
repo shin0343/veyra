@@ -160,8 +160,11 @@ export function WorkspaceProvider({
             r.ended_at ? Date.parse(r.ended_at) : Date.now(),
           ),
         );
+        // The API accepts a half-open window of at most 24 hours; end 1s past the last
+        // recording so its final events are included, and keep the span exactly 24h.
+        const until = end + 1000;
         const query = end
-          ? `&start=${new Date(end - 24 * 3600000).toISOString()}&end=${new Date(end + 1000).toISOString()}`
+          ? `&start=${new Date(until - 24 * 3600000).toISOString()}&end=${new Date(until).toISOString()}`
           : "";
         void load<Schema["EventList"]>(`/events?limit=100${query}`, setEvents);
       })

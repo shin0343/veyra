@@ -1,0 +1,40 @@
+PASS Cameras: test sources hidden by default — 6 cameras shown
+PASS axe WCAG 2.2 AA: Cameras
+PASS Cameras: opening a camera shows its panel
+PASS Cameras: the opened camera plays live
+PASS Cameras: panel names the footage credit
+PASS axe WCAG 2.2 AA: Cameras with a camera open
+PASS Cameras → Live: single camera plays
+PASS Live: one tile in single mode
+PASS Live: 2×2 wall shows four tiles
+PASS Live: wall video plays
+PASS Live: 3×3 shows all six cameras
+PASS axe WCAG 2.2 AA: Live view
+PASS Saved views: views with test sources hidden by default — 4 shown
+PASS Saved views: previews use real camera frames — 13 frames
+PASS axe WCAG 2.2 AA: Saved views
+PASS Saved view: opens and plays
+PASS Saved view: editor opens with its cameras chosen — 1 chosen
+PASS axe WCAG 2.2 AA: Saved view editor
+PASS Recordings: opens on a recording with moments — 3 moments
+PASS Recordings: recording plays
+PASS Recordings: time strip sits under the player
+PASS Recordings: choosing a moment seeks — offset_ms=8900&segment_id=b54d775b-3f13-50c0-91b0-2d39524353da
+PASS axe WCAG 2.2 AA: Recordings
+PASS Explore result → recording plays at the evidence
+PASS Activity: Watch plays the evidence clip in place
+PASS Activity: Movement filter shows movement rows
+PASS axe WCAG 2.2 AA: Activity
+PASS Settings: privacy table lists cameras
+PASS Settings: usage today is read
+PASS axe WCAG 2.2 AA: Settings
+PASS Settings → Cameras: showing test sources reveals them
+PASS Muse: suggestions fit the page — Which cameras allow cloud analysis? | Is Trail camera sending video right now? | Create a saved view named “Everyday” with Trail camera, Entrance gate, Street approach and Garden wildlife
+PASS Muse: each suggestion says whether it changes anything
+PASS Muse: suggestion fills the composer only
+PASS axe WCAG 2.2 AA: Muse panel
+PASS Palette: real cameras and views match for free — 2 free matches
+PASS Palette: first match opens that camera
+PASS No paid or mutating request left the browser
+PASS No page errors
+39/39 passed

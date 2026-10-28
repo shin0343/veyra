@@ -1509,12 +1509,15 @@ function NoResults({
             : `${mode.kind === "muse" ? "Muse searched the stored analysis" : "The stored analysis was checked"} and found no match. Only analyzed clips can match, so this doesn’t prove it didn’t happen.`}
       </p>
       <div className="ws-state-actions">
-        {zoomed && (
-          <Button variant="secondary" size="sm" onClick={onReset}>
-            Show the full range
-          </Button>
-        )}
-        <Button variant="ghost" size="sm" onClick={onAll}>
+        {/* The timeline header already offers "Full range"; one recovery here covers both. */}
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => {
+            if (zoomed) onReset();
+            onAll();
+          }}
+        >
           Show all moments
         </Button>
       </div>

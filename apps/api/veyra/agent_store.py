@@ -554,11 +554,14 @@ class AgentStore:
                         json.dumps(action["arguments"]), strict=True
                     )
                     current = {}
-                    for cell in sorted(layout.cells, key=lambda cell: str(cell.camera_id)):
-                        row = db.execute(
-                            "SELECT * FROM cameras WHERE id=%s AND deleted_at IS NULL FOR SHARE",
-                            (cell.camera_id,),
-                        ).fetchone()
+                    rows = {
+                        row["id"]: row
+                        for row in store.share_cameras(
+                            db, (cell.camera_id for cell in layout.cells)
+                        )
+                    }
+                    for cell in layout.cells:
+                        row = rows.get(cell.camera_id)
                         if not row or not row["enabled"]:
                             raise Problem(
                                 409,
