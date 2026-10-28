@@ -40,6 +40,8 @@ class CameraUpdate(c.CameraUpdate):
 
 
 class Camera(c.Camera):
+    video_width: int | None = Field(default=None, gt=0, le=8192)
+    video_height: int | None = Field(default=None, gt=0, le=8192)
     group_name: str | None = None
     location: str | None = None
     connection_error: c.ErrorDetail | None = None

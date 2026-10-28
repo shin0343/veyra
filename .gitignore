@@ -14,3 +14,4 @@ runtime/
 .DS_Store
 .next-dev/
 .next-qa/
+.next-rc/

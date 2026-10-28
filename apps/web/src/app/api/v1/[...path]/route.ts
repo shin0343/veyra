@@ -32,7 +32,53 @@ const layout = z
   })
   .strict();
 const label = z.string().trim().min(1).max(100);
+const interpretation = z
+  .object({
+    curated_only: z.boolean().optional(),
+    camera_names: z.array(label).max(16),
+    camera_ids: z.array(z.uuid()).max(16).optional(),
+    start: z.iso.datetime({ offset: true }).nullable(),
+    end: z.iso.datetime({ offset: true }).nullable(),
+    objects: z
+      .array(
+        z
+          .object({
+            category: z.string().min(1).max(30),
+            attributes: z.array(z.string().min(1).max(30)).max(12),
+            apparel: z
+              .array(
+                z
+                  .object({
+                    kind: z.string().min(1).max(30),
+                    colors: z.array(z.string().min(1).max(30)).max(11),
+                  })
+                  .strict(),
+              )
+              .max(8)
+              .optional(),
+          })
+          .strict(),
+      )
+      .max(8),
+    event_types: z.array(z.string().min(1).max(30)).max(8),
+    keywords: z.array(z.string().min(1).max(100)).max(12),
+    motion_only: z.boolean(),
+    unsupported_reason: z.string().max(50).nullable(),
+    limit: z.number().int().min(1).max(50).optional(),
+  })
+  .strict();
 const postRoutes: [RegExp, z.ZodType][] = [
+  [
+    /^activity-query$/,
+    z
+      .object({
+        camera_ids: z.array(z.uuid()).min(1).max(16),
+        start: z.iso.datetime({ offset: true }),
+        end: z.iso.datetime({ offset: true }),
+        bucket_seconds: z.number().int().min(10).max(3600),
+      })
+      .strict(),
+  ],
   [
     /^cameras$/,
     z
@@ -50,6 +96,7 @@ const postRoutes: [RegExp, z.ZodType][] = [
     /^search$/,
     z
       .object({
+        curated_only: z.boolean().optional(),
         query: z.string().trim().min(1).max(2000),
         camera_ids: z.array(z.uuid()).max(16).optional(),
         start: z.iso.datetime({ offset: true }).nullable().optional(),
@@ -76,6 +123,8 @@ const postRoutes: [RegExp, z.ZodType][] = [
           .optional(),
         keywords: z.array(z.string().min(2).max(40)).max(6).optional(),
         motion_only: z.boolean().optional(),
+        interpretation: interpretation.optional(),
+        curated_only: z.boolean().optional(),
         limit: z.number().int().min(1).max(50).optional(),
       })
       .strict(),
@@ -133,6 +182,8 @@ const queryKeys = new Set([
   "bucket_seconds",
   "offset_ms",
   "segment_id",
+  "curated_only",
+  "kind",
 ]);
 
 function failure(status: number, code: string, message: string) {

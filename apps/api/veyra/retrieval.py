@@ -1,6 +1,8 @@
 """Parameterized stored-index retrieval and real recording/activity time arithmetic."""
 
 import base64
+import binascii
+import hashlib
 import json
 import time
 from datetime import datetime, timedelta, timezone
@@ -51,15 +53,16 @@ def union_ms(intervals, start, end):
     return total
 
 
-def available_segments(db, settings, camera_ids, start, end):
+def available_segments(db, settings, camera_ids, start, end, curated_only=False):
     rows = db.execute(
         """SELECT s.*,r.camera_id,c.name AS camera_name FROM segments s
         JOIN recordings r ON r.id=s.recording_id JOIN cameras c ON c.id=r.camera_id
         WHERE c.deleted_at IS NULL AND s.status='ready' AND r.status IN ('ready','recording')
         AND (%s::uuid[] IS NULL OR r.camera_id=ANY(%s)) AND s.started_at<%s
         AND s.started_at+s.duration_ms*interval '1 millisecond'>%s
+        AND (NOT %s OR r.source_media->>'kind'='prerecorded')
         ORDER BY s.started_at,s.id LIMIT 10001""",
-        (camera_ids or None, camera_ids or None, end, start),
+        (camera_ids or None, camera_ids or None, end, start, curated_only),
     ).fetchall()
     if len(rows) > 10000:
         raise Problem(422, "SEARCH_WINDOW_TOO_LARGE", "Narrow the camera or time range.")
@@ -125,6 +128,7 @@ def constraints_for(db, body, intent):
         end=end,
         camera_ids=sorted(selected, key=str),
         limit=body.limit,
+        curated_only=body.curated_only,
     )
 
 
@@ -181,6 +185,7 @@ def retrieve(db, settings, constraints, query="Structured video search"):
     if constraints.camera_names:
         body = m.SearchRequest(
             query=query,
+            curated_only=constraints.curated_only,
             camera_ids=constraints.camera_ids,
             start=start,
             end=end,
@@ -189,9 +194,13 @@ def retrieve(db, settings, constraints, query="Structured video search"):
         constraints = constraints_for(
             db,
             body,
-            m.SearchIntent.model_validate(constraints.model_dump(exclude={"camera_ids", "limit"})),
+            m.SearchIntent.model_validate(
+                constraints.model_dump(exclude={"camera_ids", "limit", "curated_only"})
+            ),
         )
-    segments = available_segments(db, settings, constraints.camera_ids, start, end)
+    segments = available_segments(
+        db, settings, constraints.camera_ids, start, end, constraints.curated_only
+    )
     by_id = {row["id"]: row for row in segments}
     ids = list(by_id)
     coverage = db.execute(
@@ -492,32 +501,61 @@ def activity(db, settings, camera_id, start, end, bucket_seconds):
     return m.ActivityHistogram(camera_id=camera_id, buckets=buckets)
 
 
-def list_events(db, settings, camera_id, start, end, cursor, limit):
+def list_events(db, settings, camera_id, start, end, cursor, limit, kind=None, curated_only=False):
+    value = None
+    if cursor:
+        try:
+            value = json.loads(base64.urlsafe_b64decode(cursor.encode()))
+            if value["v"] != 2:
+                raise ValueError
+            start = start or datetime.fromisoformat(value["start"])
+            end = end or datetime.fromisoformat(value["end"])
+        except (ValueError, TypeError, KeyError, binascii.Error, UnicodeError):
+            raise Problem(422, "INVALID_CURSOR", "The event cursor is invalid.") from None
     start, end = window(start, end)
+    scope = hashlib.sha256(
+        json.dumps(
+            [
+                str(camera_id),
+                start.isoformat(),
+                end.isoformat(),
+                kind,
+                curated_only,
+                index_store.version(settings),
+            ]
+        ).encode()
+    ).hexdigest()[:24]
+    previous_time, previous_id = end, UUID(int=2**128 - 1)
+    if value is not None:
+        try:
+            previous_time, previous_id = datetime.fromisoformat(value["at"]), UUID(value["id"])
+            if (
+                value["scope"] != scope
+                or previous_time.tzinfo is None
+                or not start <= previous_time < end
+            ):
+                raise ValueError
+        except (ValueError, TypeError, KeyError):
+            raise Problem(
+                422, "INVALID_CURSOR", "The event cursor does not match these filters."
+            ) from None
     if camera_id:
         store.get_camera(db, camera_id)
-    segments = available_segments(db, settings, [camera_id] if camera_id else [], start, end)
+    segments = available_segments(
+        db, settings, [camera_id] if camera_id else [], start, end, curated_only
+    )
     indexes = db.execute(
         """SELECT * FROM segment_indexes WHERE segment_id=ANY(%s)
         AND pipeline_version=%s AND state='succeeded'""",
         ([s["id"] for s in segments], index_store.version(settings)),
     ).fetchall()
     indexed_ids = [i["segment_id"] for i in unchanged_indexes(indexes, segments)]
-    previous_time, previous_id = start, UUID(int=0)
-    if cursor:
-        try:
-            value = json.loads(base64.urlsafe_b64decode(cursor.encode()))
-            previous_time, previous_id = datetime.fromisoformat(value[0]), UUID(value[1])
-            if previous_time.tzinfo is None:
-                raise ValueError
-        except (ValueError, TypeError, IndexError):
-            raise Problem(422, "INVALID_CURSOR", "The event cursor is invalid.") from None
     rows = db.execute(
         """SELECT e.* FROM events e LEFT JOIN video_metadata v ON v.id=e.metadata_id
         WHERE e.segment_id=ANY(%s) AND e.started_at>=%s AND e.started_at<%s
-        AND (e.started_at,e.id)>(%s,%s) AND (v.id IS NULL OR v.processing_state='succeeded')
-        AND e.pipeline_version=%s
-        ORDER BY e.started_at,e.id LIMIT %s""",
+        AND (e.started_at,e.id)<(%s,%s) AND (v.id IS NULL OR v.processing_state='succeeded')
+        AND e.pipeline_version=%s AND (%s::text IS NULL OR e.kind=%s)
+        ORDER BY e.started_at DESC,e.id DESC LIMIT %s""",
         (
             indexed_ids,
             start,
@@ -525,6 +563,8 @@ def list_events(db, settings, camera_id, start, end, cursor, limit):
             previous_time,
             previous_id,
             index_store.version(settings),
+            kind,
+            kind,
             limit + 1,
         ),
     ).fetchall()
@@ -532,7 +572,16 @@ def list_events(db, settings, camera_id, start, end, cursor, limit):
     if len(rows) > limit:
         row = rows[limit - 1]
         next_cursor = base64.urlsafe_b64encode(
-            json.dumps([row["started_at"].isoformat(), str(row["id"])]).encode()
+            json.dumps(
+                {
+                    "v": 2,
+                    "at": row["started_at"].isoformat(),
+                    "id": str(row["id"]),
+                    "scope": scope,
+                    "start": start.isoformat(),
+                    "end": end.isoformat(),
+                }
+            ).encode()
         ).decode()
     return c.EventList(
         items=[c.Event(**{key: row[key] for key in c.Event.model_fields}) for row in rows[:limit]],

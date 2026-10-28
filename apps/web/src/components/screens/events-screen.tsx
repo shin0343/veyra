@@ -26,71 +26,102 @@ import { MediaPlayer, formatOffset } from "../media-player";
 import { recordingHref } from "./recordings-screen";
 
 const PAGE = 30;
-/**
- * The server pages /events oldest-first. Within the bounded (≤ 24 h) period, read every page
- * (at most 10 × 100) so the list can honestly be newest-first, then reveal it in pages.
- */
+/** Recent-first keyset pages; each click reads just the next page with its original filters. */
 function useEvents(
   camera: string,
+  kind: string,
   period: { start: number; end: number } | null,
 ) {
-  const { preview, events: workspaceEvents } = useWorkspace();
+  const { preview, events: workspaceEvents, showTestSources } = useWorkspace();
+  const start = period?.start;
+  const end = period?.end;
+  const key = `${camera}-${kind}-${start}-${end}-${showTestSources}`;
   const [loaded, setLoaded] = useState<{
     key: string;
     value: Resource<Event[]>;
-    truncated: boolean;
-  }>({ key: "", value: { state: "loading" }, truncated: false });
-  const [shown, setShown] = useState(PAGE);
-  const start = period?.start;
-  const end = period?.end;
-  const key = `${camera}-${start}-${end}`;
+    next: string | null;
+    pending: boolean;
+  }>({ key: "", value: { state: "loading" }, next: null, pending: false });
+  function query(cursor?: string | null) {
+    const params = new URLSearchParams({
+      limit: String(PAGE),
+      start: new Date(start!).toISOString(),
+      end: new Date(end!).toISOString(),
+      curated_only: String(!showTestSources),
+    });
+    if (camera !== "all") params.set("camera_id", camera);
+    if (kind !== "all") params.set("kind", kind);
+    if (cursor) params.set("cursor", cursor);
+    return `/events?${params}`;
+  }
   useEffect(() => {
     if (preview || start === undefined || end === undefined) return;
     const controller = new AbortController();
-    void (async () => {
-      const items: Event[] = [];
-      let cursor: string | null = null;
-      try {
-        for (let page = 0; page < 10; page++) {
-          const query = new URLSearchParams({
-            limit: "100",
-            start: new Date(start).toISOString(),
-            end: new Date(end).toISOString(),
+    request<Schema["EventList"]>(query(), { signal: controller.signal })
+      .then((data) => {
+        if (!controller.signal.aborted)
+          setLoaded({
+            key,
+            value: { state: "ready", data: data.items },
+            next: data.next_cursor,
+            pending: false,
           });
-          if (camera !== "all") query.set("camera_id", camera);
-          if (cursor) query.set("cursor", cursor);
-          const data: Schema["EventList"] = await request(`/events?${query}`, {
-            signal: controller.signal,
-          });
-          items.push(...data.items);
-          cursor = data.next_cursor;
-          if (!cursor) break;
-        }
-        setLoaded({
-          key,
-          value: { state: "ready", data: items },
-          truncated: Boolean(cursor),
-        });
-      } catch (error) {
+      })
+      .catch((error) => {
         if (!controller.signal.aborted && !isAbort(error))
-          setLoaded({ key, value: resourceError(error), truncated: false });
-      }
-    })();
+          setLoaded({
+            key,
+            value: resourceError(error),
+            next: null,
+            pending: false,
+          });
+      });
     return () => controller.abort();
-  }, [camera, preview, start, end, key]);
-  if (preview)
-    return {
-      events: workspaceEvents,
-      shown: Infinity,
-      showMore: () => undefined,
-      truncated: false,
-    };
-  return {
-    events: loaded.key === key ? loaded.value : ({ state: "loading" } as const),
-    shown,
-    showMore: () => setShown((value) => value + PAGE),
-    truncated: loaded.key === key && loaded.truncated,
-  };
+    // key contains all request inputs.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [preview, key]);
+  async function showMore() {
+    if (loaded.key !== key || loaded.pending || !loaded.next) return;
+    setLoaded((current) => ({ ...current, pending: true }));
+    try {
+      const data = await request<Schema["EventList"]>(query(loaded.next));
+      setLoaded((current) =>
+        current.key !== key || current.value.state !== "ready"
+          ? current
+          : {
+              key,
+              value: {
+                state: "ready",
+                data: [...current.value.data, ...data.items].filter(
+                  (item, index, all) =>
+                    all.findIndex((other) => other.id === item.id) === index,
+                ),
+              },
+              next: data.next_cursor,
+              pending: false,
+            },
+      );
+    } catch {
+      // Keep verified rows and the cursor; the same read can be retried without data loss.
+      setLoaded((current) =>
+        current.key === key ? { ...current, pending: false } : current,
+      );
+    }
+  }
+  return preview
+    ? {
+        events: workspaceEvents,
+        shown: Infinity,
+        showMore: () => undefined,
+        truncated: false,
+      }
+    : {
+        events:
+          loaded.key === key ? loaded.value : ({ state: "loading" } as const),
+        shown: Infinity,
+        showMore,
+        truncated: loaded.key === key && Boolean(loaded.next),
+      };
 }
 
 export function EventsScreen() {
@@ -103,7 +134,11 @@ export function EventsScreen() {
   // The 24 hours ending at the latest recorded video, not "now".
   const period =
     coverage.state === "ready" ? anchoredWindow(coverage.data.items) : null;
-  const { events, shown, showMore, truncated } = useEvents(camera, period);
+  const { events, shown, showMore, truncated } = useEvents(
+    camera,
+    kind,
+    period,
+  );
   const cameraData = cameras.state === "ready" ? cameras.data : [];
   const testIds = testCameraIds(cameraData);
   const all =
@@ -130,8 +165,10 @@ export function EventsScreen() {
         description={
           events.state === "ready" ? (
             <>
-              <span>{plural(count("observation"), "Muse observation")}</span>
-              <span>{plural(count("motion"), "movement sample")}</span>
+              <span>
+                {plural(count("observation"), "loaded Muse observation")}
+              </span>
+              <span>{plural(count("motion"), "loaded movement sample")}</span>
               {period && (
                 <span>
                   latest recorded day, ending{" "}
@@ -160,7 +197,7 @@ export function EventsScreen() {
               onClick={() => setKind(item.value)}
             >
               {item.label}
-              {events.state === "ready" && (
+              {events.state === "ready" && kind === item.value && (
                 <span className="tc"> {count(item.value)}</span>
               )}
             </button>
@@ -337,20 +374,18 @@ export function EventsScreen() {
                   </ol>
                 </section>
               ))}
-              {filtered.length > shown && (
+              {(filtered.length > shown || truncated) && (
                 <div className="load-more">
                   <Button variant="secondary" size="sm" onClick={showMore}>
                     Show older activity
                   </Button>
-                  <span className="muted">
-                    {shown} of {filtered.length} shown
-                  </span>
+                  <span className="muted">{filtered.length} loaded</span>
                 </div>
               )}
               {truncated && (
                 <p className="muted">
-                  Showing the first 1,000 events in this period. Choose a camera
-                  to narrow it.
+                  More activity is available in this period. Show older activity
+                  to continue.
                 </p>
               )}
               {!filtered.length && (

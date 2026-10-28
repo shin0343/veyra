@@ -287,6 +287,20 @@ def create_layout(ctx, body):
                 "Use the requested camera names, or an ID explicitly supplied by the user.",
             )
         camera = resolve_camera(ctx.db, reference)
+        if reference.name is not None:
+            requested = normalized(reference.name)
+            if not re.search(
+                r"(?<!\w)" + re.escape(requested) + r"(?!\w)", normalized(ctx.user_message)
+            ):
+                raise ResolutionProblem(
+                    "CAMERA_SELECTION_REQUIRED",
+                    "Name each camera you want in the view. Muse cannot choose cameras for you.",
+                    [
+                        descriptor(row).model_dump(mode="json")
+                        for row in store.list_cameras(ctx.db)
+                        if row["enabled"]
+                    ],
+                )
         if not camera.enabled:
             raise Problem(409, "CAMERA_DISABLED", "A selected camera is disabled.")
         cameras.append(camera)
@@ -362,6 +376,8 @@ def system_status(ctx, body):
 
 
 def search_video(ctx, body):
+    if ctx.settings and ctx.settings.demo_curated_only:
+        body = body.model_copy(update={"curated_only": True})
     if ctx.settings is None:
         raise Problem(503, "DEPENDENCY_UNAVAILABLE", "Search storage is not configured.")
     result = retrieval.retrieve(ctx.db, ctx.settings, body, ctx.user_message)

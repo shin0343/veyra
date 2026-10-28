@@ -5,13 +5,14 @@ Nothing here calls Muse. Queries read already validated observations through the
 exact finalized segment file that the evidence references.
 """
 
+import json
 import os
 import subprocess
 import threading
 from typing import Annotated
 from uuid import UUID, uuid4
 
-from pydantic import Field
+from pydantic import Field, field_validator
 
 from . import contracts as c
 from . import index_models as m
@@ -33,6 +34,19 @@ class IndexQuery(c.WireModel):
     keywords: list[Keyword] = Field(default_factory=list, max_length=6)
     motion_only: bool = False
     limit: int = Field(default=24, ge=1, le=50)
+    # Full validated interpretation for exact free refinement, including apparel and all
+    # object/event/keyword constraints. Explicit scopes intersect rather than widen it.
+    interpretation: m.StructuredSearch | None = None
+    curated_only: bool = False
+
+    @field_validator("interpretation", mode="before")
+    @classmethod
+    def wire_interpretation(cls, value):
+        # FastAPI has decoded JSON already. Strict JSON validation permits ISO instants
+        # and UUID strings, while retaining strict booleans, integers and extra-field checks.
+        if isinstance(value, dict):
+            return m.StructuredSearch.model_validate_json(json.dumps(value), strict=True)
+        return value
 
 
 class CameraCoverage(c.WireModel):
@@ -56,7 +70,58 @@ class IndexCoverage(c.WireModel):
     items: list[CameraCoverage]
 
 
+class ActivityQuery(c.WireModel):
+    camera_ids: list[UUID] = Field(min_length=1, max_length=16)
+    start: c.AwareDatetime
+    end: c.AwareDatetime
+    bucket_seconds: int = Field(default=60, ge=10, le=3600)
+
+
+class ActivityList(c.WireModel):
+    items: list[m.ActivityHistogram]
+
+
+def activities(db, settings, body):
+    start, end = retrieval.window(body.start, body.end)
+    ids = list(dict.fromkeys(body.camera_ids))
+    if (end - start).total_seconds() / body.bucket_seconds * len(ids) > 2880:
+        raise Problem(422, "TOO_MANY_BUCKETS", "Use a larger activity bucket or fewer cameras.")
+    return ActivityList(
+        items=[
+            retrieval.activity(db, settings, camera_id, start, end, body.bucket_seconds)
+            for camera_id in ids
+        ]
+    )
+
+
 def query(db, settings, body: IndexQuery) -> m.SearchResponse:
+    if body.interpretation is not None:
+        parsed = body.interpretation
+        intent = m.SearchIntent.model_validate(
+            parsed.model_dump(exclude={"camera_ids", "limit", "curated_only"})
+        )
+        requested = set(body.camera_ids)
+        original = set(parsed.camera_ids)
+        if requested and original and not requested.intersection(original):
+            raise Problem(
+                422, "CAMERA_FILTER_CONFLICT", "The camera filter conflicts with Muse's reading."
+            )
+        constraints = retrieval.constraints_for(
+            db,
+            m.SearchRequest(
+                query="Stored interpretation",
+                camera_ids=sorted(
+                    requested & original if requested and original else requested or original,
+                    key=str,
+                ),
+                curated_only=body.curated_only,
+                start=body.start,
+                end=body.end,
+                limit=body.limit,
+            ),
+            intent,
+        )
+        return retrieval.retrieve(db, settings, constraints, "Stored Muse interpretation")
     constraints = m.StructuredSearch(
         camera_names=[],
         start=body.start,
@@ -68,12 +133,13 @@ def query(db, settings, body: IndexQuery) -> m.SearchResponse:
         unsupported_reason=None,
         camera_ids=body.camera_ids,
         limit=body.limit,
+        curated_only=body.curated_only,
     )
     label = " · ".join([*body.categories, *body.event_types, *body.keywords]) or "All observations"
     return retrieval.retrieve(db, settings, constraints, f"Index filter: {label}")
 
 
-def coverage(db, settings) -> IndexCoverage:
+def coverage(db, settings, curated_only=False) -> IndexCoverage:
     version = index_store.version(settings)
     cameras = {
         row["id"]: row
@@ -81,7 +147,9 @@ def coverage(db, settings) -> IndexCoverage:
             """SELECT c.id,c.name,count(r.id) AS recordings,
             coalesce(sum(r.available_duration_ms),0) AS available_ms
             FROM cameras c LEFT JOIN recordings r ON r.camera_id=c.id AND r.status!='deleted'
-            WHERE c.deleted_at IS NULL GROUP BY c.id,c.name ORDER BY c.name"""
+            AND (NOT %s OR r.source_media->>'kind'='prerecorded')
+            WHERE c.deleted_at IS NULL GROUP BY c.id,c.name ORDER BY c.name""",
+            (curated_only,),
         ).fetchall()
     }
     segments = {
@@ -94,8 +162,9 @@ def coverage(db, settings) -> IndexCoverage:
             FROM segments s JOIN recordings r ON r.id=s.recording_id
             LEFT JOIN segment_indexes i ON i.segment_id=s.id AND i.pipeline_version=%s
               AND i.state='succeeded'
-            WHERE s.status='ready' AND r.status!='deleted' GROUP BY r.camera_id""",
-            (version,),
+            WHERE s.status='ready' AND r.status!='deleted'
+            AND (NOT %s OR r.source_media->>'kind'='prerecorded') GROUP BY r.camera_id""",
+            (version, curated_only),
         ).fetchall()
     }
     observations: dict = {}
@@ -104,8 +173,9 @@ def coverage(db, settings) -> IndexCoverage:
         s.started_at+v.observation_start_ms*interval '1 millisecond' AS at
         FROM video_metadata v JOIN segments s ON s.id=v.segment_id
         JOIN recordings r ON r.id=s.recording_id
-        WHERE v.processing_state='succeeded' AND v.provenance->>'pipeline_version'=%s""",
-        (version,),
+        WHERE v.processing_state='succeeded' AND v.provenance->>'pipeline_version'=%s
+        AND (NOT %s OR r.source_media->>'kind'='prerecorded')""",
+        (version, curated_only),
     ).fetchall():
         item = observations.setdefault(
             row["camera_id"], {"count": 0, "last": None, "types": {}, "categories": {}}

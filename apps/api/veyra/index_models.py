@@ -198,6 +198,7 @@ class SearchIntent(Strict):
 
 
 class SearchRequest(c.SearchRequest):
+    curated_only: bool = False
     timezone: str = Field(default="UTC", max_length=80)
 
     @field_validator("timezone")
@@ -211,6 +212,7 @@ class SearchRequest(c.SearchRequest):
 
 
 class StructuredSearch(SearchIntent):
+    curated_only: bool = False
     camera_ids: list[UUID] = Field(default_factory=list, max_length=16)
     limit: int = Field(default=10, ge=1, le=50)
 
@@ -233,6 +235,15 @@ class Usage(c.WireModel):
     reserved_usd: float = 0
     estimated_usd: float | None = None
     billing: Literal["unknown"] = "unknown"
+    daily_request_limit: int | None = None
+    daily_limit_usd: float | None = None
+    admission_used_usd: float | None = None
+    admission_remaining_usd: float | None = None
+    remaining_requests: int | None = None
+    admission_enabled: bool | None = None
+    observed_at: c.AwareDatetime | None = None
+    latest_usage_at: c.AwareDatetime | None = None
+    billing_updated_at: c.AwareDatetime | None = None
 
 
 class AnalysisJob(c.AnalysisJob):

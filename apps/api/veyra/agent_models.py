@@ -67,6 +67,17 @@ class VerifiedResult(c.WireModel):
 
 
 class AgentResponse(c.AgentResponse):
+    interaction_state: Literal[
+        "answered",
+        "clarification_required",
+        "awaiting_confirmation",
+        "completed_verified",
+        "committed_unverified",
+        "rejected",
+        "cancelled",
+        "failed",
+    ] = "answered"
+    clarification: str | None = None
     actions: list[RuntimeActionResult]
     suggested_actions: list[RuntimeNavigationAction] = Field(default_factory=list)
     navigation_target: RuntimeNavigationTarget | None = None

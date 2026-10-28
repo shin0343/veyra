@@ -9,6 +9,8 @@ from urllib.parse import urlsplit
 
 from pydantic import Field, SecretStr
 
+from .db import Problem
+from .index_media import media_info
 from .models import SourceMedia
 from .settings import Settings as BaseSettings
 from .source_policy import validate_rtsp_source
@@ -45,6 +47,7 @@ class Settings(BaseSettings):
     model_output_usd_per_million: float | None = Field(default=None, ge=0)
     demo_library_path: Path | None = None
     demo_assets_root: Path = Path("runtime/video-library")
+    demo_curated_only: bool = False
 
 
 class SourceRegistry:
@@ -134,6 +137,14 @@ class SourceRegistry:
                 raise ValueError
             if hashlib.sha256(poster.read_bytes()).hexdigest() != asset["poster_sha256"]:
                 raise ValueError
+            try:
+                inspected = media_info(video)
+                dimensions = {
+                    "video_width": inspected["width"],
+                    "video_height": inspected["height"],
+                }
+            except Problem:
+                dimensions = {}
             self.sources[source_id] = {
                 "mode": "publisher",
                 "path": media_path,
@@ -141,6 +152,7 @@ class SourceRegistry:
                 "source_media": media.model_dump(mode="json"),
                 "poster": poster,
                 "demo_duration_ms": asset["duration_ms"],
+                "video_dimensions": dimensions,
             }
 
     def demo_file(self, name):

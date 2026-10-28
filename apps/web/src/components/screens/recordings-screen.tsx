@@ -129,9 +129,10 @@ export function RecordingsScreen({ recordingId }: { recordingId?: string }) {
     workspace.recordings.state === "ready"
       ? workspace.recordings.data.filter((r) => r.status !== "deleted")
       : [];
-  const hiddenTests = workspace.showTestSources
-    ? 0
-    : all.filter((r) => isTestRecording(r, testIds)).length;
+  const hiddenTests =
+    workspace.showTestSources || workspace.preview
+      ? 0
+      : all.filter((r) => isTestRecording(r, testIds)).length;
   // Open on the recording that holds the newest Muse observation, not merely the newest file.
   const latestObservation =
     coverage.state === "ready"
@@ -162,7 +163,9 @@ export function RecordingsScreen({ recordingId }: { recordingId?: string }) {
             <>
               <span>{plural(all.length - hiddenTests, "recording")}</span>
               {!!hiddenTests && (
-                <span>{plural(hiddenTests, "test recording")} hidden</span>
+                <span>
+                  {plural(hiddenTests, "test or unverified recording")} hidden
+                </span>
               )}
               <span>times in {timezone}</span>
             </>
@@ -224,6 +227,7 @@ export function RecordingsScreen({ recordingId }: { recordingId?: string }) {
               (recording) =>
                 recording.status !== "deleted" &&
                 (workspace.showTestSources ||
+                  workspace.preview ||
                   !isTestRecording(recording, testIds) ||
                   recording.id === recordingId) &&
                 (cameraFilter === "all" ||

@@ -10,7 +10,7 @@ from . import models as m
 from .db import Problem
 
 
-def camera_model(row):
+def camera_model(row, registry=None):
     status = row["status"]
     observed = row["last_observed_at"]
     code = row["connection_error_code"]
@@ -18,7 +18,9 @@ def camera_model(row):
         observed is None or datetime.now(timezone.utc) - observed > timedelta(seconds=10)
     ):
         status = "unknown"
+    source = registry.get(row["source_id"]) if registry else None
     return m.Camera(
+        **(source.get("video_dimensions", {}) if source else {}),
         **{
             key: row[key]
             for key in (
@@ -103,7 +105,7 @@ def create_camera(db, body, registry):
             Jsonb(source["source_media"]) if source.get("source_media") else None,
         ),
     ).fetchone()
-    return 201, camera_model(row).model_dump(mode="json"), camera_id
+    return 201, camera_model(row, registry).model_dump(mode="json"), camera_id
 
 
 def update_camera(db, camera_id, body):

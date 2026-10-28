@@ -365,6 +365,12 @@ function CameraPanel({
           <dd>{camera.location ?? "Not set"}</dd>
           <dt>Recordings</dt>
           <dd>{own.length}</dd>
+          <dt>Encoded video size</dt>
+          <dd>
+            {camera.video_width && camera.video_height
+              ? `${camera.video_width} × ${camera.video_height}`
+              : "Not available"}
+          </dd>
           <dt>In views</dt>
           <dd>
             {views.length

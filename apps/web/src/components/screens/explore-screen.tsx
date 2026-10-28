@@ -48,6 +48,7 @@ import type {
 } from "@/lib/types";
 import { useCoverage } from "@/lib/use-coverage";
 import { useRequestKey } from "@/lib/use-request-key";
+import { consumeSearch, prepareSearch } from "@/lib/search-session";
 import { EvidenceFrame } from "../evidence-frame";
 import { MediaPlayer, formatOffset } from "../media-player";
 import { SourceMediaCredit } from "../source-media";
@@ -88,6 +89,9 @@ type Pane = "moments" | "details" | "timeline";
 /** Where the visible results came from: a Muse parse (1 request) or the stored index (free). */
 type Source = "index" | "muse" | "refined";
 type Parsed = Omit<SearchResponse, "items">;
+// Keep one submitted interpretation alive through filter changes and route transitions.
+// An aborted render must not cancel a paid request and silently submit another one.
+const interpretations = new Map<string, Promise<SearchResponse>>();
 
 /**
  * Muse's reading of a sentence is kept for the browser session, so Back, reload and every
@@ -116,25 +120,21 @@ function writeParse(query: string, value: Parsed) {
 
 /** The part of Muse's reading the stored index can express directly. */
 function refinement(c: Schema["StructuredSearch"]) {
-  const categories = [...new Set(c.objects.map((o) => o.category))].slice(0, 4);
-  const lost =
-    c.objects.some(
-      (o) => o.attributes.length > 0 || (o.apparel?.length ?? 0) > 0,
-    ) || new Set(c.objects.map((o) => o.category)).size > 4;
   return {
-    query: {
-      categories,
-      event_types: c.event_types,
-      keywords: c.keywords.slice(0, 6),
-      motion_only: c.motion_only,
-    } satisfies Partial<IndexQuery>,
-    lost,
+    query: { interpretation: c } satisfies Partial<IndexQuery>,
+    lost: false,
   };
 }
 
 export function ExploreScreen() {
-  const { preview, previewState, cameras, recordings, openMuse } =
-    useWorkspace();
+  const {
+    preview,
+    previewState,
+    cameras,
+    recordings,
+    openMuse,
+    showTestSources,
+  } = useWorkspace();
   const params = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -244,6 +244,7 @@ export function ExploreScreen() {
     windowStart,
     windowEnd,
     attempt,
+    showTestSources,
   ]);
   const results: Resource<SearchResponse> =
     loaded.key === resultKey ? loaded.value : { state: "loading" };
@@ -257,7 +258,9 @@ export function ExploreScreen() {
       end: new Date(windowEnd).toISOString(),
     };
     const cameraScope = cameraId === "all" ? [] : [cameraId];
-    const parsed = museQuery ? parsedRef.current[museQuery] : undefined;
+    const parsed = museQuery
+      ? (parsedRef.current[museQuery] ?? readParse(museQuery))
+      : undefined;
     let call: Promise<SearchResponse>;
     let from: Source;
     if (museQuery && parsed?.constraints.unsupported_reason) {
@@ -273,6 +276,7 @@ export function ExploreScreen() {
         method: "POST",
         signal: controller.signal,
         body: JSON.stringify({
+          curated_only: !showTestSources,
           camera_ids: cameraScope.length ? cameraScope : (c.camera_ids ?? []),
           ...(range || !c.start || !c.end
             ? window
@@ -283,24 +287,35 @@ export function ExploreScreen() {
       });
     } else if (museQuery) {
       from = "muse";
-      call = request<SearchResponse>("/search", {
-        method: "POST",
-        signal: controller.signal,
-        timeoutMs: 65000,
-        body: JSON.stringify({
-          query: museQuery,
-          camera_ids: cameraScope,
-          ...window,
-          limit: 24,
-          timezone: timeZoneName(),
-        }),
-      });
+      if (!interpretations.has(museQuery))
+        interpretations.set(
+          museQuery,
+          request<SearchResponse>("/search", {
+            method: "POST",
+            timeoutMs: 65000,
+            body: JSON.stringify({
+              query: museQuery,
+              curated_only: !showTestSources,
+              camera_ids: cameraScope,
+              ...window,
+              limit: 24,
+              timezone: timeZoneName(),
+            }),
+          }).then((data) => {
+            const { items: _items, ...reading } = data;
+            void _items;
+            writeParse(museQuery, reading);
+            return data;
+          }),
+        );
+      call = interpretations.get(museQuery)!;
     } else {
       from = "index";
       call = request<SearchResponse>("/index-query", {
         method: "POST",
         signal: controller.signal,
         body: JSON.stringify({
+          curated_only: !showTestSources,
           camera_ids: cameraScope,
           ...window,
           ...(topic.query as Partial<IndexQuery>),
@@ -355,21 +370,27 @@ export function ExploreScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [preview, resultKey]);
 
-  // A sentence in the URL (Back, reload, a link from Muse) reuses Muse's earlier reading for
-  // free. Only an explicit "Ask Muse" choice elsewhere (run=1, from ⌘K) spends a request here.
+  // Query words are tab-local; a URL never authorizes a paid request. Legacy q links are
+  // migrated to an opaque reference and only prefill or reuse an existing interpretation.
   const initialQuery = useRef({
     q: params.get("q")?.trim() ?? "",
-    run: params.get("run") === "1",
+    id: params.get("search"),
+    consumed: false,
   });
   useEffect(() => {
-    const { q, run } = initialQuery.current;
-    if (!q || preview || !full) return;
-    initialQuery.current = { q: "", run: false };
+    if (initialQuery.current.consumed || preview || !full) return;
+    initialQuery.current.consumed = true;
+    const stored = consumeSearch(initialQuery.current.id);
+    const q = stored?.query ?? initialQuery.current.q;
+    const run = stored?.submit === true;
+    if (!q) return;
+    setAsk(q);
     const cached = readParse(q);
     if (cached) remember(q, cached);
     if (cached || run) setMode({ kind: "muse", query: q });
-    if (run) setParam("run", null);
-  }, [full, preview, setParam, remember]);
+    if (initialQuery.current.q)
+      router.replace(prepareSearch(q), { scroll: false });
+  }, [full, preview, router, remember]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -389,17 +410,19 @@ export function ExploreScreen() {
   function submit(event: { preventDefault: () => void }) {
     event.preventDefault();
     const query = ask.trim();
-    if (!query) return;
+    if (!query || (mode.kind === "muse" && results.state === "loading")) return;
     // A deliberate Ask always re-reads the words with Muse (1 request).
     remember(query, null);
+    interpretations.delete(query);
     setMode({ kind: "muse", query });
     setAttempt((value) => value + 1);
-    setParam("q", query);
+    router.replace(prepareSearch(query), { scroll: false });
   }
   function clearMuse() {
     setMode({ kind: "index" });
     setAsk("");
     setParam("q", null);
+    setParam("search", null);
   }
 
   const hits = preview
@@ -430,8 +453,7 @@ export function ExploreScreen() {
       ? recordings.data.find((r) => r.id === selected.recording_id)
           ?.source_media
       : undefined;
-  const pendingAsk =
-    mode.kind === "index" && ask.trim() && ask.trim() === params.get("q");
+  const pendingAsk = mode.kind === "index" && ask.trim();
 
   const noVideo = !preview && coverage.state === "ready" && !full;
   return (

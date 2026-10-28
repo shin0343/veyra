@@ -4,6 +4,23 @@
  */
 
 export interface paths {
+    "/api/v1/activity-query": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Activity Query */
+        post: operations["queryActivity"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/agent/capabilities": {
         parameters: {
             query?: never;
@@ -582,6 +599,31 @@ export interface components {
              */
             motion_definition: string;
         };
+        /** ActivityList */
+        ActivityList: {
+            /** Items */
+            items: components["schemas"]["ActivityHistogram"][];
+        };
+        /** ActivityQuery */
+        ActivityQuery: {
+            /**
+             * Bucket Seconds
+             * @default 60
+             */
+            bucket_seconds: number;
+            /** Camera Ids */
+            camera_ids: string[];
+            /**
+             * End
+             * Format: date-time
+             */
+            end: string;
+            /**
+             * Start
+             * Format: date-time
+             */
+            start: string;
+        };
         /** AgentMessage */
         AgentMessage: {
             /** Conversation Id */
@@ -595,6 +637,8 @@ export interface components {
             actions: (components["schemas"]["RuntimeActionSucceeded"] | components["schemas"]["ActionNeedsConfirmation"] | components["schemas"]["ActionFailed"])[];
             /** Camera Candidates */
             camera_candidates?: components["schemas"]["CameraDescriptor"][];
+            /** Clarification */
+            clarification?: string | null;
             confirmation_request?: components["schemas"]["LayoutProposal"] | null;
             /**
              * Conversation Id
@@ -605,6 +649,12 @@ export interface components {
             errors?: components["schemas"]["ErrorDetail"][];
             /** Executed Operations */
             executed_operations?: components["schemas"]["RuntimeActionSucceeded"][];
+            /**
+             * Interaction State
+             * @default answered
+             * @enum {string}
+             */
+            interaction_state: "answered" | "clarification_required" | "awaiting_confirmation" | "completed_verified" | "committed_unverified" | "rejected" | "cancelled" | "failed";
             /** Message */
             message: string;
             /** Navigation Target */
@@ -729,6 +779,10 @@ export interface components {
              * @enum {string}
              */
             status: "unknown" | "online" | "offline" | "error" | "disabled";
+            /** Video Height */
+            video_height?: number | null;
+            /** Video Width */
+            video_width?: number | null;
         };
         /** CameraCoverage */
         CameraCoverage: {
@@ -1092,10 +1146,16 @@ export interface components {
             camera_ids?: string[];
             /** Categories */
             categories?: ("person" | "bicycle" | "motorcycle" | "car" | "truck" | "bus" | "dog" | "cat" | "bird" | "bag" | "package" | "door" | "other")[];
+            /**
+             * Curated Only
+             * @default false
+             */
+            curated_only: boolean;
             /** End */
             end?: string | null;
             /** Event Types */
             event_types?: ("person_visible" | "vehicle_visible" | "animal_visible" | "walking" | "running" | "cycling" | "object_carried" | "door_movement")[];
+            interpretation?: components["schemas"]["StructuredSearch"] | null;
             /** Keywords */
             keywords?: string[];
             /**
@@ -1483,6 +1543,11 @@ export interface components {
         SearchRequest: {
             /** Camera Ids */
             camera_ids?: string[];
+            /**
+             * Curated Only
+             * @default false
+             */
+            curated_only: boolean;
             /** End */
             end?: string | null;
             /**
@@ -1613,6 +1678,11 @@ export interface components {
             /** Camera Names */
             camera_names: string[];
             /**
+             * Curated Only
+             * @default false
+             */
+            curated_only: boolean;
+            /**
              * End
              * @description JSON null unless specified; otherwise an ISO 8601 UTC instant. Never an empty string.
              */
@@ -1643,23 +1713,41 @@ export interface components {
         };
         /** Usage */
         Usage: {
+            /** Admission Enabled */
+            admission_enabled?: boolean | null;
+            /** Admission Remaining Usd */
+            admission_remaining_usd?: number | null;
+            /** Admission Used Usd */
+            admission_used_usd?: number | null;
             /**
              * Billing
              * @default unknown
              * @constant
              */
             billing: "unknown";
+            /** Billing Updated At */
+            billing_updated_at?: string | null;
             /**
              * Bytes Uploaded
              * @default 0
              */
             bytes_uploaded: number;
+            /** Daily Limit Usd */
+            daily_limit_usd?: number | null;
+            /** Daily Request Limit */
+            daily_request_limit?: number | null;
             /** Estimated Usd */
             estimated_usd?: number | null;
             /** Input Tokens */
             input_tokens?: number | null;
+            /** Latest Usage At */
+            latest_usage_at?: string | null;
+            /** Observed At */
+            observed_at?: string | null;
             /** Output Tokens */
             output_tokens?: number | null;
+            /** Remaining Requests */
+            remaining_requests?: number | null;
             /**
              * Requests
              * @default 0
@@ -1717,6 +1805,111 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    queryActivity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ActivityQuery"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActivityList"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Requested Range Not Satisfiable */
+            416: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Implemented */
+            501: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     listCapabilities: {
         parameters: {
             query?: never;
@@ -3290,6 +3483,8 @@ export interface operations {
                 end?: string | null;
                 cursor?: string | null;
                 limit?: number;
+                kind?: ("motion" | "observation") | null;
+                curated_only?: boolean;
             };
             header?: never;
             path?: never;
@@ -3494,7 +3689,9 @@ export interface operations {
     };
     getIndexCoverage: {
         parameters: {
-            query?: never;
+            query?: {
+                curated_only?: boolean;
+            };
             header?: never;
             path?: never;
             cookie?: never;

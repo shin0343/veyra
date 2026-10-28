@@ -1,0 +1,215 @@
+{
+  "scope": "Read-only normalized VIDEO-01 asset inspection; no reindexing or attribution changes",
+  "assets": [
+    {
+      "asset_id": "entrance-gate",
+      "sha256_matches": true,
+      "media": {
+        "kind": "prerecorded",
+        "asset_id": "entrance-gate",
+        "title": "Freedom Park-Entrance Gate 2",
+        "creator": "Olusola David, Ayibiowu",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3AFreedom_Park-Entrance_Gate_2.webm",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "changes": "Excerpt 0\u201320.6s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+        "sha256": "2ad7a6563bb23b5e4321ae42e5944aa753a01707c0c4f5c05960f443f6861c85"
+      },
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "format": {
+          "duration": "20.600000"
+        }
+      }
+    },
+    {
+      "asset_id": "street-approach",
+      "sha256_matches": true,
+      "media": {
+        "kind": "prerecorded",
+        "asset_id": "street-approach",
+        "title": "Street traffic",
+        "creator": "Editor (YouTube)",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3AStreet_traffic.webm",
+        "license": "CC BY 3.0",
+        "license_url": "https://creativecommons.org/licenses/by/3.0",
+        "changes": "Excerpt 0\u201330s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+        "sha256": "b52fdf7dab4c160b7321afe0c079322dc4f0709489f8079625dda342d5f44af0"
+      },
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "format": {
+          "duration": "30.000000"
+        }
+      }
+    },
+    {
+      "asset_id": "garden-wildlife",
+      "sha256_matches": true,
+      "media": {
+        "kind": "prerecorded",
+        "asset_id": "garden-wildlife",
+        "title": "Red squirrels in Tresco Abbey Gardens",
+        "creator": "andrewrabbott",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3ARed_squirrels_in_Tresco_Abbey_Gardens.webm",
+        "license": "CC BY 4.0",
+        "license_url": "https://creativecommons.org/licenses/by/4.0",
+        "changes": "Excerpt 0\u201323.6s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+        "sha256": "724e8867f2113c9b791fa7737af5d0d7531c8ed6896c4551dc4dec26c5316cb3"
+      },
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "format": {
+          "duration": "23.600000"
+        }
+      }
+    },
+    {
+      "asset_id": "community-space",
+      "sha256_matches": true,
+      "media": {
+        "kind": "prerecorded",
+        "asset_id": "community-space",
+        "title": "Pedestrian area Ljubljana",
+        "creator": "Sounds of Changes",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3APedestrian_area_Ljubljana.webm",
+        "license": "CC BY 3.0",
+        "license_url": "https://creativecommons.org/licenses/by/3.0",
+        "changes": "Excerpt 0\u201336s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+        "sha256": "5e9e466ba405af89cf4975b4658462157a6e00851a0fa2be13e0cbb0c550dfa9"
+      },
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "format": {
+          "duration": "36.000000"
+        }
+      }
+    },
+    {
+      "asset_id": "bicycle-parking",
+      "sha256_matches": true,
+      "media": {
+        "kind": "prerecorded",
+        "asset_id": "bicycle-parking",
+        "title": "Nieuwe fietsenstalling Jaarbeursplein Utrecht",
+        "creator": "ProRail",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3ANieuwe_fietsenstalling_Jaarbeursplein_Utrecht.webm",
+        "license": "CC BY 3.0",
+        "license_url": "https://creativecommons.org/licenses/by/3.0",
+        "changes": "Excerpt 46\u201378s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+        "sha256": "be20a96a061a47b0fe2229b61589061fd9622b1c0eff44cbb3d68fcbcf054169"
+      },
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "format": {
+          "duration": "32.000000"
+        }
+      }
+    },
+    {
+      "asset_id": "trail-camera",
+      "sha256_matches": true,
+      "media": {
+        "kind": "prerecorded",
+        "asset_id": "trail-camera",
+        "title": "Dirt jump biking",
+        "creator": "Henry Geer",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3ADirt_jump_biking.webm",
+        "license": "CC BY 3.0",
+        "license_url": "https://creativecommons.org/licenses/by/3.0",
+        "changes": "Excerpt 2\u201338s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+        "sha256": "69f1f1268b090b77f908e38653194b0af8e9b4be8ba48d13644b79663f6a7a8e"
+      },
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "format": {
+          "duration": "36.000000"
+        }
+      }
+    },
+    {
+      "asset_id": "station-entrance",
+      "sha256_matches": true,
+      "media": {
+        "kind": "prerecorded",
+        "asset_id": "station-entrance",
+        "title": "8 Street station entrance vc",
+        "creator": "rym (Flickr)",
+        "source_url": "https://commons.wikimedia.org/wiki/File%3A8_Street_station_entrance_vc.ogv",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0",
+        "changes": "Excerpt 0\u201310s; silent H.264, 15 fps, resized and letterboxed without cropping. Preview extracted from video.",
+        "sha256": "6f61be26a356a13161d8946d5c71890f3077fda2efbaf2dc3cfcd6b0b4faa43d"
+      },
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "width": 960,
+            "height": 540
+          }
+        ],
+        "format": {
+          "duration": "10.000000"
+        }
+      }
+    }
+  ],
+  "historical_mixed_recording": {
+    "id": "05636b39-cb53-59a1-aa49-4a117421ea4d",
+    "provenance": "unknown/mixed; not repaired by inference",
+    "curated_default": "excluded",
+    "original_recording_and_indexes": "preserved",
+    "reason": "Camera source changed after capture began. No reliable segment-level attribution snapshot exists for the legacy take."
+  }
+}

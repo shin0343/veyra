@@ -81,25 +81,32 @@ export function Timeline({
           [id]: value,
         },
       }));
-    const query = new URLSearchParams({
-      start: new Date(start).toISOString(),
-      end: new Date(end).toISOString(),
-      bucket_seconds: String(step),
-    });
-    for (const id of laneIds.split(",").filter(Boolean))
-      request<Histogram>(`/cameras/${id}/activity?${query}`, {
+    const ids = laneIds.split(",").filter(Boolean);
+    if (ids.length)
+      request<Schema["ActivityList"]>("/activity-query", {
+        method: "POST",
         signal: controller.signal,
+        body: JSON.stringify({
+          camera_ids: ids,
+          start: new Date(start).toISOString(),
+          end: new Date(end).toISOString(),
+          bucket_seconds: step,
+        }),
       })
-        .then((value) => store(id, { state: "ready", data: value }))
+        .then((value) => {
+          for (const histogram of value.items)
+            store(histogram.camera_id, { state: "ready", data: histogram });
+        })
         .catch((error) => {
           if (controller.signal.aborted || isAbort(error)) return;
-          store(id, {
-            state: "error",
-            message:
-              error instanceof Error
-                ? error.message
-                : "Activity couldn’t load.",
-          });
+          for (const id of ids)
+            store(id, {
+              state: "error",
+              message:
+                error instanceof Error
+                  ? error.message
+                  : "Activity couldn’t load.",
+            });
         });
     return () => controller.abort();
   }, [start, end, step, laneIds, requestKey]);

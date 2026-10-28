@@ -64,7 +64,7 @@ def register_segments(db, settings, recording_id=None):
     )
 
 
-def usage(db, job_id=None):
+def usage(db, job_id=None, settings=None):
     row = db.execute(
         """SELECT count(*) FILTER
         (WHERE operation IN ('video_analysis','search_intent','agent_turn')) AS requests,
@@ -75,9 +75,33 @@ def usage(db, job_id=None):
              WHERE operation IN ('video_analysis','search_intent','agent_turn')
              AND estimated_usd IS NULL)=0 THEN sum(estimated_usd) END AS estimated_usd
         FROM model_usage WHERE (%s::uuid IS NULL OR analysis_job_id=%s)
-        AND (%s::uuid IS NOT NULL OR created_at>=date_trunc('day',now()))""",
+        AND (%s::uuid IS NOT NULL OR created_at>=
+            (date_trunc('day',now() AT TIME ZONE 'UTC') AT TIME ZONE 'UTC'))""",
         (job_id, job_id, job_id),
     ).fetchone()
+    if settings is not None and job_id is None:
+        admission = db.execute("""SELECT
+            COALESCE(sum(GREATEST(reserved_usd,COALESCE(estimated_usd,0))),0) AS used,
+            max(created_at) AS latest FROM model_usage
+            WHERE created_at >= (date_trunc('day',now() AT TIME ZONE 'UTC') AT TIME ZONE 'UTC')
+            AND operation IN ('video_analysis','search_intent','agent_turn')""").fetchone()
+        remaining = max(0.0, settings.model_daily_budget_usd - float(admission["used"]))
+        enabled = settings.model_daily_budget_usd > 0 and settings.model_request_reserve_usd > 0
+        row.update(
+            daily_request_limit=settings.model_daily_requests,
+            daily_limit_usd=settings.model_daily_budget_usd,
+            admission_used_usd=float(admission["used"]),
+            admission_remaining_usd=remaining,
+            remaining_requests=min(
+                max(0, settings.model_daily_requests - row["requests"]),
+                int((remaining + 1e-8) / settings.model_request_reserve_usd),
+            )
+            if enabled
+            else 0,
+            admission_enabled=enabled,
+            observed_at=datetime.now(timezone.utc),
+            latest_usage_at=admission["latest"],
+        )
     return m.Usage(**row)
 
 

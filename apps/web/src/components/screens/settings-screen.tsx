@@ -55,8 +55,38 @@ function UsageSummary() {
       </div>
       <p className="muted">
         Reservations are admission limits set by your operator, not Meta’s bill.
-        Actual billing is unknown here.
+        Actual billing is unknown here. This database’s reservations do not
+        guarantee an account-wide spending cap.
       </p>
+      {usage?.daily_limit_usd != null && (
+        <>
+          <div className="setting-readonly">
+            <span>Configured daily admission limit</span>
+            <strong>${usage.daily_limit_usd.toFixed(2)}</strong>
+          </div>
+          <div className="setting-readonly">
+            <span>Admission capacity remaining</span>
+            <strong>
+              {usage.admission_remaining_usd != null
+                ? `$${usage.admission_remaining_usd.toFixed(2)}`
+                : "Unknown"}
+            </strong>
+          </div>
+          <div className="setting-readonly">
+            <span>Model requests available under reservation rules</span>
+            <strong>{usage.remaining_requests ?? "Unknown"}</strong>
+          </div>
+          <p className="muted">
+            {usage.admission_enabled
+              ? "Admission enabled"
+              : "Paid model requests disabled"}
+            {usage.observed_at
+              ? ` · Checked ${new Date(usage.observed_at).toLocaleTimeString()}`
+              : ""}
+            {" · Billing update unavailable"}
+          </p>
+        </>
+      )}
     </div>
   );
 }

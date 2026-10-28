@@ -99,7 +99,8 @@ class UsageMeter:
             db.execute("SELECT pg_advisory_xact_lock(9102605)")
             row = db.execute("""SELECT count(*) AS requests,
                 COALESCE(sum(GREATEST(reserved_usd,COALESCE(estimated_usd,0))),0) AS usd
-                FROM model_usage WHERE created_at >= date_trunc('day',now())
+                FROM model_usage WHERE created_at >=
+                (date_trunc('day',now() AT TIME ZONE 'UTC') AT TIME ZONE 'UTC')
                 AND operation IN ('video_analysis','search_intent','agent_turn')""").fetchone()
             if row["requests"] >= settings.model_daily_requests or (
                 float(row["usd"]) + settings.model_request_reserve_usd

@@ -153,6 +153,62 @@
         "title": "ActivityHistogram",
         "type": "object"
       },
+      "ActivityList": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ActivityHistogram"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "ActivityList",
+        "type": "object"
+      },
+      "ActivityQuery": {
+        "additionalProperties": false,
+        "properties": {
+          "bucket_seconds": {
+            "default": 60,
+            "maximum": 3600.0,
+            "minimum": 10.0,
+            "title": "Bucket Seconds",
+            "type": "integer"
+          },
+          "camera_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "maxItems": 16,
+            "minItems": 1,
+            "title": "Camera Ids",
+            "type": "array"
+          },
+          "end": {
+            "format": "date-time",
+            "title": "End",
+            "type": "string"
+          },
+          "start": {
+            "format": "date-time",
+            "title": "Start",
+            "type": "string"
+          }
+        },
+        "required": [
+          "camera_ids",
+          "start",
+          "end"
+        ],
+        "title": "ActivityQuery",
+        "type": "object"
+      },
       "AgentMessage": {
         "additionalProperties": false,
         "properties": {
@@ -216,6 +272,17 @@
             "title": "Camera Candidates",
             "type": "array"
           },
+          "clarification": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Clarification"
+          },
           "confirmation_request": {
             "anyOf": [
               {
@@ -244,6 +311,21 @@
             },
             "title": "Executed Operations",
             "type": "array"
+          },
+          "interaction_state": {
+            "default": "answered",
+            "enum": [
+              "answered",
+              "clarification_required",
+              "awaiting_confirmation",
+              "completed_verified",
+              "committed_unverified",
+              "rejected",
+              "cancelled",
+              "failed"
+            ],
+            "title": "Interaction State",
+            "type": "string"
           },
           "message": {
             "title": "Message",
@@ -588,6 +670,32 @@
             ],
             "title": "Status",
             "type": "string"
+          },
+          "video_height": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "maximum": 8192.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Video Height"
+          },
+          "video_width": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "maximum": 8192.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Video Width"
           }
         },
         "required": [
@@ -1547,6 +1655,11 @@
             "title": "Categories",
             "type": "array"
           },
+          "curated_only": {
+            "default": false,
+            "title": "Curated Only",
+            "type": "boolean"
+          },
           "end": {
             "anyOf": [
               {
@@ -1576,6 +1689,16 @@
             "maxItems": 4,
             "title": "Event Types",
             "type": "array"
+          },
+          "interpretation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StructuredSearch"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "keywords": {
             "items": {
@@ -2560,6 +2683,11 @@
             "title": "Camera Ids",
             "type": "array"
           },
+          "curated_only": {
+            "default": false,
+            "title": "Curated Only",
+            "type": "boolean"
+          },
           "end": {
             "anyOf": [
               {
@@ -2919,6 +3047,11 @@
             "title": "Camera Names",
             "type": "array"
           },
+          "curated_only": {
+            "default": false,
+            "title": "Curated Only",
+            "type": "boolean"
+          },
           "end": {
             "anyOf": [
               {
@@ -3026,16 +3159,83 @@
       "Usage": {
         "additionalProperties": false,
         "properties": {
+          "admission_enabled": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Admission Enabled"
+          },
+          "admission_remaining_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Admission Remaining Usd"
+          },
+          "admission_used_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Admission Used Usd"
+          },
           "billing": {
             "const": "unknown",
             "default": "unknown",
             "title": "Billing",
             "type": "string"
           },
+          "billing_updated_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Billing Updated At"
+          },
           "bytes_uploaded": {
             "default": 0,
             "title": "Bytes Uploaded",
             "type": "integer"
+          },
+          "daily_limit_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Daily Limit Usd"
+          },
+          "daily_request_limit": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Daily Request Limit"
           },
           "estimated_usd": {
             "anyOf": [
@@ -3059,6 +3259,30 @@
             ],
             "title": "Input Tokens"
           },
+          "latest_usage_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Usage At"
+          },
+          "observed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observed At"
+          },
           "output_tokens": {
             "anyOf": [
               {
@@ -3069,6 +3293,17 @@
               }
             ],
             "title": "Output Tokens"
+          },
+          "remaining_requests": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Remaining Requests"
           },
           "requests": {
             "default": 0,
@@ -3213,6 +3448,132 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/v1/activity-query": {
+      "post": {
+        "operationId": "queryActivity",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActivityQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "416": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Requested Range Not Satisfiable"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "501": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Implemented"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Activity Query",
+        "tags": [
+          "events"
+        ]
+      }
+    },
     "/api/v1/agent/capabilities": {
       "get": {
         "operationId": "listCapabilities",
@@ -5236,6 +5597,36 @@
               "title": "Limit",
               "type": "integer"
             }
+          },
+          {
+            "in": "query",
+            "name": "kind",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "motion",
+                    "observation"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Kind"
+            }
+          },
+          {
+            "in": "query",
+            "name": "curated_only",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "Curated Only",
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -5486,6 +5877,18 @@
     "/api/v1/index-coverage": {
       "get": {
         "operationId": "getIndexCoverage",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "curated_only",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "Curated Only",
+              "type": "boolean"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {

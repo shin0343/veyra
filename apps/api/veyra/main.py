@@ -4,7 +4,7 @@ import json
 import logging
 import secrets
 from contextlib import asynccontextmanager
-from typing import Annotated
+from typing import Annotated, Literal
 from uuid import UUID, uuid4
 
 import psycopg
@@ -255,13 +255,15 @@ def camera_thumbnail(camera_id: UUID, request: Request):
 def cameras(request: Request):
     with request.app.state.database.connect() as db:
         rows = store.list_cameras(db)
-        return models.CameraList(items=[store.camera_model(row) for row in rows])
+        return models.CameraList(
+            items=[store.camera_model(row, request.app.state.sources) for row in rows]
+        )
 
 
 @router.get("/cameras/{camera_id}", response_model=models.Camera, operation_id="getCamera")
 def camera(camera_id: UUID, request: Request):
     with request.app.state.database.connect() as db:
-        return store.camera_model(store.get_camera(db, camera_id))
+        return store.camera_model(store.get_camera(db, camera_id), request.app.state.sources)
 
 
 @router.post("/cameras", response_model=models.Camera, status_code=201, operation_id="createCamera")
@@ -488,7 +490,7 @@ def recording_index(recording_id: UUID, request: Request):
 def analysis_usage(principal: Principal, request: Request):
     agent_tools.authorize(principal, "analysis:write")
     with request.app.state.database.connect() as db:
-        return index_store.usage(db)
+        return index_store.usage(db, settings=request.app.state.settings)
 
 
 @router.post(
@@ -528,10 +530,12 @@ def events(
     end: c.AwareDatetime | None = None,
     cursor: Cursor = None,
     limit: PageLimit = 50,
+    kind: Literal["motion", "observation"] | None = None,
+    curated_only: bool = False,
 ):
     with request.app.state.database.connect() as db:
         return retrieval.list_events(
-            db, request.app.state.settings, camera_id, start, end, cursor, limit
+            db, request.app.state.settings, camera_id, start, end, cursor, limit, kind, curated_only
         )
 
 
@@ -553,9 +557,20 @@ def index_query(body: explore.IndexQuery, request: Request):
     operation_id="getIndexCoverage",
     tags=["search"],
 )
-def index_coverage(request: Request):
+def index_coverage(request: Request, curated_only: bool = False):
     with request.app.state.database.connect() as db:
-        return explore.coverage(db, request.app.state.settings)
+        return explore.coverage(db, request.app.state.settings, curated_only)
+
+
+@router.post(
+    "/activity-query",
+    response_model=explore.ActivityList,
+    operation_id="queryActivity",
+    tags=["events"],
+)
+def activity_query(body: explore.ActivityQuery, request: Request):
+    with request.app.state.database.connect() as db:
+        return explore.activities(db, request.app.state.settings, body)
 
 
 @router.get(

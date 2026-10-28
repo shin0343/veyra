@@ -1,5 +1,7 @@
 "use client";
 
+import { prepareSearch } from "@/lib/search-session";
+
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
@@ -333,9 +335,7 @@ function CommandPalette({
     // Both options name their cost; choosing one is the person's deliberate request.
     if (option.kind === "muse") openMuse(query, { send: true });
     else if (option.kind === "search")
-      router.push(
-        href(`/explore?q=${encodeURIComponent(text.slice(0, 2000))}&run=1`),
-      );
+      router.push(href(prepareSearch(text, true)));
     else if (option.kind === "camera")
       router.push(href(`/cameras?camera=${option.camera.id}`));
     else if (option.kind === "view")
@@ -439,7 +439,7 @@ function CommandPalette({
               </strong>
               <small>
                 {option.kind === "muse"
-                  ? "Ask Muse · 1 request · it can prepare views for your approval"
+                  ? "Ask Muse · paid AI · may use several model requests · changes need approval"
                   : option.kind === "search"
                     ? "Ask Muse · 1 request · reads stored analysis, then opens Explore"
                     : option.kind === "camera"

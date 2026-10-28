@@ -143,6 +143,11 @@
           "title": "Camera Names",
           "type": "array"
         },
+        "curated_only": {
+          "default": false,
+          "title": "Curated Only",
+          "type": "boolean"
+        },
         "end": {
           "anyOf": [
             {

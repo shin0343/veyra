@@ -3,6 +3,7 @@
 import hashlib
 import json
 import logging
+import re
 from datetime import datetime, timedelta, timezone
 from uuid import uuid4
 
@@ -78,17 +79,64 @@ def response_for(run, envelopes, error=None, verified=None):
         )
     else:
         status = "completed"
-        message = " ".join(item["message"] for item in actions if item["status"] == "succeeded")
+        message = " ".join(
+            dict.fromkeys(item["message"] for item in actions if item["status"] == "succeeded")
+        )
         if not message:
             message = (
                 "No VMS action was executed. Identity recognition is unsupported. "
                 "Available functions include camera settings, live camera navigation, "
                 "recordings and saved layouts."
             )
+    candidates = [
+        candidate for item in envelopes for candidate in item["data"].get("candidates", [])
+    ]
+    clarification = None
+    # A camera-list receipt is not completion of a requested layout. Build the next step
+    # from actual tool data; model prose never becomes a write receipt or permission.
+    layout_intent = re.search(
+        r"(?:creat|mak|assembl|sav|arrang|build)\w*.*(?:view|layout)|(?:뷰|레이아웃).*만들",
+        run.get("user_message", ""),
+        re.IGNORECASE,
+    )
+    if layout_intent and not pending and not executed and not errors:
+        candidates = [
+            camera
+            for item in envelopes
+            if item["action"]["tool_name"] == "cameras.list"
+            for camera in item["data"].get("items", [])
+            if camera["enabled"]
+        ]
+        clarification = (
+            "Choose the cameras for this view and give it a name. "
+            "The available cameras are listed below; choosing one fills your message. "
+            "Submit the complete request, then review the proposal before saving."
+            if candidates
+            else "There are no available cameras for this view. Connect or enable a camera first."
+        )
+        message = clarification
+    if verified:
+        outcome = "completed_verified"
+    elif executed:
+        outcome = "committed_unverified"
+    elif pending:
+        outcome = "awaiting_confirmation"
+    elif errors and all(item["code"] == "USER_DECLINED" for item in errors):
+        outcome = "rejected"
+    elif errors and all(item["code"] == "CONFIRMATION_EXPIRED" for item in errors):
+        outcome = "cancelled"
+    elif errors:
+        outcome = "failed"
+    elif clarification:
+        outcome = "clarification_required"
+    else:
+        outcome = "answered"
     return a.AgentResponse(
         conversation_id=run["conversation_id"],
         run_id=run["id"],
         status=status,
+        interaction_state=outcome,
+        clarification=clarification,
         message=message,
         actions=actions,
         suggested_actions=navigation,
@@ -97,9 +145,7 @@ def response_for(run, envelopes, error=None, verified=None):
         executed_operations=executed,
         verified_results=verified or [],
         errors=errors,
-        camera_candidates=[
-            candidate for item in envelopes for candidate in item["data"].get("candidates", [])
-        ],
+        camera_candidates=candidates,
     ).model_dump(mode="json")
 
 

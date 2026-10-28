@@ -44,6 +44,7 @@ import { Button } from "./ui/button";
 import { Dialog } from "./ui/dialog";
 import { Badge, CameraStatus, ErrorMessage } from "./ui/primitives";
 import { formatOffset } from "./media-player";
+import { prepareSearch } from "@/lib/search-session";
 import { readableReceipt } from "@/lib/receipts";
 
 interface Turn {
@@ -64,12 +65,14 @@ export function MusePanel() {
   // The thread lives with the always-mounted panel so closing Muse keeps context.
   const [turns, setTurns] = useState<Turn[]>([]);
   const controllers = useRef(new Map<string, AbortController>());
+  const sending = useRef(false);
   const conversationId =
     [...turns].reverse().find((turn) => turn.response)?.response
       ?.conversation_id ?? null;
   async function send(message: string, existing?: Turn) {
     const text = message.trim();
-    if (!text || preview) return;
+    if (!text || preview || sending.current) return;
+    sending.current = true;
     const turn: Turn = existing
       ? {
           ...existing,
@@ -123,6 +126,7 @@ export function MusePanel() {
       );
     } finally {
       controllers.current.delete(turn.id);
+      sending.current = false;
     }
   }
   useEffect(() => {
@@ -286,7 +290,7 @@ function MuseThread({
       <div className="muse-context">
         <span>
           <Sparkles size={14} />
-          Muse · 1 request per question
+          Muse · paid AI · may use several model requests
         </span>
         {!!turns.length && (
           <button className="muse-reset" onClick={onReset} disabled={pending}>
@@ -339,7 +343,10 @@ function MuseThread({
                 response={turn.response}
                 decision={turn.decision}
                 onDecision={(value) => onDecision(turn.id, value)}
-                onSend={submit}
+                onPrefill={(text) => {
+                  setQuery(text);
+                  composer.current?.focus();
+                }}
                 busy={pending}
               />
             )}
@@ -398,10 +405,10 @@ function MuseThread({
           type="submit"
           size="sm"
           disabled={!query.trim() || pending}
-          aria-label="Send message: Ask Muse, uses 1 request"
+          aria-label="Send message: Ask Muse, uses paid model requests"
         >
           <ArrowUp size={15} />
-          Ask Muse · 1 request
+          Ask Muse · paid AI
         </Button>
       </form>
       <p className="composer-note">
@@ -524,14 +531,14 @@ function ResponseView({
   response,
   decision,
   onDecision,
-  onSend,
+  onPrefill,
   busy,
 }: {
   userMessage: string;
   response: AgentResponse;
   decision?: AgentResponse;
   onDecision: (response: AgentResponse) => void;
-  onSend: (text: string) => void;
+  onPrefill: (text: string) => void;
   busy: boolean;
 }) {
   // Destinations come from server receipts: suggested_actions plus each succeeded action's
@@ -571,6 +578,16 @@ function ResponseView({
     ? suggestions.filter((item) => item.target.kind === "recording")
     : [];
   const proposal = response.confirmation_request;
+  const [executing, setExecuting] = useState(false);
+  const decisionAction = useDecision(
+    proposal?.confirmation.id ?? "none",
+    onDecision,
+    setExecuting,
+  );
+  const expiresIn = useExpiry(
+    proposal?.confirmation.expires_at ?? "9999-01-01T00:00:00Z",
+  );
+  const expired = Boolean(proposal && expiresIn <= 0 && !decision);
   const pendingActions = response.actions.filter(
     (action) =>
       action.status === "confirmation_required" &&
@@ -588,11 +605,21 @@ function ResponseView({
     !pendingActions.length &&
     !response.camera_candidates?.length &&
     !errors.length;
-  if (decision)
+  if (decision || executing || expired)
     return (
       <div className="assistant-answer">
-        <DecisionStatus response={decision} />
-        <DecisionResult response={decision} />
+        {decision ? (
+          <>
+            <DecisionStatus response={decision} />
+            <DecisionResult response={decision} />
+          </>
+        ) : (
+          <Badge tone="amber">
+            {executing
+              ? "Executing approved change…"
+              : "Cancelled · approval expired · nothing saved"}
+          </Badge>
+        )}
         <details className="muse-history">
           <summary>What Muse proposed</summary>
           <p>{readableReceipt(response.message)}</p>
@@ -601,6 +628,7 @@ function ResponseView({
               proposal={proposal}
               decision={decision}
               onDecision={onDecision}
+              decisionAction={decisionAction}
             />
           )}
         </details>
@@ -609,7 +637,11 @@ function ResponseView({
     );
   return (
     <div className="assistant-answer">
-      <ResponseStatus status={response.status} readOnly={readOnly} />
+      {response.interaction_state === "clarification_required" ? (
+        <Badge tone="amber">Choose cameras to continue · nothing changed</Badge>
+      ) : (
+        <ResponseStatus status={response.status} readOnly={readOnly} />
+      )}
       <p>{readableReceipt(response.message)}</p>
       {!!features.length && (
         <div className="muse-section">
@@ -635,6 +667,7 @@ function ResponseView({
           proposal={proposal}
           decision={decision}
           onDecision={onDecision}
+          decisionAction={decisionAction}
         />
       )}
       {pendingActions.map((action) =>
@@ -649,15 +682,17 @@ function ResponseView({
       )}
       {!!response.camera_candidates?.length && (
         <div className="muse-section">
-          <p className="palette-label">Which camera did you mean?</p>
+          <p className="palette-label">
+            Choose cameras · fills the message, sends nothing
+          </p>
           <div className="muse-candidates">
             {response.camera_candidates.map((camera) => (
               <button
                 key={camera.id}
                 disabled={busy}
                 onClick={() =>
-                  onSend(
-                    `Use the camera named "${camera.name}" (${camera.id}).`,
+                  onPrefill(
+                    `${userMessage} Use the camera named "${camera.name}" (${camera.id}).`,
                   )
                 }
               >
@@ -915,8 +950,12 @@ function SearchMoments({
       )}
       <Link
         className="muse-more-link"
-        href={href(`/explore?q=${encodeURIComponent(query.slice(0, 2000))}`)}
-        onClick={closeMuse}
+        href={href("/explore")}
+        onClick={(event) => {
+          event.preventDefault();
+          window.location.assign(href(prepareSearch(query)));
+          closeMuse();
+        }}
       >
         <Search size={14} />
         Open video search for captions and coverage
@@ -935,8 +974,12 @@ function SearchRecovery({ query }: { query: string }) {
       </p>
       <Link
         className="muse-nav-row"
-        href={href(`/explore?q=${encodeURIComponent(query.slice(0, 2000))}`)}
-        onClick={closeMuse}
+        href={href("/explore")}
+        onClick={(event) => {
+          event.preventDefault();
+          window.location.assign(href(prepareSearch(query)));
+          closeMuse();
+        }}
       >
         <Search size={16} />
         <span>
@@ -961,12 +1004,17 @@ function useExpiry(expiresAt: string) {
 function useDecision(
   confirmationId: string,
   onDecision: (response: AgentResponse) => void,
+  onExecuting?: (value: boolean) => void,
 ) {
   const { reload } = useWorkspace();
   const [pending, setPending] = useState<boolean | null>(null);
   const [error, setError] = useState<unknown>(null);
   const [base] = useState(() => crypto.randomUUID());
+  const locked = useRef(false);
   async function decide(approved: boolean) {
+    if (locked.current) return;
+    locked.current = true;
+    onExecuting?.(approved);
     setPending(approved);
     setError(null);
     try {
@@ -983,6 +1031,8 @@ function useDecision(
       setError(value);
     } finally {
       setPending(null);
+      locked.current = false;
+      onExecuting?.(false);
     }
   }
   return { decide, pending, error };
@@ -992,16 +1042,15 @@ function LayoutProposalCard({
   proposal,
   decision,
   onDecision,
+  decisionAction,
 }: {
   proposal: Schema["LayoutProposal"];
   decision?: AgentResponse;
   onDecision: (response: AgentResponse) => void;
+  decisionAction: ReturnType<typeof useDecision>;
 }) {
   const remaining = useExpiry(proposal.confirmation.expires_at);
-  const { decide, pending, error } = useDecision(
-    proposal.confirmation.id,
-    onDecision,
-  );
+  const { decide, pending, error } = decisionAction;
   const { layout } = proposal;
   const rows =
     Math.floor(

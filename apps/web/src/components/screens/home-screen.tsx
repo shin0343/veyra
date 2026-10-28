@@ -1,5 +1,7 @@
 "use client";
 
+import { prepareSearch } from "@/lib/search-session";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -392,12 +394,7 @@ function HomeFind({ coverage }: { coverage: ReturnType<typeof useCoverage> }) {
           event.preventDefault();
           if (!text) return;
           if (goes) router.push(href(appRoutes[places[0].id]));
-          else if (!preview)
-            router.push(
-              href(
-                `/explore?q=${encodeURIComponent(text.slice(0, 2000))}&run=1`,
-              ),
-            );
+          else if (!preview) router.push(href(prepareSearch(text, true)));
         }}
       >
         <Sparkles size={18} className="hm-find-mark" aria-hidden="true" />
@@ -632,6 +629,7 @@ function useFoundMoments(coverage: ReturnType<typeof useCoverage>) {
       method: "POST",
       signal: controller.signal,
       body: JSON.stringify({
+        curated_only: true,
         start: new Date(window.start).toISOString(),
         end: new Date(window.end).toISOString(),
         limit: 16,

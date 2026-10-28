@@ -15,7 +15,7 @@ export function testCameraIds(cameras: Camera[]) {
 
 /** A recording made by a test camera. */
 export function isTestRecording(recording: Recording, testIds: Set<string>) {
-  return testIds.has(recording.camera_id);
+  return testIds.has(recording.camera_id) || !recording.source_media;
 }
 
 /** A saved view that would show a test pattern in at least one position. */

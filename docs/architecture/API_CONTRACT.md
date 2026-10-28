@@ -1,5 +1,44 @@
 # Frozen API contract — v0.1.0
 
+**Final integration runtime additions (October 27, 2026):** frozen package contracts remain
+unchanged. `AgentResponse.interaction_state` identifies answered, clarification_required,
+awaiting_confirmation, completed_verified, committed_unverified, rejected, cancelled or failed.
+The value comes from stored action receipts and independent database verification. Optional
+`clarification` and actual `camera_candidates` distinguish a camera-list read from completing a
+layout request. Layout tools require user-supplied camera references; the provider cannot choose
+arbitrary cameras. Original idempotent message snapshots and confirmation receipts remain separate.
+
+`POST /index-query` optionally accepts `interpretation: StructuredSearch`. It preserves object,
+attribute, apparel, event and keyword constraints without invoking Muse. Explicit camera and time
+filters intersect that interpretation; a contradictory camera scope returns CAMERA_FILTER_CONFLICT.
+The browser stores search words and interpretations in tab-local sessionStorage; new URLs carry an
+opaque `search` reference. Legacy q/run URLs only prefill or reuse a cached interpretation and cannot
+authorize a new paid request. Agent questions may use several metered provider turns; the UI says
+paid AI rather than promising one provider request per question.
+
+The final runtime also adds:
+
+- `curated_only=false` on search, index-query, index-coverage and events. When true, only recording
+  snapshots with `source_media.kind=prerecorded` are included. Historical unknown/mixed recordings
+  and their observations remain accessible explicitly; no old recording inherits a new source's
+  attribution. The curated demo enables this scope and the browser explains the smaller coverage.
+- `/events` is recent-first with stable `(started_at DESC,id DESC)` keyset pagination. Version 2
+  cursors bind the camera, kind, time window, provenance scope and pipeline. Old or mismatched
+  cursors return `INVALID_CURSOR`. Optional `kind=motion|observation` filters on the server.
+- `POST /activity-query {camera_ids: UUID[1..16], start, end, bucket_seconds:10..3600}` returns
+  `{items: ActivityHistogram[]}` using the existing per-camera service in one request. At most
+  2,880 total buckets. Authorization and the per-camera endpoint are unchanged.
+- `Camera.video_width/video_height` are nullable encoded dimensions measured with FFprobe from
+  the checksum-validated configured demo file. Unknown streams remain null.
+- Operator-only `analysis-usage` includes configured daily request/USD admission ceilings,
+  `admission_used_usd=sum(max(reserved,estimated))`, remaining admission capacity, logical requests
+  still admissible under both limits, observed/latest-usage timestamps and admission-enabled state.
+  UTC-day boundaries match the admission ledger. Billing and billing_updated_at remain unknown/null.
+  These values apply to this database, not the provider account or an actual charge ceiling.
+
+No migration or existing demo-row rewrite is required. Regenerate the runtime artifacts with
+`make agent-contracts`; frozen package contracts remain reproducible.
+
 **VIDEO-02 runtime additions (additive; frozen v0.1.0 artifacts unchanged).** Three read-only
 routes in `apps/api/veyra/explore.py`, generated into the runtime artifacts with
 `make agent-contracts` (`openapi-phase05.json`, `api-phase05.d.ts`):

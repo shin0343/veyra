@@ -1,0 +1,99 @@
+{
+  "captured_at": "2026-10-27T22:08:58.000761+00:00",
+  "checkpoint_revision": "f457c26ebdb2108253573ec3b41c57a4ce7829d8",
+  "backup": "runtime/backups/final-redesign02-checkpoint/demo.dump",
+  "frontends": [
+    {
+      "url": "http://127.0.0.1:3200",
+      "build_id": "Xt58zp9KoNy6Yf99tkmGh",
+      "html_status": 200,
+      "manifest_status": 200,
+      "camera_ids": [
+        "0b014f6f-4cda-49d5-9d7f-9a8c758ab3ee",
+        "271c13bb-2775-4a9f-b0e8-b9780f4b1d2d",
+        "48a3fb91-d509-414f-9479-48cfc886b775",
+        "55163235-01fa-427f-99ce-27c24b7f30f1",
+        "736b2e6b-b93c-41ad-af97-be479405ac59",
+        "82f995cb-8bee-469d-9063-a2da3439fbdb",
+        "b345aac7-984e-43f9-a927-37c639642e27",
+        "d9102168-f60d-4feb-b47d-5b5012d2e1a4"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:3600",
+      "build_id": "8Ljcda0FKDR9A1APIKC-3",
+      "html_status": 200,
+      "manifest_status": 200,
+      "camera_ids": [
+        "0b014f6f-4cda-49d5-9d7f-9a8c758ab3ee",
+        "271c13bb-2775-4a9f-b0e8-b9780f4b1d2d",
+        "48a3fb91-d509-414f-9479-48cfc886b775",
+        "55163235-01fa-427f-99ce-27c24b7f30f1",
+        "736b2e6b-b93c-41ad-af97-be479405ac59",
+        "82f995cb-8bee-469d-9063-a2da3439fbdb",
+        "b345aac7-984e-43f9-a927-37c639642e27",
+        "d9102168-f60d-4feb-b47d-5b5012d2e1a4"
+      ]
+    }
+  ],
+  "api_url": "http://127.0.0.1:54214",
+  "ports": {
+    "postgres": 54209,
+    "rtsp": 54210,
+    "hls": 54211,
+    "control": 54212,
+    "playback": 54213,
+    "api": 54214
+  },
+  "paid_calls": 0,
+  "api_schema_sha256": "5e8aaab2d0c4ff34894e389ffc0f245b780d3e13a8ecf7958711e714d8ed5b8c",
+  "/health/ready": {
+    "status": "ready",
+    "version": "0.1.0"
+  },
+  "/api/v1/analysis-usage": {
+    "requests": 95,
+    "input_tokens": 358968,
+    "output_tokens": 116707,
+    "bytes_uploaded": 16702838,
+    "reserved_usd": 4.75,
+    "estimated_usd": null,
+    "billing": "unknown"
+  },
+  "migrations": [
+    {
+      "version": "001_initial",
+      "checksum_matches": true
+    },
+    {
+      "version": "002_vms",
+      "checksum_matches": true
+    },
+    {
+      "version": "003_agent",
+      "checksum_matches": true
+    },
+    {
+      "version": "004_indexing",
+      "checksum_matches": true
+    },
+    {
+      "version": "005_agent_usage",
+      "checksum_matches": true
+    },
+    {
+      "version": "006_demo_media",
+      "checksum_matches": true
+    }
+  ],
+  "row_counts": {
+    "cameras": 8,
+    "layouts": 7,
+    "layout_cells": 22,
+    "recordings": 10,
+    "segments": 7724,
+    "video_metadata": 95
+  },
+  "same_workspace_visible": true,
+  "backend_revision": "Legacy process has no revision stamp; schema hash and migration checksums verified. Final integration starts a fresh process from an identified revision."
+}
