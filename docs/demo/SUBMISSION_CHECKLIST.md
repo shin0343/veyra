@@ -23,7 +23,7 @@ visibility or licence requirement. Nothing below invents a requirement.
       (video length/host, repo visibility, licence, team details) before submitting.
 - [ ] Choose the track (Indie or Startup).
 - [ ] Upload the video where the form requires; add the footage credits to its description.
-- [ ] Decide repository visibility / push (nothing has been pushed).
+- [x] Public repository: https://github.com/shin0343/veyra (MIT License for the code).
 - [ ] Optional: a narrated voice-over (the recording is silent, with on-screen captions).
 - [ ] Submit before **Nov 4, 2026, 21:00 America/New_York**.
 

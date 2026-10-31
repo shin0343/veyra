@@ -117,7 +117,10 @@ hashes: [VIDEO_ASSET_MANIFEST](docs/demo/VIDEO_ASSET_MANIFEST.md).
 | Trail camera | [Dirt jump biking](https://commons.wikimedia.org/wiki/File%3ADirt_jump_biking.webm) | Henry Geer | CC BY 3.0 |
 | Station entrance (spare source, used by the registration test) | [8 Street station entrance vc](https://commons.wikimedia.org/wiki/File%3A8_Street_station_entrance_vc.ogv) | rym (Flickr) | CC BY 2.0 |
 
-The repository has no licence file of its own; choose one before publishing the code.
+## Licence
+
+The code is released under the [MIT License](LICENSE). Third-party footage, including the test
+fixtures in `apps/api/tests/fixtures/video/`, keeps its own Creative Commons licence listed above.
 
 ## Further reading
 
